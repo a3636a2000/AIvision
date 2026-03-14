@@ -21,6 +21,7 @@ const VideoMaker = lazy(() => import('./pages/VideoMaker'))
 const SmartDashboard = lazy(() => import('./pages/SmartDashboard'))
 const WorkResult = lazy(() => import('./pages/WorkResult'))
 const VisionInspection = lazy(() => import('./pages/VisionInspection'))
+const ItemMaster = lazy(() => import('./pages/ItemMaster'))
 
 const VALID_PATHS = [
   '/',
@@ -35,13 +36,14 @@ const VALID_PATHS = [
   '/sf-dashboard',
   '/sf-production',
   '/sf-vision',
+  '/sf-items',
 ]
 
 function isValidPath(path: string) {
   return VALID_PATHS.includes(path)
 }
 
-const SF_PATHS = ['/sf-dashboard', '/sf-production', '/sf-vision']
+const SF_PATHS = ['/sf-dashboard', '/sf-production', '/sf-vision', '/sf-items']
 
 /**
  * 스마트팩토리 페이지 로딩 스피너
@@ -72,6 +74,7 @@ function PageManager() {
   const [sfDashboardLoaded, setSfDashboardLoaded] = useState(false)
   const [sfProductionLoaded, setSfProductionLoaded] = useState(false)
   const [sfVisionLoaded, setSfVisionLoaded] = useState(false)
+  const [sfItemsLoaded, setSfItemsLoaded] = useState(false)
 
   useEffect(() => {
     if (path === '/video-maker') setVideoMakerLoaded(true)
@@ -79,6 +82,7 @@ function PageManager() {
     if (path === '/sf-dashboard') setSfDashboardLoaded(true)
     if (path === '/sf-production') setSfProductionLoaded(true)
     if (path === '/sf-vision') setSfVisionLoaded(true)
+    if (path === '/sf-items') setSfItemsLoaded(true)
   }, [path])
 
   // 유효하지 않은 경로 → 홈으로 리다이렉트
@@ -160,6 +164,14 @@ function PageManager() {
         <div className="flex-1 flex-col min-h-0 overflow-hidden" style={{ display: path === '/sf-vision' ? 'flex' : 'none' }}>
           <Suspense fallback={<SFLoading />}>
             <VisionInspection />
+          </Suspense>
+        </div>
+      )}
+
+      {sfItemsLoaded && (
+        <div className="flex-1 flex-col min-h-0 overflow-hidden" style={{ display: path === '/sf-items' ? 'flex' : 'none' }}>
+          <Suspense fallback={<SFLoading />}>
+            <ItemMaster />
           </Suspense>
         </div>
       )}

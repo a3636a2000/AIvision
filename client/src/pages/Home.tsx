@@ -10,6 +10,7 @@ import {
   LayoutDashboard,
   Factory,
   Eye,
+  Package,
   BarChart2,
   Award,
   Cpu,
@@ -52,6 +53,14 @@ const Home = () => {
       gradient: 'from-violet-500 to-purple-600',
       badge: 'AI 검사',
     },
+    {
+      icon: Package,
+      title: '품목등록',
+      desc: '품목 마스터 등록·관리, 품목코드/규격/계정 정보 일괄 관리',
+      path: '/sf-items',
+      gradient: 'from-amber-500 to-orange-500',
+      badge: '기준정보',
+    },
   ]
 
   return (
@@ -80,7 +89,7 @@ const Home = () => {
             {[
               { label: '실습 모듈', value: '6개' },
               { label: 'AI 기능', value: '10+' },
-              { label: '스마트팩토리', value: '3종' },
+              { label: '스마트팩토리', value: '4종' },
             ].map((stat) => (
               <div key={stat.label} className="flex items-center gap-2 px-3 py-1.5 bg-gray-800/60 rounded-lg border border-gray-700/40">
                 <span className="text-blue-400 font-bold text-sm">{stat.value}</span>
@@ -101,7 +110,7 @@ const Home = () => {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {sfCards.map((card) => (
               <button
                 key={card.path}
