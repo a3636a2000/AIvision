@@ -17,6 +17,11 @@ const ChatRoom = lazy(() => import('./pages/ChatRoom'))
 // 동영상 만들기 페이지
 const VideoMaker = lazy(() => import('./pages/VideoMaker'))
 
+// 스마트팩토리 페이지
+const SmartDashboard = lazy(() => import('./pages/SmartDashboard'))
+const WorkResult = lazy(() => import('./pages/WorkResult'))
+const VisionInspection = lazy(() => import('./pages/VisionInspection'))
+
 const VALID_PATHS = [
   '/',
   '/pdf-converter',
@@ -27,16 +32,34 @@ const VALID_PATHS = [
   '/cookie-policy',
   '/chat',
   '/video-maker',
+  '/sf-dashboard',
+  '/sf-production',
+  '/sf-vision',
 ]
 
 function isValidPath(path: string) {
   return VALID_PATHS.includes(path)
 }
 
+const SF_PATHS = ['/sf-dashboard', '/sf-production', '/sf-vision']
+
+/**
+ * 스마트팩토리 페이지 로딩 스피너
+ */
+function SFLoading() {
+  return (
+    <div className="flex-1 flex items-center justify-center bg-slate-50">
+      <div className="text-center">
+        <div className="w-8 h-8 border-3 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+        <div className="text-slate-500 text-sm">로딩 중...</div>
+      </div>
+    </div>
+  )
+}
+
 /**
  * 페이지 매니저
  * display:none 방식으로 모든 페이지를 항상 마운트 상태로 유지
- * → 이미지 편집기, PDF 변환기 상태가 페이지 전환 시에도 보존됨
  */
 function PageManager() {
   const location = useLocation()
@@ -46,10 +69,16 @@ function PageManager() {
   // lazy 로드 페이지: 최초 방문 후 마운트 유지 (display:none 방식)
   const [videoMakerLoaded, setVideoMakerLoaded] = useState(false)
   const [chatRoomLoaded, setChatRoomLoaded] = useState(false)
+  const [sfDashboardLoaded, setSfDashboardLoaded] = useState(false)
+  const [sfProductionLoaded, setSfProductionLoaded] = useState(false)
+  const [sfVisionLoaded, setSfVisionLoaded] = useState(false)
 
   useEffect(() => {
     if (path === '/video-maker') setVideoMakerLoaded(true)
     if (path === '/chat') setChatRoomLoaded(true)
+    if (path === '/sf-dashboard') setSfDashboardLoaded(true)
+    if (path === '/sf-production') setSfProductionLoaded(true)
+    if (path === '/sf-vision') setSfVisionLoaded(true)
   }, [path])
 
   // 유효하지 않은 경로 → 홈으로 리다이렉트
@@ -83,13 +112,7 @@ function PageManager() {
       {/* 정책/고객지원 페이지 — lazy 로드, 해당 경로일 때만 렌더링 */}
       {['/help-center', '/privacy-policy', '/terms-of-service', '/cookie-policy'].includes(path) && (
         <div className="flex-1 flex-col min-h-0 overflow-auto" style={{ display: 'flex' }}>
-          <Suspense
-            fallback={
-              <div className="flex-1 flex items-center justify-center">
-                <div className="text-gray-400 text-sm">로딩 중...</div>
-              </div>
-            }
-          >
+          <Suspense fallback={<div className="flex-1 flex items-center justify-center"><div className="text-gray-400 text-sm">로딩 중...</div></div>}>
             {path === '/help-center' && <HelpCenter />}
             {path === '/privacy-policy' && <PrivacyPolicy />}
             {path === '/terms-of-service' && <TermsOfService />}
@@ -100,17 +123,8 @@ function PageManager() {
 
       {/* 채팅방 페이지 — 최초 방문 후 마운트 유지 */}
       {chatRoomLoaded && (
-        <div
-          className="flex-1 flex-col min-h-0 overflow-hidden"
-          style={{ display: path === '/chat' ? 'flex' : 'none' }}
-        >
-          <Suspense
-            fallback={
-              <div className="flex-1 flex items-center justify-center">
-                <div className="text-gray-400 text-sm">로딩 중...</div>
-              </div>
-            }
-          >
+        <div className="flex-1 flex-col min-h-0 overflow-hidden" style={{ display: path === '/chat' ? 'flex' : 'none' }}>
+          <Suspense fallback={<div className="flex-1 flex items-center justify-center"><div className="text-gray-400 text-sm">로딩 중...</div></div>}>
             <ChatRoom />
           </Suspense>
         </div>
@@ -118,18 +132,34 @@ function PageManager() {
 
       {/* 동영상 만들기 페이지 — 최초 방문 후 마운트 유지 */}
       {videoMakerLoaded && (
-        <div
-          className="flex-1 flex-col min-h-0 overflow-hidden"
-          style={{ display: path === '/video-maker' ? 'flex' : 'none' }}
-        >
-          <Suspense
-            fallback={
-              <div className="flex-1 flex items-center justify-center">
-                <div className="text-gray-400 text-sm">로딩 중...</div>
-              </div>
-            }
-          >
+        <div className="flex-1 flex-col min-h-0 overflow-hidden" style={{ display: path === '/video-maker' ? 'flex' : 'none' }}>
+          <Suspense fallback={<div className="flex-1 flex items-center justify-center"><div className="text-gray-400 text-sm">로딩 중...</div></div>}>
             <VideoMaker />
+          </Suspense>
+        </div>
+      )}
+
+      {/* ─── 스마트팩토리 페이지 ─── */}
+      {sfDashboardLoaded && (
+        <div className="flex-1 flex-col min-h-0 overflow-hidden" style={{ display: path === '/sf-dashboard' ? 'flex' : 'none' }}>
+          <Suspense fallback={<SFLoading />}>
+            <SmartDashboard />
+          </Suspense>
+        </div>
+      )}
+
+      {sfProductionLoaded && (
+        <div className="flex-1 flex-col min-h-0 overflow-hidden" style={{ display: path === '/sf-production' ? 'flex' : 'none' }}>
+          <Suspense fallback={<SFLoading />}>
+            <WorkResult />
+          </Suspense>
+        </div>
+      )}
+
+      {sfVisionLoaded && (
+        <div className="flex-1 flex-col min-h-0 overflow-hidden" style={{ display: path === '/sf-vision' ? 'flex' : 'none' }}>
+          <Suspense fallback={<SFLoading />}>
+            <VisionInspection />
           </Suspense>
         </div>
       )}
