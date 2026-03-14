@@ -51,15 +51,7 @@ const mockProcessList: ProcessItem[] = [
   { prcCd: 'PRC006', prcName: 'SPRAY Q/T…', prcKind: '2', areaId: 'A001' },
 ];
 
-const mockItems = [
-  { itemCd: '25002C001', itemName: '배선조립체', std: '-', warehouseName: '공정창고', safeQty: '-', price: '-', vendor: '-' },
-  { itemCd: 'P-GO-D4HKXX-O-111', itemName: 'D4H LOOSE LINK & PIN&BUSH…', std: 'KBJ(LUB)', warehouseName: '완제품창고', safeQty: '222', price: '2,222', vendor: '능협' },
-  { itemCd: 'P-GO-D4HKXX-O-361', itemName: 'D4H LOOSE LINK & PIN&BUSH…', std: 'KBJ(LUB)', warehouseName: '완제품창고', safeQty: '-', price: '0', vendor: 'nara tech' },
-  { itemCd: 'P-G235-SB2', itemName: '가드레일G235-SB2', std: 'W4000×H725mm', warehouseName: '완제품창고', safeQty: '500', price: '-', vendor: '-' },
-  { itemCd: 'W-BL-D4HKXX-O-100', itemName: '[D4H] T/BUSH [LUB] : 소재절단', std: 'SCR440(Φ58×116)', warehouseName: '공정창고', safeQty: '87', price: '-', vendor: '-' },
-  { itemCd: 'W-BL-D4HKXX-O-200', itemName: '[D4H] T/BUSH [LUB] : Through…', std: 'SCR440(Φ58×116)', warehouseName: '공정창고', safeQty: '-', price: '-', vendor: '-' },
-  { itemCd: 'W-BL-D4HKXX-O-400', itemName: '[D4H] T/BUSH [LUB] : 1차가공', std: 'SCR440(Φ58×116)', warehouseName: '공정창고', safeQty: '377', price: '-', vendor: '-' },
-];
+/* mockItems 삭제 — /api/items DB에서 실시간 조회 */
 
 const mockWorkOrders = [
   { prcOdCd: 'WO-20260314-01', prcCd: 'PRC001', prcName: '조립(포장, 방청, 도장)', itemCd: 'PART-001', itemName: '엔진 피스톤 A', planQty: 1000 },
@@ -312,6 +304,17 @@ export default function WorkResultPage() {
   const [itemScanOpen, setItemScanOpen] = useState(false);
   const [workOrderModalOpen, setWorkOrderModalOpen] = useState(false);
 
+  const { data: itemMasterList = [] } = useQuery<any[]>({
+    queryKey: ["/api/items"],
+    queryFn: async () => { const res = await fetch("/api/items"); if (!res.ok) throw new Error("품목 조회 실패"); return res.json(); },
+  });
+
+  const itemsForModal = itemMasterList.map((it: any) => ({
+    itemCd: it.itemCd || '', itemName: it.itemName || '', std: it.std || '-',
+    warehouseName: it.warehouseName || '-', safeQty: it.safetyStock ?? '-',
+    price: it.stdCost ?? '-', vendor: it.vendorName || '-',
+  }));
+
   const { data: workResultList = [], refetch: refetchList } = useQuery<any[]>({
     queryKey: ["/api/work-result"],
     queryFn: async () => { const res = await fetch(`/api/work-result`); if (!res.ok) throw new Error("조회 실패"); return res.json(); },
@@ -354,7 +357,7 @@ export default function WorkResultPage() {
   }, [toast]);
 
   const handleItemScan = useCallback((value: string) => {
-    const matched = mockItems.find(i => i.itemCd === value);
+    const matched = itemsForModal.find((i: any) => i.itemCd === value);
     const item = matched || { itemCd: value, itemName: '스캔품목', std: '-' };
     setDetails(prev => {
       const emptyIdx = prev.findIndex(d => !d.itemCd);
@@ -363,7 +366,7 @@ export default function WorkResultPage() {
       return [...prev, newDetail];
     });
     toast({ title: "품목 스캔됨", description: `${item.itemCd} - ${item.itemName}` });
-  }, [formData.prcCd, toast]);
+  }, [formData.prcCd, toast, itemsForModal]);
 
   const handleSelectProcess = (idx: number) => {
     setSelectedProcessIdx(idx);
@@ -430,7 +433,7 @@ export default function WorkResultPage() {
   return (
     <SmartFactoryWrapper>
       <Toaster />
-      <SearchModal isOpen={itemModalOpen} onClose={() => setItemModalOpen(false)} title="품목 조회" icon={<Package className="w-5 h-5" />} data={mockItems} onSelect={handleItemSelect}
+      <SearchModal isOpen={itemModalOpen} onClose={() => setItemModalOpen(false)} title="품목 조회" icon={<Package className="w-5 h-5" />} data={itemsForModal} onSelect={handleItemSelect}
         columns={[{ key: 'itemCd', label: '품목코드', isCode: true }, { key: 'itemName', label: '품목명' }, { key: 'std', label: '규격' }, { key: 'warehouseName', label: '창고명' }, { key: 'safeQty', label: '적정재고' }, { key: 'price', label: '표준원가' }, { key: 'vendor', label: '거래처명' }]}
         searchPlaceholder="품목코드 또는 품목명 검색..."
         rightButton={

@@ -14,6 +14,7 @@ import {
   LayoutDashboard,
   Factory,
   Eye,
+  Package,
 } from 'lucide-react'
 import { cn } from '../lib/utils'
 import { useAppStore } from '../store/useAppStore'
@@ -39,6 +40,7 @@ const Sidebar = () => {
     { icon: LayoutDashboard, label: '대시보드',    path: '/sf-dashboard' },
     { icon: Factory,         label: '작업실적',    path: '/sf-production' },
     { icon: Eye,             label: 'AI 비전',     path: '/sf-vision' },
+    { icon: Package,         label: '품목등록',    path: '/sf-items' },
   ]
 
   // 고객지원
