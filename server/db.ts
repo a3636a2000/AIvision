@@ -242,6 +242,54 @@ export async function initBoardTables() {
     `)
     console.log('📦 work_result_entries 테이블 준비 완료')
 
+    // ─── 품목 마스터 (전체 컬럼) ───
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS item_master (
+        id SERIAL PRIMARY KEY,
+        use_yn BOOLEAN DEFAULT TRUE,
+        bom_yn BOOLEAN DEFAULT FALSE,
+        item_type VARCHAR(20) DEFAULT '제품',
+        acct_code VARCHAR(20),
+        acct_name VARCHAR(40),
+        item_cd VARCHAR(60) NOT NULL UNIQUE,
+        item_name VARCHAR(200) NOT NULL,
+        std VARCHAR(100),
+        draw_no VARCHAR(60),
+        eng_name VARCHAR(200),
+        item_group VARCHAR(40),
+        base_unit VARCHAR(10),
+        conv_unit VARCHAR(10),
+        base_ratio NUMERIC(12,4) DEFAULT 1,
+        conv_ratio NUMERIC(12,4) DEFAULT 1,
+        bom_unit VARCHAR(10),
+        bom_base_ratio NUMERIC(12,4) DEFAULT 1,
+        bom_ratio NUMERIC(12,4) DEFAULT 1,
+        warehouse_cd VARCHAR(20),
+        warehouse_name VARCHAR(60),
+        proc_cd VARCHAR(20),
+        proc_name VARCHAR(60),
+        equip_cd VARCHAR(20),
+        equip_name VARCHAR(60),
+        prod_lt INTEGER DEFAULT 0,
+        category VARCHAR(20),
+        prod_plan VARCHAR(40),
+        in_out_type VARCHAR(10),
+        supply_type VARCHAR(20),
+        outsource_cd VARCHAR(20),
+        vendor_name VARCHAR(60),
+        proper_stock NUMERIC(12,2) DEFAULT 0,
+        safety_stock NUMERIC(12,2) DEFAULT 0,
+        init_carry_qty NUMERIC(12,2) DEFAULT 0,
+        init_carry_amt NUMERIC(14,2) DEFAULT 0,
+        std_cost NUMERIC(14,2) DEFAULT 0,
+        work_date VARCHAR(10),
+        work_id VARCHAR(30),
+        created_at TIMESTAMP DEFAULT NOW(),
+        updated_at TIMESTAMP DEFAULT NOW()
+      );
+    `)
+    console.log('📦 item_master 테이블 준비 완료')
+
     // 인덱스 생성
     await client.query(`CREATE INDEX IF NOT EXISTS idx_posts_created_at ON posts(created_at DESC)`)
     await client.query(`CREATE INDEX IF NOT EXISTS idx_post_comments_post_id ON post_comments(post_id)`)

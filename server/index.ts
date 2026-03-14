@@ -7,6 +7,7 @@ import { initBoardTables, query } from './db'
 import postsRouter from './routes/posts'
 import chatRouter from './routes/chat'
 import feedRouter from './routes/feed'
+import itemsRouter from './routes/items'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const app = express()
@@ -38,6 +39,9 @@ app.use('/api/chat', chatRouter)
 
 // 피드 게시판 API 라우트
 app.use('/api/feed', feedRouter)
+
+// 품목 마스터 API 라우트
+app.use('/api/items', itemsRouter)
 
 // ─── 스마트팩토리 API ───
 
