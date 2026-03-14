@@ -1,19 +1,12 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
-  FileText,
-  ScanLine,
-  Move,
   Upload,
-  Type,
   Download,
   ArrowRight,
   ArrowDown,
+  ScanLine,
   Eraser,
-  Ruler,
-  Video,
-  ExternalLink,
-  BookOpen,
   LayoutDashboard,
   Factory,
   Eye,
@@ -26,32 +19,6 @@ import Footer from '../components/Footer'
 const Home = () => {
   const navigate = useNavigate()
 
-  const handleDrop = useCallback(
-    (e: React.DragEvent) => {
-      e.preventDefault()
-      const file = e.dataTransfer.files[0]
-      if (file && (file.type === 'application/pdf' || file.type.startsWith('image/'))) {
-        navigate('/pdf-converter', { state: { file } })
-      }
-    },
-    [navigate]
-  )
-
-  const handleDragOver = useCallback((e: React.DragEvent) => {
-    e.preventDefault()
-  }, [])
-
-  const handleFileSelect = useCallback(() => {
-    const input = document.createElement('input')
-    input.type = 'file'
-    input.accept = '.pdf,image/*'
-    input.onchange = (e) => {
-      const file = (e.target as HTMLInputElement).files?.[0]
-      if (file) navigate('/pdf-converter', { state: { file } })
-    }
-    input.click()
-  }, [navigate])
-
   const workflowSteps = [
     { icon: Upload,    text: '데이터 업로드' },
     { icon: Eraser,    text: '전처리·정제' },
@@ -60,7 +27,6 @@ const Home = () => {
     { icon: Download,  text: '결과 다운로드' },
   ]
 
-  // 제조 AI 스마트팩토리 실습 메뉴
   const sfCards = [
     {
       icon: LayoutDashboard,
@@ -85,38 +51,6 @@ const Home = () => {
       path: '/sf-vision',
       gradient: 'from-violet-500 to-purple-600',
       badge: 'AI 검사',
-    },
-  ]
-
-  // AI 문서 편집 도구
-  const toolCards = [
-    {
-      icon: FileText,
-      title: 'PDF 변환 & 워터마크 제거',
-      items: ['PDF/이미지를 고해상도 슬라이드로 변환', '워터마크 자동 감지 및 제거', '이미지·PDF·PPT 다양한 형식 다운로드'],
-      path: '/pdf-converter',
-      gradient: 'from-orange-500 to-amber-500',
-    },
-    {
-      icon: Type,
-      title: 'AI 한글 텍스트 복원',
-      items: ['깨진 한글 영역 선택 → AI OCR 자동 인식', '원본 폰트 크기·두께 측정 후 자연스럽게 교체', '편집 결과를 이미지·PDF에 바로 반영'],
-      path: '/image-editor',
-      gradient: 'from-blue-500 to-cyan-500',
-    },
-    {
-      icon: Move,
-      title: '이미지 조각 이동',
-      items: ['선택 영역의 이미지를 드래그로 이동', '8개 핸들로 선택 영역 크기 조절', 'Ctrl+Z로 실행 취소'],
-      path: '/image-editor',
-      gradient: 'from-emerald-500 to-teal-500',
-    },
-    {
-      icon: Ruler,
-      title: '정밀 편집 도구',
-      items: ['원본 글자 높이·획 두께 픽셀 단위 측정', '폰트 크기 슬라이더 + 볼드 토글', 'Ctrl+마우스 휠로 이미지 확대/축소'],
-      path: '/image-editor',
-      gradient: 'from-purple-500 to-pink-500',
     },
   ]
 
@@ -213,106 +147,6 @@ const Home = () => {
                 )}
               </React.Fragment>
             ))}
-          </div>
-        </div>
-
-        {/* ── PDF 업로드 드롭존 ── */}
-        <div
-          className="mb-8 sm:mb-12 cursor-pointer group"
-          onDrop={handleDrop}
-          onDragOver={handleDragOver}
-          onClick={handleFileSelect}
-        >
-          <div className="bg-gray-900/60 backdrop-blur-sm rounded-xl border-2 border-dashed border-gray-700/60 p-5 sm:p-7 hover:border-blue-500/40 active:border-blue-500/50 transition-all duration-300">
-            <div className="flex flex-col items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
-                <Upload className="w-6 h-6 text-blue-400" />
-              </div>
-              <div className="text-center">
-                <p className="text-gray-300 font-medium text-sm sm:text-base mb-1">
-                  PDF 또는 이미지 파일을 드래그하거나 클릭하세요
-                </p>
-                <p className="text-gray-500 text-xs sm:text-sm">
-                  PDF 업로드 → 워터마크 제거 → 한글 OCR 복원 → 편집 → 다운로드
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* ── AI 문서 편집 도구 ── */}
-        <div className="mb-8 sm:mb-12">
-          <h2 className="text-xs font-medium text-gray-600 uppercase tracking-wider mb-4 sm:mb-5 text-center">
-            AI 문서 편집 도구
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {toolCards.map((card) => (
-              <button
-                key={card.title}
-                onClick={() => navigate(card.path)}
-                className="w-full bg-gray-900/60 border border-gray-800/60 rounded-xl p-4 sm:p-6 text-left hover:border-gray-700 active:bg-gray-800/40 transition-all group"
-              >
-                <div className="flex items-start gap-3 sm:gap-4">
-                  <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br ${card.gradient} flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform`}>
-                    <card.icon className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-white font-medium text-sm sm:text-base mb-1 sm:mb-1.5">{card.title}</h3>
-                    <ul className="space-y-1">
-                      {card.items.map((item) => (
-                        <li key={item} className="text-gray-500 text-xs flex items-center gap-1.5">
-                          <span className="w-1 h-1 rounded-full bg-gray-600 shrink-0" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* ── 외부 서비스 & 동영상 ── */}
-        <div className="mb-8 sm:mb-12">
-          <h2 className="text-xs font-medium text-gray-600 uppercase tracking-wider mb-4 sm:mb-5 text-center">
-            서비스 바로가기
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <a
-              href="https://notebooklm.google.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-gray-900/60 border border-gray-800/60 rounded-xl p-4 sm:p-5 hover:border-blue-500/40 hover:bg-blue-500/5 active:bg-gray-800/40 transition-all group flex items-center gap-3 sm:gap-4"
-            >
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                <BookOpen className="w-5 h-5 text-white" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2">
-                  <h3 className="text-white font-medium text-sm sm:text-base">Google NotebookLM</h3>
-                  <ExternalLink className="w-3.5 h-3.5 text-gray-500 group-hover:text-blue-400 transition-colors shrink-0" />
-                </div>
-                <p className="text-gray-500 text-xs mt-1">
-                  AI 기반 노트북으로 자료 정리 → PDF 내보내기 후 동영상 스튜디오에 활용
-                </p>
-              </div>
-            </a>
-
-            <button
-              onClick={() => navigate('/video-maker')}
-              className="w-full bg-gray-900/60 border border-gray-800/60 rounded-xl p-4 sm:p-5 text-left hover:border-indigo-500/40 hover:bg-indigo-500/5 active:bg-gray-800/40 transition-all group flex items-center gap-3 sm:gap-4"
-            >
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                <Video className="w-5 h-5 text-white" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="text-white font-medium text-sm sm:text-base">AI 동영상 스튜디오</h3>
-                <p className="text-gray-500 text-xs mt-1">
-                  PDF·이미지·영상 → AI 나레이션 + TTS 음성 → WebM/PPTX 내보내기
-                </p>
-              </div>
-            </button>
           </div>
         </div>
 
