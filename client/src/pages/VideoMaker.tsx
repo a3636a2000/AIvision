@@ -516,12 +516,12 @@ const VideoMaker: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col h-full bg-gray-950 text-white overflow-hidden relative">
+    <div className="flex flex-col h-full bg-gray-950 text-slate-800 overflow-hidden relative">
       {/* ── 상단 헤더 바 ── */}
       <header className="h-14 border-b border-gray-800 bg-gray-900 flex items-center justify-between px-4 sm:px-6 z-20 shadow-xl shrink-0">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-900/40">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-slate-800">
               <path d="M4.5 4.5a3 3 0 00-3 3v9a3 3 0 003 3h8.25a3 3 0 003-3v-9a3 3 0 00-3-3H4.5zM19.94 18.75l-2.69-2.69V7.94l2.69-2.69c.944-.945 2.56-.276 2.56 1.06v11.38c0 1.336-1.616 2.005-2.56 1.06z" />
             </svg>
           </div>
@@ -537,8 +537,8 @@ const VideoMaker: React.FC = () => {
               onClick={() => setAspectRatio(AspectRatio.Video16_9)}
               className={`px-3 py-1 text-xs font-bold rounded-md transition-all ${
                 aspectRatio === AspectRatio.Video16_9
-                  ? 'bg-indigo-600 text-white shadow-lg'
-                  : 'text-gray-400 hover:text-white'
+                  ? 'bg-indigo-600 text-slate-800 shadow-lg'
+                  : 'text-gray-400 hover:text-slate-800'
               }`}
             >
               16:9
@@ -547,8 +547,8 @@ const VideoMaker: React.FC = () => {
               onClick={() => setAspectRatio(AspectRatio.Portrait9_16)}
               className={`px-3 py-1 text-xs font-bold rounded-md transition-all ${
                 aspectRatio === AspectRatio.Portrait9_16
-                  ? 'bg-indigo-600 text-white shadow-lg'
-                  : 'text-gray-400 hover:text-white'
+                  ? 'bg-indigo-600 text-slate-800 shadow-lg'
+                  : 'text-gray-400 hover:text-slate-800'
               }`}
             >
               9:16
@@ -625,7 +625,7 @@ const VideoMaker: React.FC = () => {
                       key={tier}
                       onClick={() => handleModelChange(tier)}
                       className={`w-full text-left px-3 py-2 rounded-lg text-xs transition-all ${
-                        isActive ? 'bg-indigo-600/20 border border-indigo-500/40 text-white' : 'hover:bg-gray-700 text-gray-400'
+                        isActive ? 'bg-indigo-600/20 border border-indigo-500/40 text-slate-800' : 'hover:bg-gray-700 text-gray-400'
                       }`}
                     >
                       <div className="font-medium">{c.label}</div>
@@ -777,7 +777,7 @@ const VideoMaker: React.FC = () => {
                 onChange={handleFileUpload}
               />
               <div className="w-12 h-12 bg-gray-800 group-hover:bg-indigo-600 rounded-full flex items-center justify-center transition-all shadow-lg shadow-black/40">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6 text-gray-400 group-hover:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6 text-gray-400 group-hover:text-slate-800">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
               </div>

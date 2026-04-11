@@ -21,7 +21,15 @@ const VideoMaker = lazy(() => import('./pages/VideoMaker'))
 const SmartDashboard = lazy(() => import('./pages/SmartDashboard'))
 const WorkResult = lazy(() => import('./pages/WorkResult'))
 const VisionInspection = lazy(() => import('./pages/VisionInspection'))
+const VisionSetupPage = lazy(() => import('./pages/VisionSetup'))
 const ItemMaster = lazy(() => import('./pages/ItemMaster'))
+const DefectTypeMaster = lazy(() => import('./pages/DefectTypeMaster'))
+
+// AI 데이터분석 페이지
+const DataAnalysisSetup = lazy(() => import('./pages/DataAnalysisSetup'))
+const AiOntology = lazy(() => import('./pages/AiOntology'))
+const AiPattern = lazy(() => import('./pages/AiPattern'))
+const RealtimeInsight = lazy(() => import('./pages/RealtimeInsight'))
 
 const VALID_PATHS = [
   '/',
@@ -36,14 +44,20 @@ const VALID_PATHS = [
   '/sf-dashboard',
   '/sf-production',
   '/sf-vision',
+  '/sf-vision-setup',
   '/sf-items',
+  '/sf-defect-types',
+  '/ai-data-setup',
+  '/ai-ontology',
+  '/ai-pattern',
+  '/ai-insight',
 ]
 
 function isValidPath(path: string) {
   return VALID_PATHS.includes(path)
 }
 
-const SF_PATHS = ['/sf-dashboard', '/sf-production', '/sf-vision', '/sf-items']
+const SF_PATHS = ['/sf-dashboard', '/sf-production', '/sf-vision', '/sf-vision-setup', '/sf-items', '/sf-defect-types']
 
 /**
  * 스마트팩토리 페이지 로딩 스피너
@@ -74,7 +88,14 @@ function PageManager() {
   const [sfDashboardLoaded, setSfDashboardLoaded] = useState(false)
   const [sfProductionLoaded, setSfProductionLoaded] = useState(false)
   const [sfVisionLoaded, setSfVisionLoaded] = useState(false)
+  const [sfVisionSetupLoaded, setSfVisionSetupLoaded] = useState(false)
   const [sfItemsLoaded, setSfItemsLoaded] = useState(false)
+  const [sfDefectTypesLoaded, setSfDefectTypesLoaded] = useState(false)
+
+  const [aiDataSetupLoaded, setAiDataSetupLoaded] = useState(false)
+  const [aiOntologyLoaded, setAiOntologyLoaded] = useState(false)
+  const [aiPatternLoaded, setAiPatternLoaded] = useState(false)
+  const [aiInsightLoaded, setAiInsightLoaded] = useState(false)
 
   useEffect(() => {
     if (path === '/video-maker') setVideoMakerLoaded(true)
@@ -82,7 +103,13 @@ function PageManager() {
     if (path === '/sf-dashboard') setSfDashboardLoaded(true)
     if (path === '/sf-production') setSfProductionLoaded(true)
     if (path === '/sf-vision') setSfVisionLoaded(true)
+    if (path === '/sf-vision-setup') setSfVisionSetupLoaded(true)
     if (path === '/sf-items') setSfItemsLoaded(true)
+    if (path === '/sf-defect-types') setSfDefectTypesLoaded(true)
+    if (path === '/ai-data-setup') setAiDataSetupLoaded(true)
+    if (path === '/ai-ontology') setAiOntologyLoaded(true)
+    if (path === '/ai-pattern') setAiPatternLoaded(true)
+    if (path === '/ai-insight') setAiInsightLoaded(true)
   }, [path])
 
   // 유효하지 않은 경로 → 홈으로 리다이렉트
@@ -168,10 +195,59 @@ function PageManager() {
         </div>
       )}
 
+      {sfVisionSetupLoaded && (
+        <div className="flex-1 flex-col min-h-0 overflow-hidden" style={{ display: path === '/sf-vision-setup' ? 'flex' : 'none' }}>
+          <Suspense fallback={<SFLoading />}>
+            <VisionSetupPage />
+          </Suspense>
+        </div>
+      )}
+
       {sfItemsLoaded && (
         <div className="flex-1 flex-col min-h-0 overflow-hidden" style={{ display: path === '/sf-items' ? 'flex' : 'none' }}>
           <Suspense fallback={<SFLoading />}>
             <ItemMaster />
+          </Suspense>
+        </div>
+      )}
+
+      {sfDefectTypesLoaded && (
+        <div className="flex-1 flex-col min-h-0 overflow-hidden" style={{ display: path === '/sf-defect-types' ? 'flex' : 'none' }}>
+          <Suspense fallback={<SFLoading />}>
+            <DefectTypeMaster />
+          </Suspense>
+        </div>
+      )}
+
+      {/* ─── AI 데이터분석 페이지 ─── */}
+      {aiDataSetupLoaded && (
+        <div className="flex-1 flex-col min-h-0 overflow-hidden" style={{ display: path === '/ai-data-setup' ? 'flex' : 'none' }}>
+          <Suspense fallback={<SFLoading />}>
+            <DataAnalysisSetup />
+          </Suspense>
+        </div>
+      )}
+
+      {aiOntologyLoaded && (
+        <div className="flex-1 flex-col min-h-0 overflow-hidden" style={{ display: path === '/ai-ontology' ? 'flex' : 'none' }}>
+          <Suspense fallback={<SFLoading />}>
+            <AiOntology />
+          </Suspense>
+        </div>
+      )}
+
+      {aiPatternLoaded && (
+        <div className="flex-1 flex-col min-h-0 overflow-hidden" style={{ display: path === '/ai-pattern' ? 'flex' : 'none' }}>
+          <Suspense fallback={<SFLoading />}>
+            <AiPattern />
+          </Suspense>
+        </div>
+      )}
+
+      {aiInsightLoaded && (
+        <div className="flex-1 flex-col min-h-0 overflow-hidden" style={{ display: path === '/ai-insight' ? 'flex' : 'none' }}>
+          <Suspense fallback={<SFLoading />}>
+            <RealtimeInsight />
           </Suspense>
         </div>
       )}

@@ -28,7 +28,7 @@ const PrivacyPolicy: React.FC = () => {
         {/* 뒤로가기 */}
         <button
           onClick={() => navigate('/')}
-          className="inline-flex items-center gap-1 text-gray-400 hover:text-white text-sm mb-6 transition-colors"
+          className="inline-flex items-center gap-1 text-gray-400 hover:text-slate-800 text-sm mb-6 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           홈으로
@@ -38,7 +38,7 @@ const PrivacyPolicy: React.FC = () => {
         <div className="text-center mb-10 sm:mb-12">
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
-              <Shield className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
+              <Shield className="w-7 h-7 sm:w-8 sm:h-8 text-slate-800" />
             </div>
             <div>
               <h1 className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
@@ -60,7 +60,7 @@ const PrivacyPolicy: React.FC = () => {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center shrink-0">
-                <FileText className="w-4 h-4 text-white" />
+                <FileText className="w-4 h-4 text-slate-800" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-100">1. 개인정보의 처리 목적</h2>
             </div>
@@ -91,7 +91,7 @@ const PrivacyPolicy: React.FC = () => {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center shrink-0">
-                <Calendar className="w-4 h-4 text-white" />
+                <Calendar className="w-4 h-4 text-slate-800" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-100">2. 개인정보의 처리 및 보유 기간</h2>
             </div>
@@ -131,7 +131,7 @@ const PrivacyPolicy: React.FC = () => {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-lg flex items-center justify-center shrink-0">
-                <User className="w-4 h-4 text-white" />
+                <User className="w-4 h-4 text-slate-800" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-100">3. 개인정보의 제3자 제공</h2>
             </div>
@@ -160,7 +160,7 @@ const PrivacyPolicy: React.FC = () => {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center shrink-0">
-                <Database className="w-4 h-4 text-white" />
+                <Database className="w-4 h-4 text-slate-800" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-100">4. 개인정보처리의 위탁</h2>
             </div>
@@ -197,7 +197,7 @@ const PrivacyPolicy: React.FC = () => {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-pink-500 to-rose-500 rounded-lg flex items-center justify-center shrink-0">
-                <Eye className="w-4 h-4 text-white" />
+                <Eye className="w-4 h-4 text-slate-800" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-100">5. 정보주체의 권리·의무</h2>
             </div>
@@ -231,7 +231,7 @@ const PrivacyPolicy: React.FC = () => {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-red-500 to-pink-500 rounded-lg flex items-center justify-center shrink-0">
-                <Lock className="w-4 h-4 text-white" />
+                <Lock className="w-4 h-4 text-slate-800" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-100">6. 개인정보의 안전성 확보 조치</h2>
             </div>
@@ -266,7 +266,7 @@ const PrivacyPolicy: React.FC = () => {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-lg flex items-center justify-center shrink-0">
-                <Phone className="w-4 h-4 text-white" />
+                <Phone className="w-4 h-4 text-slate-800" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-100">7. 개인정보 보호책임자</h2>
             </div>
@@ -319,7 +319,7 @@ const PrivacyPolicy: React.FC = () => {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-violet-500 to-purple-500 rounded-lg flex items-center justify-center shrink-0">
-                <FileText className="w-4 h-4 text-white" />
+                <FileText className="w-4 h-4 text-slate-800" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-100">8. 개인정보 처리방침 변경</h2>
             </div>

@@ -257,6 +257,31 @@ initBoardTables().catch((err) => {
   console.error('⚠️ DB 초기화 실패 (서버는 계속 실행됩니다):', err)
 })
 
+// 백터화된 테이블 (Graph DB) API
+app.get('/api/vectorized-tables', async (_req, res) => {
+  try {
+    const rows = await query(`SELECT table_name FROM vectorized_tables ORDER BY created_at DESC`);
+    res.json(rows.map(r => r.table_name));
+  } catch (error) {
+    console.error('vectorized-tables list error:', error);
+    res.status(500).json({ message: '조회에 실패했습니다.' });
+  }
+});
+
+app.post('/api/vectorized-tables', async (req, res) => {
+  try {
+    const { tableName } = req.body;
+    if (!tableName) {
+      return res.status(400).json({ message: 'table_name이 없습니다.' });
+    }
+    await query(`INSERT INTO vectorized_tables (table_name) VALUES ($1) ON CONFLICT DO NOTHING`, [tableName]);
+    res.json({ success: true });
+  } catch (error) {
+    console.error('vectorized-tables insert error:', error);
+    res.status(500).json({ message: '저장에 실패했습니다.' });
+  }
+});
+
 // 프로덕션: 빌드된 프론트엔드 정적 파일 서빙
 const distPath = path.join(__dirname, '..', 'dist')
 if (fs.existsSync(distPath)) {

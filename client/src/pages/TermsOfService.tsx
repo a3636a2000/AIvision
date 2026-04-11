@@ -27,7 +27,7 @@ const TermsOfService: React.FC = () => {
         {/* 뒤로가기 */}
         <button
           onClick={() => navigate('/')}
-          className="inline-flex items-center gap-1 text-gray-400 hover:text-white text-sm mb-6 transition-colors"
+          className="inline-flex items-center gap-1 text-gray-400 hover:text-slate-800 text-sm mb-6 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           홈으로
@@ -37,7 +37,7 @@ const TermsOfService: React.FC = () => {
         <div className="text-center mb-10 sm:mb-12">
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-green-600 to-blue-600 rounded-full flex items-center justify-center shadow-lg">
-              <Scale className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
+              <Scale className="w-7 h-7 sm:w-8 sm:h-8 text-slate-800" />
             </div>
             <div>
               <h1 className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-green-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">
@@ -59,7 +59,7 @@ const TermsOfService: React.FC = () => {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center shrink-0">
-                <FileText className="w-4 h-4 text-white" />
+                <FileText className="w-4 h-4 text-slate-800" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-100">제1조 (목적)</h2>
             </div>
@@ -75,7 +75,7 @@ const TermsOfService: React.FC = () => {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center shrink-0">
-                <User className="w-4 h-4 text-white" />
+                <User className="w-4 h-4 text-slate-800" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-100">제2조 (정의)</h2>
             </div>
@@ -101,7 +101,7 @@ const TermsOfService: React.FC = () => {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-lg flex items-center justify-center shrink-0">
-                <Calendar className="w-4 h-4 text-white" />
+                <Calendar className="w-4 h-4 text-slate-800" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-100">제3조 (약관의 명시와 설명 및 개정)</h2>
             </div>
@@ -125,7 +125,7 @@ const TermsOfService: React.FC = () => {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center shrink-0">
-                <CheckCircle className="w-4 h-4 text-white" />
+                <CheckCircle className="w-4 h-4 text-slate-800" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-100">제4조 (서비스의 제공 및 변경)</h2>
             </div>
@@ -160,7 +160,7 @@ const TermsOfService: React.FC = () => {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-pink-500 to-rose-500 rounded-lg flex items-center justify-center shrink-0">
-                <User className="w-4 h-4 text-white" />
+                <User className="w-4 h-4 text-slate-800" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-100">제5조 (회원가입)</h2>
             </div>
@@ -192,7 +192,7 @@ const TermsOfService: React.FC = () => {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center shrink-0">
-                <Shield className="w-4 h-4 text-white" />
+                <Shield className="w-4 h-4 text-slate-800" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-100">제9조 (개인정보보호)</h2>
             </div>
@@ -216,7 +216,7 @@ const TermsOfService: React.FC = () => {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-gray-500 to-gray-600 rounded-lg flex items-center justify-center shrink-0">
-                <AlertCircle className="w-4 h-4 text-white" />
+                <AlertCircle className="w-4 h-4 text-slate-800" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-100">제11조 (면책조항)</h2>
             </div>
@@ -240,7 +240,7 @@ const TermsOfService: React.FC = () => {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-violet-500 to-purple-500 rounded-lg flex items-center justify-center shrink-0">
-                <Scale className="w-4 h-4 text-white" />
+                <Scale className="w-4 h-4 text-slate-800" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-100">제12조 (준거법 및 관할법원)</h2>
             </div>
@@ -260,7 +260,7 @@ const TermsOfService: React.FC = () => {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg flex items-center justify-center shrink-0">
-                <Calendar className="w-4 h-4 text-white" />
+                <Calendar className="w-4 h-4 text-slate-800" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-100">부칙</h2>
             </div>

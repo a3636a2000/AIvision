@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   BarChart,
@@ -35,6 +36,15 @@ import {
   Zap,
   ArrowUpRight,
   ArrowDownRight,
+  Factory,
+  Eye,
+  Settings,
+  UserCheck,
+  UserMinus,
+  ShoppingCart,
+  FileText,
+  CreditCard,
+  RefreshCcw
 } from "lucide-react";
 import SmartFactoryWrapper from "@/components/SmartFactoryWrapper";
 
@@ -85,7 +95,7 @@ const BOARD_MESSAGES = [
   { id: 5, text: "안전 수칙 준수 안내", date: "03-10", isNew: false },
 ];
 
-function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string }) {
+function AnimatedNumber({ value, suffix = "", decimals = 0 }: { value: number; suffix?: string; decimals?: number }) {
   const [display, setDisplay] = useState(0);
   useEffect(() => {
     const duration = 1200;
@@ -98,12 +108,12 @@ function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string
         setDisplay(value);
         clearInterval(timer);
       } else {
-        setDisplay(Math.floor(current));
+        setDisplay(current);
       }
     }, duration / steps);
     return () => clearInterval(timer);
   }, [value]);
-  return <>{display.toLocaleString()}{suffix}</>;
+  return <>{decimals > 0 ? display.toFixed(decimals) : Math.floor(display).toLocaleString()}{suffix}</>;
 }
 
 function MiniCalendar() {
@@ -142,32 +152,32 @@ function MiniCalendar() {
   return (
     <div>
       <div className="flex items-center justify-between mb-3">
-        <button onClick={prev} className="p-1 hover:bg-white/10 rounded transition-colors">
-          <ChevronLeft className="w-4 h-4 text-slate-400" />
+        <button onClick={prev} className="p-1 hover:bg-slate-100 rounded transition-colors">
+          <ChevronLeft className="w-4 h-4 text-slate-500" />
         </button>
-        <span className="text-sm font-semibold text-white">
+        <span className="text-sm font-semibold text-slate-800">
           {year}년 {String(month + 1).padStart(2, "0")}월
         </span>
-        <button onClick={next} className="p-1 hover:bg-white/10 rounded transition-colors">
-          <ChevronRight className="w-4 h-4 text-slate-400" />
+        <button onClick={next} className="p-1 hover:bg-slate-100 rounded transition-colors">
+          <ChevronRight className="w-4 h-4 text-slate-500" />
         </button>
       </div>
       <div className="grid grid-cols-7 gap-0.5 text-center text-[10px]">
-        {["일", "월", "화", "수", "목", "금", "토"].map((d) => (
-          <div key={d} className="py-1 text-slate-400 font-medium">{d}</div>
+        {["일", "월", "화", "수", "목", "금", "토"].map((d, index) => (
+          <div key={d} className={`py-1 font-medium ${index === 0 ? "text-rose-500" : index === 6 ? "text-blue-500" : "text-slate-500"}`}>{d}</div>
         ))}
         {days.map((cell, i) => (
           <div
             key={i}
             className={`py-1 rounded-md transition-all text-[11px] ${
               cell.today
-                ? "bg-violet-500 text-white font-bold shadow-lg shadow-violet-500/30"
+                ? "bg-blue-50 text-blue-600 font-bold border border-blue-500"
                 : cell.current
-                ? "text-slate-200 hover:bg-white/10 cursor-pointer"
-                : "text-slate-600"
+                ? "text-slate-700 hover:bg-slate-50 cursor-pointer"
+                : "text-slate-300"
             }`}
           >
-            {cell.day}
+            {cell.day > 0 ? cell.day : ""}
           </div>
         ))}
       </div>
@@ -177,7 +187,7 @@ function MiniCalendar() {
 
 export default function SmartDashboard() {
   const queryClient = useQueryClient();
-  const [clockedIn, setClockedIn] = useState(false);
+  const navigate = useNavigate();
 
   const { data: stats } = useQuery<Stats>({
     queryKey: ["/api/vision/stats"],
@@ -204,24 +214,30 @@ export default function SmartDashboard() {
   const kpiCards = [
     {
       title: "ORDER 현황",
-      value: total,
-      sub: (total * 5950).toLocaleString(),
-      icon: ClipboardList,
-      gradient: "from-violet-600 to-indigo-600",
-      shadow: "shadow-violet-500/25",
-      trend: "+12.5%",
-      trendUp: true,
+      value: 3574,
+      sub: "21,255,489",
+      icon: ShoppingCart,
+      gradient: "from-blue-500 to-blue-600",
+      shadow: "shadow-sm",
+      textColor: "text-blue-500",
+      subTextColor: "text-blue-400",
+      badgeBg: "bg-blue-100",
+      badgeText: "text-blue-600",
+      bgColor: "bg-[#e8f1fa]",
       number: 1,
     },
     {
-      title: "생산 현황",
-      value: ok,
-      sub: (ok * 5950).toLocaleString(),
-      icon: Package,
+      title: "수출 신고 현황",
+      value: 0,
+      sub: "0",
+      icon: FileText,
       gradient: "from-emerald-500 to-teal-600",
-      shadow: "shadow-emerald-500/25",
-      trend: "+8.3%",
-      trendUp: true,
+      shadow: "shadow-sm",
+      textColor: "text-emerald-500",
+      subTextColor: "text-emerald-400",
+      badgeBg: "bg-blue-100",
+      badgeText: "text-blue-600",
+      bgColor: "bg-[#f8f9fa]",
       number: 2,
     },
     {
@@ -229,32 +245,41 @@ export default function SmartDashboard() {
       value: 0,
       sub: "0",
       icon: Truck,
-      gradient: "from-cyan-500 to-blue-600",
-      shadow: "shadow-cyan-500/25",
-      trend: "0%",
-      trendUp: true,
+      gradient: "from-amber-500 to-orange-600",
+      shadow: "shadow-sm",
+      textColor: "text-amber-500",
+      subTextColor: "text-amber-400",
+      badgeBg: "bg-blue-100",
+      badgeText: "text-blue-600",
+      bgColor: "bg-[#fdf6e3]",
       number: 3,
     },
     {
       title: "매출 마감 현황",
-      value: 11059,
-      sub: "6,329,960",
-      icon: DollarSign,
-      gradient: "from-amber-500 to-orange-600",
-      shadow: "shadow-amber-500/25",
-      trend: "+5.2%",
-      trendUp: true,
+      value: 11334,
+      sub: "6,487,173",
+      icon: CreditCard,
+      gradient: "from-purple-500 to-purple-600",
+      shadow: "shadow-sm",
+      textColor: "text-purple-500",
+      subTextColor: "text-purple-400",
+      badgeBg: "bg-blue-100",
+      badgeText: "text-blue-600",
+      bgColor: "bg-[#f8f9fa]",
       number: 4,
     },
     {
-      title: "불량 현황",
-      value: ng,
-      sub: ngRate + "%",
-      icon: AlertTriangle,
+      title: "반입 현황",
+      value: 0,
+      sub: "0",
+      icon: RefreshCcw,
       gradient: "from-rose-500 to-red-600",
-      shadow: "shadow-rose-500/25",
-      trend: "-2.1%",
-      trendUp: false,
+      shadow: "shadow-sm",
+      textColor: "text-rose-500",
+      subTextColor: "text-rose-400",
+      badgeBg: "bg-blue-100",
+      badgeText: "text-blue-600",
+      bgColor: "bg-[#f8f9fa]",
       number: 5,
     },
   ];
@@ -276,147 +301,105 @@ export default function SmartDashboard() {
       {/* 배경 애니메이션 */}
       <style>{`
         @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-        @keyframes pulse-glow { 0%,100%{opacity:.4} 50%{opacity:.8} }
         @keyframes slide-in { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+        @keyframes fade-in-right { from{opacity:0;transform:translateX(10px)} to{opacity:1;transform:translateX(0)} }
         .card-animate { animation: slide-in .5s ease-out both; }
         .card-animate:nth-child(2) { animation-delay: .08s; }
         .card-animate:nth-child(3) { animation-delay: .16s; }
         .card-animate:nth-child(4) { animation-delay: .24s; }
         .card-animate:nth-child(5) { animation-delay: .32s; }
+        .list-animate { animation: fade-in-right .4s ease-out both; }
         .float { animation: float 4s ease-in-out infinite; }
-        .glow { animation: pulse-glow 3s ease-in-out infinite; }
-        .shimmer-bg {
-          background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.05) 50%, transparent 100%);
-          background-size: 200% 100%;
-          animation: shimmer 3s infinite;
-        }
-        .glass { backdrop-filter: blur(12px); background: rgba(15,23,42,.6); border: 1px solid rgba(255,255,255,.08); }
       `}</style>
 
-      <div className="space-y-4 relative min-h-full bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 -m-4 lg:-m-5 p-4 lg:p-5 overflow-auto">
-        {/* 배경 장식 */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-violet-600/10 rounded-full blur-3xl glow" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl glow" style={{ animationDelay: "1.5s" }} />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-600/5 rounded-full blur-3xl" />
-        </div>
-
+      <div className="flex flex-col absolute inset-0 bg-[#f8f9fc] p-2">
         {/* 헤더 툴바 */}
-        <div className="relative glass rounded-xl p-3 card-animate">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <div className="flex items-center gap-3 flex-wrap">
-              <div className="flex items-center gap-2">
-                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-violet-500/30">
-                  <span className="text-white text-xs font-black">관리</span>
-                </div>
-                <div>
-                  <p className="text-white text-sm font-semibold">관리자님</p>
-                  <p className="text-slate-400 text-[10px]">사업장: 품질재단실습</p>
-                </div>
-              </div>
-              <div className="h-6 w-px bg-slate-700 mx-1 hidden sm:block" />
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setClockedIn(true)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                    clockedIn
-                      ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
-                      : "bg-emerald-600 text-white hover:bg-emerald-500 shadow-lg shadow-emerald-600/30"
-                  }`}
-                >
-                  출근
-                </button>
-                <button
-                  onClick={() => setClockedIn(false)}
-                  className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-700/50 text-slate-300 hover:bg-slate-600/50 border border-slate-600/30 transition-all"
-                >
-                  퇴근
-                </button>
-              </div>
+        <div className="relative bg-white border border-indigo-100 rounded-xl px-4 py-3 mb-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shrink-0 z-10 shadow-sm">
+          <div className="flex items-center gap-3">
+            <BarChart3 className="w-5 h-5 text-indigo-600" />
+            <div>
+              <h2 className="text-indigo-900 font-bold text-lg tracking-tight">스마트 대시보드</h2>
+              <p className="text-slate-500 text-[11px] mt-0.5">사업장: 품질재단실습 | 관리자 접속중</p>
             </div>
-            <div className="flex items-center gap-2 flex-wrap">
-              <button
-                onClick={() => seedMutation.mutate()}
-                disabled={seedMutation.isPending}
-                className="px-3 py-1.5 rounded-lg text-xs font-medium bg-violet-600/20 text-violet-300 hover:bg-violet-600/30 border border-violet-500/20 transition-all flex items-center gap-1.5"
-              >
-                <Database className="w-3.5 h-3.5" />
-                샘플 데이터
-              </button>
-              <button
-                onClick={() => queryClient.invalidateQueries()}
-                className="px-3 py-1.5 rounded-lg text-xs font-medium bg-cyan-600/20 text-cyan-300 hover:bg-cyan-600/30 border border-cyan-500/20 transition-all flex items-center gap-1.5"
-              >
-                <RefreshCw className="w-3.5 h-3.5" />
-                새로고침
-              </button>
-              <div className="text-right">
-                <p className="text-white text-xs font-medium">
-                  {new Date().toLocaleDateString("ko-KR", { year: "numeric", month: "2-digit", day: "2-digit" })}
-                </p>
-                <p className="text-slate-400 text-[10px]">
-                  {new Date().toLocaleDateString("ko-KR", { weekday: "long" })} {new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" })}
-                </p>
-              </div>
+          </div>
+          <div className="flex items-center gap-2 flex-wrap">
+            <button
+              onClick={() => seedMutation.mutate()}
+              disabled={seedMutation.isPending}
+              className="h-8 px-3 rounded-md text-xs font-medium bg-blue-50 text-blue-600 hover:bg-blue-100 border border-blue-200 transition-all flex items-center gap-1.5 group"
+            >
+              <Database className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
+              샘플 데이터
+            </button>
+            <button
+              onClick={() => queryClient.invalidateQueries()}
+              className="h-8 px-3 rounded-md text-xs font-medium bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200 transition-all flex items-center gap-1.5 group"
+            >
+              <RefreshCw className="w-3.5 h-3.5 group-hover:rotate-180 transition-transform duration-500" />
+              새로고침
+            </button>
+            <div className="text-right ml-2 pl-3 border-l border-slate-200">
+              <p className="text-slate-800 text-xs font-medium mb-0.5">
+                {new Date().toLocaleDateString("ko-KR", { year: "numeric", month: "2-digit", day: "2-digit" })}
+              </p>
+              <p className="text-slate-500 text-[10px] leading-none">
+                {new Date().toLocaleDateString("ko-KR", { weekday: "long" })} {new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" })}
+              </p>
             </div>
           </div>
         </div>
 
-        {/* KPI 카드 5개 */}
-        <div className="relative grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        {/* 메인 콘텐츠 */}
+        <div className="flex-1 flex flex-col gap-2 overflow-auto z-10">
+          {/* KPI 카드 5개 */}
+        <div className="relative grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
           {kpiCards.map((card) => (
-            <div key={card.title} className="card-animate group">
-              <div className="glass rounded-xl p-4 hover:border-violet-500/30 transition-all duration-300 relative overflow-hidden h-full">
-                <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} opacity-[0.06] group-hover:opacity-[0.12] transition-opacity`} />
-                <div className="shimmer-bg absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="relative">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-slate-400 text-[10px] font-semibold tracking-wider uppercase flex items-center gap-1.5">
-                      <span className={`w-5 h-5 rounded-md bg-gradient-to-br ${card.gradient} flex items-center justify-center shadow-md ${card.shadow}`}>
-                        <span className="text-white text-[9px] font-black">{card.number}</span>
-                      </span>
+            <div key={card.title} className="card-animate group cursor-pointer">
+              <div className={`rounded-xl p-4 transition-all duration-300 relative overflow-hidden h-full border border-slate-200 ${card.bgColor} hover:-translate-y-1 hover:shadow-md`}>
+                <div className="relative z-10">
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold ${card.badgeBg} ${card.badgeText} group-hover:scale-110 transition-transform`}>
+                      {card.number}
+                    </span>
+                    <span className="text-slate-800 text-xs font-bold tracking-tight group-hover:text-indigo-600 transition-colors">
                       {card.title}
                     </span>
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    <card.icon className={`w-5 h-5 float`} style={{ color: card.gradient.includes("violet") ? "#8b5cf6" : card.gradient.includes("emerald") ? "#10b981" : card.gradient.includes("cyan") ? "#06b6d4" : card.gradient.includes("amber") ? "#f59e0b" : "#ef4444" }} />
-                    <span className="text-2xl font-black text-white tracking-tight">
+                  <div className="flex flex-col">
+                    <span className={`text-3xl font-black tracking-tight ${card.textColor}`}>
                       <AnimatedNumber value={card.value} />
                     </span>
-                  </div>
-                  <div className="mt-1 flex items-center justify-between">
-                    <span className="text-slate-500 text-[10px]">{card.sub}</span>
-                    <span className={`text-[10px] font-semibold flex items-center gap-0.5 ${card.trendUp ? "text-emerald-400" : "text-rose-400"}`}>
-                      {card.trendUp ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
-                      {card.trend}
-                    </span>
+                    <div className="mt-2 pt-2 border-t border-slate-200/50 flex items-center">
+                      <span className={`text-sm font-semibold ${card.subTextColor}`}>{card.sub}</span>
+                    </div>
                   </div>
                 </div>
+                {/* Background Icon */}
+                <card.icon className={`absolute -bottom-4 -right-4 w-24 h-24 opacity-[0.05] ${card.textColor} group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500`} />
               </div>
             </div>
           ))}
         </div>
 
         {/* 메인 그리드: 차트 + 사이드 */}
-        <div className="relative grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="relative grid grid-cols-1 lg:grid-cols-3 gap-2">
           {/* 좌측 2/3 */}
-          <div className="lg:col-span-2 space-y-4">
+          <div className="lg:col-span-2 space-y-2">
             {/* 설비 생산 현황 */}
-            <div className="glass rounded-xl p-4 card-animate">
+            <div className="bg-white border border-slate-200 shadow-sm rounded-xl p-4 card-animate">
               <div className="flex items-center gap-2 mb-4">
-                <BarChart3 className="w-4 h-4 text-violet-400" />
-                <h3 className="text-white text-sm font-semibold">설비 생산 현황</h3>
+                <BarChart3 className="w-4 h-4 text-indigo-500" />
+                <h3 className="text-indigo-900 text-sm font-bold">설비 생산 현황</h3>
                 <span className="ml-auto text-[10px] text-slate-500">단위: 수량</span>
               </div>
               <div className="h-[220px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={EQUIPMENT_DATA} barSize={32}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                    <XAxis dataKey="name" tick={{ fill: "#94a3b8", fontSize: 11 }} axisLine={false} tickLine={false} />
-                    <YAxis tick={{ fill: "#94a3b8", fontSize: 10 }} axisLine={false} tickLine={false} tickFormatter={(v: number) => (v / 1000000).toFixed(1) + "M"} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis dataKey="name" tick={{ fill: "#64748b", fontSize: 11 }} axisLine={false} tickLine={false} />
+                    <YAxis tick={{ fill: "#64748b", fontSize: 10 }} axisLine={false} tickLine={false} tickFormatter={(v: number) => (v / 1000000).toFixed(1) + "M"} />
                     <Tooltip
-                      contentStyle={{ background: "rgba(15,23,42,.9)", border: "1px solid rgba(139,92,246,.3)", borderRadius: "8px", color: "#fff", fontSize: 12 }}
+                      contentStyle={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: "8px", color: "#334155", fontSize: 12, boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)" }}
                       formatter={(value: number) => [value.toLocaleString(), "생산량"]}
                     />
                     <Bar dataKey="value" radius={[6, 6, 0, 0]}>
@@ -430,91 +413,95 @@ export default function SmartDashboard() {
             </div>
 
             {/* 도넛 차트 2개 + 생산 추이 */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {/* Invoice 수량 / 미수량 */}
-              <div className="glass rounded-xl p-4 card-animate">
+              <div className="bg-white border border-slate-200 shadow-sm rounded-xl p-4 card-animate">
                 <div className="flex items-center gap-2 mb-3">
-                  <PieChartIcon className="w-4 h-4 text-cyan-400" />
-                  <h3 className="text-white text-sm font-semibold">Invoice 수량 / 미수량</h3>
+                  <PieChartIcon className="w-4 h-4 text-indigo-500" />
+                  <h3 className="text-indigo-900 text-sm font-bold">Invoice 수량 / 미수량</h3>
                 </div>
                 <div className="h-[180px] relative">
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                       <Pie data={invoiceData} cx="50%" cy="50%" innerRadius={50} outerRadius={70} dataKey="value" startAngle={90} endAngle={-270} strokeWidth={0}>
-                        <Cell fill="#8b5cf6" />
-                        <Cell fill="#334155" />
+                        <Cell fill="#4e82f1" />
+                        <Cell fill="#e2e8f0" />
                       </Pie>
                     </PieChart>
                   </ResponsiveContainer>
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                      <span className="text-2xl font-black text-white">100%</span>
-                      <p className="text-[10px] text-slate-400">달성률</p>
+                    <div className="text-center group">
+                      <span className="text-2xl font-black text-slate-800 transition-transform group-hover:scale-110 inline-block">
+                        <AnimatedNumber value={100} suffix="%" />
+                      </span>
+                      <p className="text-[10px] text-slate-500">달성률</p>
                     </div>
                   </div>
                 </div>
                 <div className="flex justify-center gap-4 mt-1">
                   <div className="flex items-center gap-1.5">
-                    <div className="w-2.5 h-2.5 rounded-full bg-violet-500" />
-                    <span className="text-[10px] text-slate-400">Invoice <span className="text-white font-semibold">4K</span></span>
+                    <div className="w-2.5 h-2.5 rounded-full bg-blue-500" />
+                    <span className="text-[10px] text-slate-500">Invoice <span className="text-slate-800 font-semibold">4K</span></span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <div className="w-2.5 h-2.5 rounded-full bg-slate-600" />
-                    <span className="text-[10px] text-slate-400">미수량 <span className="text-white font-semibold">0</span></span>
+                    <div className="w-2.5 h-2.5 rounded-full bg-slate-200" />
+                    <span className="text-[10px] text-slate-500">미수량 <span className="text-slate-800 font-semibold">0</span></span>
                   </div>
                 </div>
               </div>
 
               {/* 수출신고 수량 / 미수량 */}
-              <div className="glass rounded-xl p-4 card-animate">
+              <div className="bg-white border border-slate-200 shadow-sm rounded-xl p-4 card-animate">
                 <div className="flex items-center gap-2 mb-3">
-                  <Layers className="w-4 h-4 text-amber-400" />
-                  <h3 className="text-white text-sm font-semibold">수출신고 수량 / 미수량</h3>
+                  <Layers className="w-4 h-4 text-indigo-500" />
+                  <h3 className="text-indigo-900 text-sm font-bold">수출신고 수량 / 미수량</h3>
                 </div>
                 <div className="h-[180px] relative">
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                       <Pie data={exportData} cx="50%" cy="50%" innerRadius={50} outerRadius={70} dataKey="value" startAngle={90} endAngle={-270} strokeWidth={0}>
-                        <Cell fill="#06b6d4" />
-                        <Cell fill="#f59e0b" />
+                        <Cell fill="#22d3ee" />
+                        <Cell fill="#e2e8f0" />
                       </Pie>
                     </PieChart>
                   </ResponsiveContainer>
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                      <span className="text-2xl font-black text-white">77%</span>
-                      <p className="text-[10px] text-slate-400">달성률</p>
+                    <div className="text-center group">
+                      <span className="text-2xl font-black text-slate-800 transition-transform group-hover:scale-110 inline-block">
+                        <AnimatedNumber value={77} suffix="%" />
+                      </span>
+                      <p className="text-[10px] text-slate-500">달성률</p>
                     </div>
                   </div>
                 </div>
                 <div className="flex justify-center gap-4 mt-1">
                   <div className="flex items-center gap-1.5">
-                    <div className="w-2.5 h-2.5 rounded-full bg-cyan-500" />
-                    <span className="text-[10px] text-slate-400">수출 <span className="text-white font-semibold">3.2M</span></span>
+                    <div className="w-2.5 h-2.5 rounded-full bg-cyan-400" />
+                    <span className="text-[10px] text-slate-500">수출 <span className="text-slate-800 font-semibold">3.2M</span></span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-                    <span className="text-[10px] text-slate-400">미수량 <span className="text-white font-semibold">960K</span></span>
+                    <div className="w-2.5 h-2.5 rounded-full bg-slate-200" />
+                    <span className="text-[10px] text-slate-500">미수량 <span className="text-slate-800 font-semibold">960K</span></span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* 공정 생산 현황 + 실시간 추이 */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="glass rounded-xl p-4 card-animate">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              <div className="bg-white border border-slate-200 shadow-sm rounded-xl p-4 card-animate">
                 <div className="flex items-center gap-2 mb-3">
-                  <Activity className="w-4 h-4 text-emerald-400" />
-                  <h3 className="text-white text-sm font-semibold">공정 생산 현황</h3>
+                  <Activity className="w-4 h-4 text-indigo-500" />
+                  <h3 className="text-indigo-900 text-sm font-bold">공정 생산 현황</h3>
                 </div>
                 <div className="h-[200px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={PROCESS_DATA} layout="vertical" margin={{ left: 10 }} barSize={16}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                      <XAxis type="number" tick={{ fill: "#94a3b8", fontSize: 10 }} axisLine={false} tickLine={false} tickFormatter={(v: number) => (v / 1000000).toFixed(1) + "M"} />
-                      <YAxis dataKey="name" type="category" width={40} tick={{ fill: "#94a3b8", fontSize: 10 }} axisLine={false} tickLine={false} />
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                      <XAxis type="number" tick={{ fill: "#64748b", fontSize: 10 }} axisLine={false} tickLine={false} tickFormatter={(v: number) => (v / 1000000).toFixed(1) + "M"} />
+                      <YAxis dataKey="name" type="category" width={40} tick={{ fill: "#64748b", fontSize: 10 }} axisLine={false} tickLine={false} />
                       <Tooltip
-                        contentStyle={{ background: "rgba(15,23,42,.9)", border: "1px solid rgba(16,185,129,.3)", borderRadius: "8px", color: "#fff", fontSize: 12 }}
+                        contentStyle={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: "8px", color: "#334155", fontSize: 12, boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)" }}
                         formatter={(value: number) => [value.toLocaleString(), "생산량"]}
                       />
                       <Bar dataKey="value" radius={[0, 6, 6, 0]}>
@@ -527,10 +514,10 @@ export default function SmartDashboard() {
                 </div>
               </div>
 
-              <div className="glass rounded-xl p-4 card-animate">
+              <div className="bg-white border border-slate-200 shadow-sm rounded-xl p-4 card-animate">
                 <div className="flex items-center gap-2 mb-3">
-                  <TrendingUp className="w-4 h-4 text-violet-400" />
-                  <h3 className="text-white text-sm font-semibold">실시간 생산 추이</h3>
+                  <TrendingUp className="w-4 h-4 text-indigo-500" />
+                  <h3 className="text-indigo-900 text-sm font-bold">실시간 생산 추이</h3>
                 </div>
                 <div className="h-[200px]">
                   <ResponsiveContainer width="100%" height="100%">
@@ -545,10 +532,10 @@ export default function SmartDashboard() {
                           <stop offset="100%" stopColor="#ef4444" stopOpacity={0} />
                         </linearGradient>
                       </defs>
-                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                      <XAxis dataKey="time" tick={{ fill: "#94a3b8", fontSize: 10 }} axisLine={false} tickLine={false} />
-                      <YAxis tick={{ fill: "#94a3b8", fontSize: 10 }} axisLine={false} tickLine={false} />
-                      <Tooltip contentStyle={{ background: "rgba(15,23,42,.9)", border: "1px solid rgba(139,92,246,.3)", borderRadius: "8px", color: "#fff", fontSize: 12 }} />
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                      <XAxis dataKey="time" tick={{ fill: "#64748b", fontSize: 10 }} axisLine={false} tickLine={false} />
+                      <YAxis tick={{ fill: "#64748b", fontSize: 10 }} axisLine={false} tickLine={false} />
+                      <Tooltip contentStyle={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: "8px", color: "#334155", fontSize: 12, boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)" }} />
                       <Area type="monotone" dataKey="생산" stroke="#8b5cf6" fill="url(#grad-prod)" strokeWidth={2} />
                       <Area type="monotone" dataKey="불량" stroke="#ef4444" fill="url(#grad-ng)" strokeWidth={2} />
                     </AreaChart>
@@ -559,26 +546,26 @@ export default function SmartDashboard() {
           </div>
 
           {/* 우측 1/3: 캘린더 + 수율 + 게시판 */}
-          <div className="space-y-4">
+          <div className="space-y-2">
             {/* 캘린더 */}
-            <div className="glass rounded-xl p-4 card-animate">
+            <div className="bg-white border border-slate-200 shadow-sm rounded-xl p-4 card-animate">
               <div className="flex items-center gap-2 mb-3">
-                <CalendarIcon className="w-4 h-4 text-violet-400" />
-                <h3 className="text-white text-sm font-semibold">캘린더</h3>
+                <CalendarIcon className="w-4 h-4 text-indigo-500" />
+                <h3 className="text-indigo-900 text-sm font-bold">캘린더</h3>
               </div>
               <MiniCalendar />
             </div>
 
             {/* 수율 게이지 */}
-            <div className="glass rounded-xl p-4 card-animate">
+            <div className="bg-white border border-slate-200 shadow-sm rounded-xl p-4 card-animate">
               <div className="flex items-center gap-2 mb-4">
-                <Zap className="w-4 h-4 text-amber-400" />
-                <h3 className="text-white text-sm font-semibold">종합 수율</h3>
+                <Zap className="w-4 h-4 text-indigo-500" />
+                <h3 className="text-indigo-900 text-sm font-bold">종합 수율</h3>
               </div>
               <div className="flex flex-col items-center">
                 <div className="relative w-32 h-32">
                   <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
-                    <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="8" />
+                    <circle cx="50" cy="50" r="42" fill="none" stroke="#e2e8f0" strokeWidth="8" />
                     <circle
                       cx="50" cy="50" r="42" fill="none"
                       stroke="url(#gauge-grad)" strokeWidth="8" strokeLinecap="round"
@@ -593,24 +580,26 @@ export default function SmartDashboard() {
                     </defs>
                   </svg>
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                      <span className="text-2xl font-black text-white">{yieldRate}%</span>
-                      <p className="text-[10px] text-slate-400">양품률</p>
+                    <div className="text-center group">
+                      <span className="text-2xl font-black text-slate-800 transition-transform group-hover:scale-110 inline-block">
+                        <AnimatedNumber value={parseFloat(yieldRate)} suffix="%" decimals={1} />
+                      </span>
+                      <p className="text-[10px] text-slate-500">양품률</p>
                     </div>
                   </div>
                 </div>
                 <div className="flex gap-6 mt-4">
-                  <div className="text-center">
-                    <div className="flex items-center gap-1">
-                      <CheckCircle className="w-3 h-3 text-emerald-400" />
-                      <span className="text-emerald-400 text-xs font-bold">{ok.toLocaleString()}</span>
+                  <div className="text-center group cursor-default">
+                    <div className="flex items-center gap-1 transition-transform group-hover:scale-110">
+                      <CheckCircle className="w-3 h-3 text-emerald-500" />
+                      <span className="text-emerald-500 text-xs font-bold"><AnimatedNumber value={ok} /></span>
                     </div>
                     <p className="text-[10px] text-slate-500">양품</p>
                   </div>
-                  <div className="text-center">
-                    <div className="flex items-center gap-1">
-                      <AlertTriangle className="w-3 h-3 text-rose-400" />
-                      <span className="text-rose-400 text-xs font-bold">{ng.toLocaleString()}</span>
+                  <div className="text-center group cursor-default">
+                    <div className="flex items-center gap-1 transition-transform group-hover:scale-110">
+                      <AlertTriangle className="w-3 h-3 text-rose-500" />
+                      <span className="text-rose-500 text-xs font-bold"><AnimatedNumber value={ng} /></span>
                     </div>
                     <p className="text-[10px] text-slate-500">불량</p>
                   </div>
@@ -619,37 +608,39 @@ export default function SmartDashboard() {
             </div>
 
             {/* 게시판 */}
-            <div className="glass rounded-xl p-4 card-animate">
+            <div className="bg-white border border-slate-200 shadow-sm rounded-xl p-4 card-animate">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <MessageSquare className="w-4 h-4 text-cyan-400" />
-                  <h3 className="text-white text-sm font-semibold">게시판</h3>
+                  <MessageSquare className="w-4 h-4 text-indigo-500" />
+                  <h3 className="text-indigo-900 text-sm font-bold">게시판</h3>
                 </div>
-                <button className="text-[10px] text-violet-400 hover:text-violet-300 font-medium transition-colors">
+                <button className="text-[10px] text-purple-500 hover:text-purple-600 font-medium transition-colors">
                   + 글쓰기
                 </button>
               </div>
               <div className="space-y-2">
-                {BOARD_MESSAGES.map((msg) => (
+                {BOARD_MESSAGES.map((msg, idx) => (
                   <div
                     key={msg.id}
-                    className="flex items-center gap-2 p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer group"
+                    className="list-animate flex items-center gap-2 p-2 rounded-lg hover:bg-slate-50 hover:shadow-sm hover:-translate-y-0.5 transition-all cursor-pointer group"
+                    style={{ animationDelay: `${0.1 * idx + 0.3}s` }}
                   >
                     <div className="flex-1 min-w-0">
-                      <p className="text-slate-300 text-xs truncate group-hover:text-white transition-colors">
+                      <p className="text-slate-700 text-xs truncate group-hover:text-indigo-600 transition-colors">
                         {msg.isNew && (
                           <span className="inline-block w-1.5 h-1.5 rounded-full bg-rose-500 mr-1.5 animate-pulse" />
                         )}
                         {msg.text}
                       </p>
                     </div>
-                    <span className="text-[10px] text-slate-600 shrink-0">{msg.date}</span>
+                    <span className="text-[10px] text-slate-500 shrink-0 group-hover:text-indigo-400 transition-colors">{msg.date}</span>
                   </div>
                 ))}
               </div>
             </div>
           </div>
         </div>
+      </div>
       </div>
     </SmartFactoryWrapper>
   );

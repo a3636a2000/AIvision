@@ -265,11 +265,11 @@ const HelpCenter: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 overflow-auto">
       {/* 히어로 */}
-      <section className="bg-gradient-to-r from-blue-800 to-blue-900 text-white py-10 sm:py-16">
+      <section className="bg-gradient-to-r from-blue-800 to-blue-900 text-slate-800 py-10 sm:py-16">
         <div className="max-w-5xl mx-auto px-4 text-center">
           <button
             onClick={() => navigate('/')}
-            className="inline-flex items-center gap-1 text-blue-300 hover:text-white text-sm mb-4 transition-colors"
+            className="inline-flex items-center gap-1 text-blue-300 hover:text-slate-800 text-sm mb-4 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             홈으로
@@ -288,7 +288,7 @@ const HelpCenter: React.FC = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
               <button className="absolute right-1 top-1 bottom-1 px-3 bg-blue-600 hover:bg-blue-700 rounded-md transition-colors">
-                <Search className="w-4 h-4 text-white" />
+                <Search className="w-4 h-4 text-slate-800" />
               </button>
             </div>
           </div>
@@ -382,7 +382,7 @@ const HelpCenter: React.FC = () => {
                 badge={
                   <>
                     {n.important && (
-                      <span className="text-xs bg-red-600 text-white rounded px-2 py-0.5 shrink-0">
+                      <span className="text-xs bg-red-600 text-slate-800 rounded px-2 py-0.5 shrink-0">
                         중요
                       </span>
                     )}

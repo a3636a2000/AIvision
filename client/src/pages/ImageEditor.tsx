@@ -1281,7 +1281,7 @@ const ImageEditor = () => {
     <>
       {/* 패널 헤더 */}
       <div className="p-3 sm:p-4 border-b border-gray-800 flex items-center justify-between shrink-0">
-        <h3 className="text-white font-medium text-sm flex items-center gap-2">
+        <h3 className="text-slate-800 font-medium text-sm flex items-center gap-2">
           <Type className="w-4 h-4 text-blue-400" />
           한글 텍스트 교체
         </h3>
@@ -1289,7 +1289,7 @@ const ImageEditor = () => {
           {hasValidSelection && (
             <button
               onClick={() => { setSelection(null); setEditedText('') }}
-              className="p-1 text-gray-400 hover:text-white transition-colors"
+              className="p-1 text-gray-400 hover:text-slate-800 transition-colors"
               title="선택 해제"
             >
               <X className="w-4 h-4" />
@@ -1298,7 +1298,7 @@ const ImageEditor = () => {
           {/* 모바일 접기 버튼 */}
           <button
             onClick={() => setMobilePanelOpen(false)}
-            className="p-1 text-gray-400 hover:text-white transition-colors md:hidden"
+            className="p-1 text-gray-400 hover:text-slate-800 transition-colors md:hidden"
           >
             <ChevronDown className="w-4 h-4" />
           </button>
@@ -1457,7 +1457,7 @@ const ImageEditor = () => {
             <button
               onClick={replaceText}
               disabled={!editedText.trim() || !selection}
-              className="flex items-center gap-2 px-4 py-2.5 sm:py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-700 disabled:text-gray-500 text-white rounded-lg text-sm w-full justify-center transition-colors font-medium"
+              className="flex items-center gap-2 px-4 py-2.5 sm:py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-700 disabled:text-gray-500 text-slate-800 rounded-lg text-sm w-full justify-center transition-colors font-medium"
             >
               <Type className="w-4 h-4" />
               {hasValidSelection ? '② 선택 영역에 텍스트 교체' : '영역을 먼저 선택하세요'}
@@ -1514,16 +1514,16 @@ const ImageEditor = () => {
         <div className="w-px h-5 sm:h-6 bg-gray-700" />
 
         {/* 줌 컨트롤 */}
-        <button onClick={zoomOut} className="p-1.5 sm:p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors" title="축소">
+        <button onClick={zoomOut} className="p-1.5 sm:p-2 text-gray-400 hover:text-slate-800 hover:bg-gray-800 rounded-lg transition-colors" title="축소">
           <ZoomOut className="w-4 h-4" />
         </button>
         <span className="text-xs sm:text-sm text-gray-400 min-w-[40px] sm:min-w-[48px] text-center">
           {Math.round(scale * 100)}%
         </span>
-        <button onClick={zoomIn} className="p-1.5 sm:p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors" title="확대">
+        <button onClick={zoomIn} className="p-1.5 sm:p-2 text-gray-400 hover:text-slate-800 hover:bg-gray-800 rounded-lg transition-colors" title="확대">
           <ZoomIn className="w-4 h-4" />
         </button>
-        <button onClick={resetZoom} className="p-1.5 sm:p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors" title="원래 크기">
+        <button onClick={resetZoom} className="p-1.5 sm:p-2 text-gray-400 hover:text-slate-800 hover:bg-gray-800 rounded-lg transition-colors" title="원래 크기">
           <RotateCcw className="w-4 h-4" />
         </button>
 
@@ -1543,7 +1543,7 @@ const ImageEditor = () => {
             <button
               onClick={runOCR}
               disabled={isProcessing}
-              className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 text-white rounded-lg text-xs sm:text-sm transition-colors"
+              className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 text-slate-800 rounded-lg text-xs sm:text-sm transition-colors"
             >
               {isProcessing ? (
                 <>
@@ -1556,7 +1556,7 @@ const ImageEditor = () => {
             </button>
             <button
               onClick={() => { setSelection(null); setEditedText('') }}
-              className="p-1.5 sm:p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
+              className="p-1.5 sm:p-2 text-gray-400 hover:text-slate-800 hover:bg-gray-800 rounded-lg transition-colors"
               title="선택 해제"
             >
               <X className="w-4 h-4" />
@@ -1589,7 +1589,7 @@ const ImageEditor = () => {
             </div>
             <button
               onClick={confirmPaste}
-              className="flex items-center gap-1.5 px-3 sm:px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-xs sm:text-sm transition-colors font-medium"
+              className="flex items-center gap-1.5 px-3 sm:px-4 py-2 bg-green-600 hover:bg-green-700 text-slate-800 rounded-lg text-xs sm:text-sm transition-colors font-medium"
             >
               <Check className="w-4 h-4" />
               <span className="hidden sm:inline">적용</span>
@@ -1622,7 +1622,7 @@ const ImageEditor = () => {
         {currentPageNumber !== null && editCanvas && (
           <button
             onClick={saveToStore}
-            className="flex items-center gap-1.5 px-3 sm:px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs sm:text-sm transition-colors relative"
+            className="flex items-center gap-1.5 px-3 sm:px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-slate-800 rounded-lg text-xs sm:text-sm transition-colors relative"
           >
             {showSaved ? (
               <>

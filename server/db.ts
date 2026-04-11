@@ -290,6 +290,29 @@ export async function initBoardTables() {
     `)
     console.log('📦 item_master 테이블 준비 완료')
 
+    // ─── 백터화된 테이블 (Graph DB 연동 목록) ───
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS vectorized_tables (
+        table_name VARCHAR(100) PRIMARY KEY,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      );
+    `)
+    console.log('📦 vectorized_tables 테이블 준비 완료')
+
+    // 백터화된 테이블 기본 데이터 생성
+    await client.query(`
+      INSERT INTO vectorized_tables (table_name)
+      VALUES
+        ('cust_mst'),
+        ('item_mst'),
+        ('emp_mst'),
+        ('t_pur_mst'),
+        ('dg_tax_mst'),
+        ('dg_mst')
+      ON CONFLICT (table_name) DO NOTHING
+    `)
+
+
     // 인덱스 생성
     await client.query(`CREATE INDEX IF NOT EXISTS idx_posts_created_at ON posts(created_at DESC)`)
     await client.query(`CREATE INDEX IF NOT EXISTS idx_post_comments_post_id ON post_comments(post_id)`)

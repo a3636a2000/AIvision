@@ -26,7 +26,7 @@ const CookiePolicy: React.FC = () => {
         {/* 뒤로가기 */}
         <button
           onClick={() => navigate('/')}
-          className="inline-flex items-center gap-1 text-gray-400 hover:text-white text-sm mb-6 transition-colors"
+          className="inline-flex items-center gap-1 text-gray-400 hover:text-slate-800 text-sm mb-6 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           홈으로
@@ -36,7 +36,7 @@ const CookiePolicy: React.FC = () => {
         <div className="text-center mb-10 sm:mb-12">
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-orange-600 to-yellow-600 rounded-full flex items-center justify-center shadow-lg">
-              <Cookie className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
+              <Cookie className="w-7 h-7 sm:w-8 sm:h-8 text-slate-800" />
             </div>
             <div>
               <h1 className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-orange-400 via-yellow-400 to-amber-400 bg-clip-text text-transparent">
@@ -58,7 +58,7 @@ const CookiePolicy: React.FC = () => {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-lg flex items-center justify-center shrink-0">
-                <Cookie className="w-4 h-4 text-white" />
+                <Cookie className="w-4 h-4 text-slate-800" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-100">1. 쿠키란 무엇인가요?</h2>
             </div>
@@ -84,7 +84,7 @@ const CookiePolicy: React.FC = () => {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center shrink-0">
-                <Settings className="w-4 h-4 text-white" />
+                <Settings className="w-4 h-4 text-slate-800" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-100">2. DECOMSOFT의 쿠키 사용 목적</h2>
             </div>
@@ -116,7 +116,7 @@ const CookiePolicy: React.FC = () => {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-lg flex items-center justify-center shrink-0">
-                <Eye className="w-4 h-4 text-white" />
+                <Eye className="w-4 h-4 text-slate-800" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-100">3. 쿠키의 종류</h2>
             </div>
@@ -177,7 +177,7 @@ const CookiePolicy: React.FC = () => {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center shrink-0">
-                <Settings className="w-4 h-4 text-white" />
+                <Settings className="w-4 h-4 text-slate-800" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-100">4. 사용 중인 쿠키 목록</h2>
             </div>
@@ -222,7 +222,7 @@ const CookiePolicy: React.FC = () => {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-red-500 to-pink-500 rounded-lg flex items-center justify-center shrink-0">
-                <Shield className="w-4 h-4 text-white" />
+                <Shield className="w-4 h-4 text-slate-800" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-100">5. 쿠키 관리 방법</h2>
             </div>
@@ -254,7 +254,7 @@ const CookiePolicy: React.FC = () => {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg flex items-center justify-center shrink-0">
-                <AlertCircle className="w-4 h-4 text-white" />
+                <AlertCircle className="w-4 h-4 text-slate-800" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-100">6. 쿠키 거부 시 영향</h2>
             </div>
@@ -299,7 +299,7 @@ const CookiePolicy: React.FC = () => {
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-lg flex items-center justify-center shrink-0">
-                <Calendar className="w-4 h-4 text-white" />
+                <Calendar className="w-4 h-4 text-slate-800" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-100">7. 정책 변경</h2>
             </div>

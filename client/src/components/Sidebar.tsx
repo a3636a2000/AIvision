@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {
   Home,
@@ -15,6 +15,13 @@ import {
   Factory,
   Eye,
   Package,
+  AlertTriangle,
+  Settings,
+  ChevronRight,
+  ChevronDown,
+  PanelLeftClose,
+  PanelLeftOpen,
+  Activity
 } from 'lucide-react'
 import { cn } from '../lib/utils'
 import { useAppStore } from '../store/useAppStore'
@@ -25,25 +32,45 @@ const Sidebar = () => {
 
   const hasPptResult = useAppStore((s) => s.slidesData.length > 0)
   const setShowPptPreview = useAppStore((s) => s.setShowPptPreview)
+  const { isSidebarOpen, toggleSidebar } = useAppStore()
 
-  // 메인 메뉴
-  const mainMenuItems = [
-    { icon: Home,         label: '홈',       path: '/' },
+  const [expandedMenus, setExpandedMenus] = useState<Record<string, boolean>>({
+    sf: true, // 기본적으로 스마트팩토리 그룹 열림
+    aiData: true,
+    main: true
+  })
+
+  const toggleMenu = (key: string) => {
+    setExpandedMenus(prev => ({ ...prev, [key]: !prev[key] }))
+  }
+
+  // AI 데이터분석
+  const aiDataItems = [
+    { icon: Settings,        label: '데이터분석 설정', path: '/ai-data-setup' },
+    { icon: LayoutDashboard, label: 'AI 온톨로지 분석', path: '/ai-ontology' },
+    { icon: FileText,        label: 'AI 온톨로지 관리', path: '/ai-pattern' },
+    { icon: Activity,        label: '실시간 인사이트 플랫폼', path: '/ai-insight' },
+  ]
+
+  // 메인 서비스 아이템들
+  const mainItems = [
     { icon: FileText,     label: 'PDF 변환', path: '/pdf-converter' },
-    { icon: Image,        label: '편집',     path: '/image-editor' },
-    { icon: Video,        label: '동영상',   path: '/video-maker' },
+    { icon: Image,        label: '이미지 편집', path: '/image-editor' },
+    { icon: Video,        label: '동영상 제작', path: '/video-maker' },
     { icon: MessageSquare,label: '채팅',     path: '/chat' },
   ]
 
-  // 스마트팩토리 메뉴 (메인 메뉴 바로 아래)
-  const sfMenuItems = [
-    { icon: LayoutDashboard, label: '대시보드',    path: '/sf-dashboard' },
-    { icon: Factory,         label: '작업실적',    path: '/sf-production' },
-    { icon: Eye,             label: 'AI 비전',     path: '/sf-vision' },
-    { icon: Package,         label: '품목등록',    path: '/sf-items' },
+  // 스마트팩토리 하위 메뉴들
+  const sfItems = [
+    { icon: LayoutDashboard, label: '스마트 대시보드', path: '/sf-dashboard' },
+    { icon: Factory,         label: '작업 실적 등록', path: '/sf-production' },
+    { icon: Eye,             label: 'AI 비전 모니터링', path: '/sf-vision' },
+    { icon: Settings,        label: 'AI 비전 검사 설정', path: '/sf-vision-setup' },
+    { icon: AlertTriangle,   label: '검사 요청 등록', path: '/sf-defect-types' },
+    { icon: Package,         label: '품목등록', path: '/sf-items' },
   ]
 
-  // 고객지원
+  // 시스템/고객지원
   const supportItems = [
     { icon: HelpCircle, label: 'FAQ',     path: '/help-center' },
     { icon: Shield,     label: '개인정보', path: '/privacy-policy' },
@@ -51,155 +78,96 @@ const Sidebar = () => {
     { icon: Cookie,     label: '쿠키정책', path: '/cookie-policy' },
   ]
 
-  const renderMenuBtn = (item: { icon: React.ElementType; label: string; path: string }, isSf = false) => {
+  const renderMenuItem = (item: { icon: React.ElementType; label: string; path: string }, isSub = false) => {
     const isActive = location.pathname === item.path
     return (
       <button
         key={item.path}
-        onClick={() => navigate(item.path)}
+        onClick={() => {
+          if (!isSidebarOpen) toggleSidebar()
+          navigate(item.path)
+        }}
         className={cn(
-          'w-10 h-10 rounded-lg flex items-center justify-center transition-all group relative',
+          'flex items-center transition-all relative w-full text-left',
+          isSidebarOpen ? (isSub ? 'h-9 px-8 text-[13px] gap-3' : 'h-10 px-4 text-sm gap-3') : 'h-10 justify-center px-0',
           isActive
-            ? isSf
-              ? 'bg-blue-700 text-white shadow-lg shadow-blue-900/40'
-              : 'bg-gray-800 text-white'
-            : isSf
-              ? 'text-blue-400/70 hover:text-blue-300 hover:bg-blue-900/30'
-              : 'text-gray-500 hover:text-gray-300 hover:bg-gray-800/50'
+            ? 'bg-blue-50 text-blue-600 font-medium'
+            : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
         )}
-        title={item.label}
+        title={!isSidebarOpen ? item.label : undefined}
       >
-        <item.icon className="w-5 h-5" />
-        {isActive && isSf && (
-          <span className="absolute left-0 top-2 bottom-2 w-0.5 bg-blue-400 rounded-r-full" />
+        {!isSub ? (
+          <item.icon className="w-[18px] h-[18px] shrink-0 opacity-80" />
+        ) : (
+          isSidebarOpen ? <ChevronRight className="w-3.5 h-3.5 shrink-0 opacity-60" /> : <span className="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0" />
         )}
-        <span className={cn(
-          'absolute left-full ml-3 px-2.5 py-1.5 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg z-50',
-          isSf
-            ? 'bg-blue-900 border border-blue-700/50'
-            : 'bg-gray-800 border border-gray-700/50'
-        )}>
-          {item.label}
-        </span>
+        {isSidebarOpen && <span className="flex-1 truncate">{item.label}</span>}
+        {isActive && (
+          <span className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-1 bg-blue-600 rounded-r-full" />
+        )}
       </button>
     )
   }
 
-  return (
-    <>
-      {/* ─── 데스크탑 사이드바 ─── */}
-      <div className="hidden md:flex w-14 h-full bg-gray-950 border-r border-gray-800/50 flex-col items-center py-3 shrink-0">
-
-        {/* 로고 */}
-        <button
-          onClick={() => navigate('/')}
-          className="w-9 h-9 rounded-lg overflow-hidden mb-4 hover:opacity-90 transition-opacity shrink-0"
-          title="한국 품질재단 제조AI 스마트팩토리 실습"
+  const renderGroup = (key: string, label: string, items: any[], defaultIcon: React.ElementType) => {
+    const isExpanded = expandedMenus[key]
+    const hasActiveChild = items.some(i => i.path === location.pathname)
+    
+    return (
+      <div className="flex flex-col">
+        <button 
+          onClick={() => isSidebarOpen ? toggleMenu(key) : toggleSidebar()}
+          className={cn(
+            "flex items-center h-10 w-full text-left text-sm transition-colors",
+            isSidebarOpen ? "px-4 gap-3" : "justify-center px-0",
+            hasActiveChild && !isExpanded ? "text-blue-600" : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+          )}
+          title={!isSidebarOpen ? label : undefined}
         >
-          <img src="/images/icon-192.png" alt="로고" className="w-full h-full object-cover" />
-        </button>
-
-        <div className="flex flex-col gap-1 flex-1">
-          {/* 메인 메뉴 */}
-          {mainMenuItems.map((item) => renderMenuBtn(item, false))}
-
-          {/* PPT 결과 아이콘 */}
-          <button
-            onClick={() => { setShowPptPreview(true); navigate('/pdf-converter') }}
-            className={cn(
-              'w-10 h-10 rounded-lg flex items-center justify-center transition-all group relative',
-              hasPptResult
-                ? 'text-orange-400 hover:text-orange-300 hover:bg-orange-500/10'
-                : 'text-gray-700 cursor-default'
-            )}
-            title="PPT 결과"
-            disabled={!hasPptResult}
-          >
-            <Presentation className="w-5 h-5" />
-            {hasPptResult && <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-orange-500 rounded-full" />}
-            <span className="absolute left-full ml-3 px-2.5 py-1.5 bg-gray-800 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg border border-gray-700/50 z-50">
-              {hasPptResult ? 'PPT 결과 보기' : 'PPT 결과 없음'}
-            </span>
-          </button>
-
-          {/* 구분선 */}
-          <div className="w-6 border-t border-gray-700/40 my-1.5 mx-auto" />
-
-          {/* 스마트팩토리 메뉴 */}
-          {sfMenuItems.map((item) => renderMenuBtn(item, true))}
-        </div>
-
-        {/* 고객지원 (하단) */}
-        <div className="flex flex-col gap-1 mt-auto pt-2 border-t border-gray-800/50">
-          {supportItems.map((item) => (
-            <a
-              key={item.path}
-              href={item.path}
-              className="w-10 h-10 rounded-lg flex items-center justify-center transition-all group relative text-gray-600 hover:text-gray-400 hover:bg-gray-800/50"
-              title={item.label}
-            >
-              <item.icon className="w-4 h-4" />
-              <span className="absolute left-full ml-3 px-2.5 py-1.5 bg-gray-800 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg border border-gray-700/50 z-50">
-                {item.label}
-              </span>
-            </a>
+          <defaultIcon className="w-[18px] h-[18px] shrink-0 opacity-80" />
+          {isSidebarOpen && <span className="flex-1 truncate">{label}</span>}
+          {isSidebarOpen && (isExpanded ? (
+            <ChevronDown className="w-4 h-4 shrink-0 opacity-60" />
+          ) : (
+            <ChevronRight className="w-4 h-4 shrink-0 opacity-60" />
           ))}
-        </div>
-      </div>
-
-      {/* ─── 모바일 하단 네비게이션 ─── */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 h-14 bg-gray-950 border-t border-gray-800/50 flex items-center justify-around z-50 overflow-x-auto px-1">
-        {mainMenuItems.map((item) => {
-          const isActive = location.pathname === item.path
-          return (
-            <button
-              key={item.path}
-              onClick={() => navigate(item.path)}
-              className={cn(
-                'flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-lg transition-all shrink-0',
-                isActive ? 'text-blue-400' : 'text-gray-500 active:text-gray-300'
-              )}
-            >
-              <item.icon className="w-5 h-5" />
-              <span className="text-[9px] font-medium">{item.label}</span>
-            </button>
-          )
-        })}
-
-        {/* 구분 */}
-        <div className="w-px h-6 bg-gray-700/50 shrink-0" />
-
-        {/* 스마트팩토리 (모바일) */}
-        {sfMenuItems.map((item) => {
-          const isActive = location.pathname === item.path
-          return (
-            <button
-              key={item.path}
-              onClick={() => navigate(item.path)}
-              className={cn(
-                'flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-lg transition-all shrink-0',
-                isActive ? 'text-blue-400' : 'text-blue-500/50 active:text-blue-300'
-              )}
-            >
-              <item.icon className="w-5 h-5" />
-              <span className="text-[9px] font-medium">{item.label}</span>
-            </button>
-          )
-        })}
-
-        {/* PPT (모바일) */}
-        {hasPptResult && (
-          <button
-            onClick={() => { setShowPptPreview(true); navigate('/pdf-converter') }}
-            className="flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-lg text-orange-400 relative shrink-0"
-          >
-            <Presentation className="w-5 h-5" />
-            <span className="text-[9px] font-medium">PPT</span>
-            <span className="absolute top-0.5 right-1 w-2 h-2 bg-orange-500 rounded-full" />
-          </button>
+        </button>
+        
+        {isExpanded && isSidebarOpen && (
+          <div className="flex flex-col pb-1">
+            {items.map(item => renderMenuItem(item, true))}
+          </div>
         )}
       </div>
-    </>
+    )
+  }
+
+  return (
+    <div className={cn("h-full bg-white border-r border-slate-200 flex flex-col shrink-0 text-slate-600 shadow-sm z-20 transition-all duration-300", isSidebarOpen ? "w-[240px]" : "w-[64px]")}>
+      
+      {/* ─── 상단 네비게이션 헤더 ─── */}
+      <div className={cn("h-12 flex items-center border-b border-slate-200 shrink-0", isSidebarOpen ? "justify-between px-4" : "justify-center px-0")}>
+        {isSidebarOpen && <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Navigation</span>}
+        <button onClick={toggleSidebar} className="text-slate-400 hover:text-slate-600 transition-colors" title={isSidebarOpen ? "사이드바 닫기" : "사이드바 열기"}>
+          {isSidebarOpen ? <PanelLeftClose className="w-4 h-4" /> : <PanelLeftOpen className="w-4 h-4" />}
+        </button>
+      </div>
+
+      <div className="flex-1 overflow-y-auto custom-scrollbar py-2">
+        {/* 그룹 메뉴들 */}
+        {renderGroup('sf', '스마트팩토리', sfItems, Factory)}
+        {renderGroup('aiData', 'AI 데이터분석', aiDataItems, LayoutDashboard)}
+        {renderGroup('main', '기본서비스', mainItems, LayoutDashboard)}
+        {renderGroup('support', '시스템', supportItems, Settings)}
+      </div>
+
+      {/* 하단 카피라이트 */}
+      <div className={cn("h-12 border-t border-slate-200 flex items-center shrink-0 bg-slate-50", isSidebarOpen ? "px-4" : "justify-center px-0")}>
+        <div className={cn("bg-blue-600 rounded-sm flex items-center justify-center font-bold text-white", isSidebarOpen ? "w-4 h-4 text-[8px] mr-2" : "w-6 h-6 text-[10px]")}>AI</div>
+        {isSidebarOpen && <span className="text-[10px] text-slate-400">© 2026 AI SMART FACTORY</span>}
+      </div>
+      
+    </div>
   )
 }
 

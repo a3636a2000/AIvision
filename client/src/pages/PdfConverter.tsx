@@ -1031,7 +1031,7 @@ const PdfConverter = () => {
       <>
       {/* 페이지 헤더 */}
       <div className="mb-4 sm:mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-white mb-1 sm:mb-2">PDF / 이미지 변환</h1>
+        <h1 className="text-xl sm:text-2xl font-bold text-slate-800 mb-1 sm:mb-2">PDF / 이미지 변환</h1>
         <p className="text-gray-400 text-xs sm:text-sm">
           PDF 슬라이드를 이미지로 변환하고 워터마크를 자동 제거합니다. 이미지 파일도 직접 업로드할 수 있습니다.
         </p>
@@ -1094,7 +1094,7 @@ const PdfConverter = () => {
           <div className="flex items-center gap-3 mb-3 sm:mb-4">
             <Loader2 className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400 animate-spin shrink-0" />
             <div className="min-w-0">
-              <p className="text-white font-medium text-sm sm:text-base truncate">{file.name}</p>
+              <p className="text-slate-800 font-medium text-sm sm:text-base truncate">{file.name}</p>
               <p className="text-blue-400 text-xs sm:text-sm">
                 {progress}/{totalPages} 페이지 변환 중...
                 {watermarkRemoval && ' (워터마크 제거 포함)'}
@@ -1120,7 +1120,7 @@ const PdfConverter = () => {
                 <CheckCircle className="w-6 h-6 sm:w-7 sm:h-7 text-emerald-400" />
               </div>
               <div className="min-w-0">
-                <p className="text-white font-semibold text-base sm:text-lg">
+                <p className="text-slate-800 font-semibold text-base sm:text-lg">
                   변환 완료! {pages.length}장
                   {watermarkRemoval && ' · 워터마크 제거됨'}
                 </p>
@@ -1146,7 +1146,7 @@ const PdfConverter = () => {
               <button
                 onClick={startPptConversion}
                 disabled={isDownloading}
-                className="flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-orange-600 hover:bg-orange-700 disabled:bg-orange-600/50 text-white rounded-xl font-semibold text-sm sm:text-base transition-colors shadow-lg shadow-orange-900/30 flex-1 sm:flex-none justify-center"
+                className="flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-orange-600 hover:bg-orange-700 disabled:bg-orange-600/50 text-slate-800 rounded-xl font-semibold text-sm sm:text-base transition-colors shadow-lg shadow-orange-900/30 flex-1 sm:flex-none justify-center"
               >
                 {isDownloading && pptProgress ? (
                   <>
@@ -1168,7 +1168,7 @@ const PdfConverter = () => {
               <button
                 onClick={downloadAsPdf}
                 disabled={isDownloading}
-                className="flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-600/50 text-white rounded-xl font-semibold text-sm sm:text-base transition-colors shadow-lg shadow-emerald-900/30 flex-1 sm:flex-none justify-center"
+                className="flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-600/50 text-slate-800 rounded-xl font-semibold text-sm sm:text-base transition-colors shadow-lg shadow-emerald-900/30 flex-1 sm:flex-none justify-center"
               >
                 {isDownloading ? (
                   <>
@@ -1317,14 +1317,14 @@ const PdfConverter = () => {
                       className="p-2 bg-white/20 backdrop-blur-sm rounded-lg hover:bg-white/30 transition-colors"
                       title="다운로드"
                     >
-                      <Download className="w-4 h-4 text-white" />
+                      <Download className="w-4 h-4 text-slate-800" />
                     </button>
                     <button
                       onClick={() => openInEditor(page)}
                       className="p-2 bg-blue-500/60 backdrop-blur-sm rounded-lg hover:bg-blue-500/80 transition-colors"
                       title="편집기에서 열기"
                     >
-                      <Pencil className="w-4 h-4 text-white" />
+                      <Pencil className="w-4 h-4 text-slate-800" />
                     </button>
                   </div>
                 </div>
