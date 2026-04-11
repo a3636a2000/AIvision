@@ -22,7 +22,7 @@ interface LayoutProps {
     '/sf-defect-types': '검사 요청 등록',
     '/sf-vision-setup': 'AI 비전 검사 설정',
     '/sf-items': '품목등록',
-    '/ai-data-setup': '데이터분석 설정',
+    '/ai-data-setup': '데이터베이스 설정',
     '/ai-ontology': 'AI 온톨로지 분석',
     '/ai-pattern': 'AI 온톨로지 관리',
     '/ai-insight': '실시간 인사이트 플랫폼',
@@ -53,7 +53,7 @@ const Layout = ({ children }: LayoutProps) => {
     { label: '검사 요청 등록', path: '/sf-defect-types' },
     { label: 'AI 비전 검사 설정', path: '/sf-vision-setup' },
     { label: '품목등록', path: '/sf-items' },
-    { label: '데이터분석 설정', path: '/ai-data-setup' },
+    { label: '데이터베이스 설정', path: '/ai-data-setup' },
     { label: 'AI 온톨로지 분석', path: '/ai-ontology' },
     { label: 'AI 온톨로지 관리', path: '/ai-pattern' },
     { label: '실시간 인사이트 플랫폼', path: '/ai-insight' },
@@ -211,8 +211,8 @@ const Layout = ({ children }: LayoutProps) => {
             <Download className="w-5 h-5" />
           </button>
           <div className="flex items-center gap-2 pl-2 border-l border-slate-200">
-            <img src="https://ui-avatars.com/api/?name=Admin&background=eff6ff&color=2563eb" alt="Profile" className="w-7 h-7 rounded-full" />
-            <span className="text-sm font-medium text-slate-700">관리자</span>
+            <img src="https://ui-avatars.com/api/?name=JM&background=eff6ff&color=2563eb" alt="Profile" className="w-7 h-7 rounded-full" />
+            <span className="text-sm font-medium text-slate-700">정현민</span>
           </div>
         </div>
       </header>

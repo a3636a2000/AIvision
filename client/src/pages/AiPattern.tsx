@@ -49,17 +49,15 @@ export default function AiPattern() {
 
   return (
     <SmartFactoryWrapper>
-      <div className="flex flex-col absolute inset-0 bg-[#f8f9fc] overflow-y-auto">
+      <div className="flex flex-col absolute inset-0 bg-[#f8f9fc] p-2 overflow-y-auto">
         
         {/* 상단 헤더 영역 */}
-        <div className="bg-white border-b border-slate-200 px-4 lg:px-6 py-4 shrink-0 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="relative bg-white border border-indigo-100 rounded-xl px-4 py-3 mb-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shrink-0 z-10 shadow-sm animate-in slide-in-from-top-4 fade-in duration-500">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center border border-blue-100">
-              <Database className="w-5 h-5 text-blue-600" />
-            </div>
+            <Database className="w-5 h-5 text-indigo-600" />
             <div>
-              <h1 className="text-xl font-extrabold text-indigo-900 tracking-tight">AI 온톨로지 관리</h1>
-              <p className="text-slate-500 text-[13px] mt-0.5">실시간 데이터 통합 및 지능형 AI 온톨로지 관리</p>
+              <h2 className="text-indigo-900 font-bold text-lg tracking-tight">AI 온톨로지 관리</h2>
+              <p className="text-slate-500 text-[11px] mt-0.5">실시간 데이터 통합 및 지능형 AI 온톨로지 관리</p>
             </div>
           </div>
           
@@ -95,7 +93,7 @@ export default function AiPattern() {
         </div>
 
         {/* 5개 스코어 카드 영역 */}
-        <div className="p-4 lg:p-6 pb-2 shrink-0">
+        <div className="p-4 pb-2 shrink-0 animate-in slide-in-from-bottom-4 fade-in duration-500 delay-100 fill-mode-both">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col h-28 relative">
@@ -197,7 +195,7 @@ export default function AiPattern() {
         </div>
 
         {/* 탭 네비게이션 */}
-        <div className="px-4 lg:px-6 shrink-0 mt-2">
+        <div className="px-4 shrink-0 mt-2 animate-in fade-in duration-500 delay-200 fill-mode-both">
           <div className="flex justify-center border-b border-slate-200 bg-slate-50/50 pt-2 rounded-t-xl mx-auto w-full max-w-4xl">
             {tabs.map(tab => (
               <button
@@ -217,7 +215,7 @@ export default function AiPattern() {
         </div>
 
         {/* 탭 컨텐츠 (개요) */}
-        <div className="flex-1 p-4 lg:p-6 lg:pt-4">
+        <div className="flex-1 p-4 lg:pt-4 animate-in slide-in-from-bottom-6 fade-in duration-500 delay-300 fill-mode-both">
           {activeTab === '개요' && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-full">
               

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import SmartFactoryWrapper from '@/components/SmartFactoryWrapper'
+import GeminiApiKeyModal from './GeminiApiKey'
 import { useToast } from '@/components/ui/use-toast'
 import { Toaster } from '@/components/ui/toaster'
 import {
   Database, FileText, HardDrive, Clock, RefreshCw, Zap,
-  CheckCircle2, Grid, Check, Loader2, Key, Save, Trash2, ExternalLink, Lightbulb
+  CheckCircle2, Grid, Check, Loader2, Key, Save, Trash2, ExternalLink, Lightbulb, ChevronRight
 } from 'lucide-react'
 
 // --- 그래프 DB 변환 알고리즘 엔진 (시뮬레이션) ---
@@ -79,6 +80,7 @@ export default function DataAnalysisSetup() {
 
   const [apiKey, setApiKey] = useState('');
   const [selectedDb, setSelectedDb] = useState('기본 데이터베이스');
+  const [isApiKeyModalOpen, setIsApiKeyModalOpen] = useState(false);
   
   const [savedKeys, setSavedKeys] = useState<{db: string, key: string}[]>(() => {
     try {
@@ -206,113 +208,25 @@ export default function DataAnalysisSetup() {
   return (
     <SmartFactoryWrapper>
       <Toaster />
-      <div className="flex flex-col absolute inset-0 bg-[#f8f9fc] p-4 lg:p-6 overflow-y-auto">
+      <div className="flex flex-col absolute inset-0 bg-[#f8f9fc] p-2 overflow-y-auto">
         
-        {/* Gemini API 키 관리 섹션 */}
-        <div className="bg-white rounded-xl shadow-sm border border-fuchsia-100 overflow-hidden mb-6 shrink-0">
-          <div className="bg-fuchsia-50/50 px-4 py-3 border-b border-fuchsia-100 flex items-center gap-2">
-            <Key className="w-5 h-5 text-fuchsia-500" />
-            <span className="text-fuchsia-600 font-bold text-[15px]">Gemini API 키 관리</span>
-          </div>
-          <div className="p-5 lg:p-6 flex flex-col gap-6">
-            
-            {/* 입력 영역 */}
-            <div className="flex flex-col md:flex-row gap-8">
-              <div className="flex-1 flex flex-col gap-4">
-                <div>
-                  <label className="block text-slate-800 font-bold text-sm mb-2">데이터베이스 선택</label>
-                  <select 
-                    className="w-full h-10 px-3 border border-slate-200 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 bg-white"
-                    value={selectedDb}
-                    onChange={(e) => setSelectedDb(e.target.value)}
-                  >
-                    <option value="기본 데이터베이스">기본 데이터베이스</option>
-                    <option value="테스트 데이터베이스">테스트 데이터베이스</option>
-                    <option value="운영 데이터베이스">운영 데이터베이스</option>
-                  </select>
-                </div>
-                
-                <div>
-                  <label className="block text-slate-800 font-bold text-sm mb-2">Gemini API 키</label>
-                  <div className="flex gap-2">
-                    <input 
-                      type="password" 
-                      placeholder="AIza..." 
-                      value={apiKey}
-                      onChange={(e) => setApiKey(e.target.value)}
-                      className="flex-1 h-10 px-3 border border-slate-200 rounded-lg text-sm text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                    />
-                    <button 
-                      onClick={handleSaveApiKey}
-                      className="h-10 px-4 bg-[#8da2ea] hover:bg-blue-500 text-white rounded-lg flex items-center justify-center transition-colors shadow-sm"
-                    >
-                      <Save className="w-4 h-4" />
-                    </button>
-                  </div>
-                  <div className="mt-2">
-                    <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer" className="text-blue-500 hover:text-blue-600 text-[13px] flex items-center gap-1 w-max">
-                      Google AI Studio에서 API 키 발급받기 <ExternalLink className="w-3 h-3" />
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              {/* 저장된 키 목록 영역 */}
-              <div className="flex-1 flex flex-col gap-2">
-                <label className="block text-slate-800 font-bold text-[15px] mb-1">저장된 API 키</label>
-                
-                {savedKeys.length > 0 ? (
-                  <div className="space-y-2">
-                    {savedKeys.map((k, idx) => (
-                      <div key={idx} className="bg-slate-50 border border-slate-200 rounded-xl p-4 flex items-center justify-between">
-                        <div className="flex flex-col gap-1.5">
-                          <span className="text-slate-800 font-bold text-sm">{k.db}</span>
-                          <div className="flex items-center gap-2">
-                            <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                            <span className="text-slate-500 text-[13px] font-mono">{maskApiKey(k.key)}</span>
-                          </div>
-                          <div className="flex">
-                            <span className="bg-blue-500 text-white text-[11px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
-                              <Check className="w-3 h-3" /> 유효
-                            </span>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <button className="w-8 h-8 flex items-center justify-center text-blue-500 hover:bg-blue-100 rounded-lg transition-colors" title="키 검증">
-                            <RefreshCw className="w-4 h-4" />
-                          </button>
-                          <button 
-                            onClick={() => handleDeleteKey(k.db)}
-                            className="w-8 h-8 flex items-center justify-center text-red-500 hover:bg-red-100 rounded-lg transition-colors" title="삭제">
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-center text-slate-500 text-sm h-full flex items-center justify-center">
-                    저장된 API 키가 없습니다.
-                  </div>
-                )}
-              </div>
+        {/* 헤더 */}
+        <div className="relative bg-white border border-indigo-100 rounded-xl px-4 py-3 mb-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shrink-0 z-10 shadow-sm">
+          <div className="flex items-center gap-3">
+            <Database className="w-5 h-5 text-indigo-600" />
+            <div>
+              <h2 className="text-indigo-900 font-bold text-lg tracking-tight">데이터베이스 설정</h2>
+              <p className="text-slate-500 text-[11px] mt-0.5">데이터 분석 및 지능형 AI 그래프 DB 구축 관리</p>
             </div>
-
-            {/* 가이드 영역 */}
-            <div className="bg-[#f3f6fc] rounded-xl p-4 border border-blue-100/50">
-              <div className="flex items-center gap-2 mb-2 text-blue-700 font-bold text-[14px]">
-                <Lightbulb className="w-4 h-4 text-amber-400" fill="currentColor" />
-                API 키 사용 가이드
-              </div>
-              <ul className="space-y-1.5 text-blue-600/80 text-[13px] list-disc list-inside">
-                <li>데이터베이스별로 다른 Gemini API 키를 설정할 수 있습니다</li>
-                <li>API 키는 브라우저 로컬스토리지에 안전하게 저장됩니다</li>
-                <li>데이터 리니지 분석 시 해당 데이터베이스의 키가 자동으로 사용됩니다</li>
-                <li>키 유효성은 Gemini API 호출로 자동 검증됩니다</li>
-              </ul>
-            </div>
-            
           </div>
+          <button 
+            onClick={() => setIsApiKeyModalOpen(true)}
+            className="h-8 pl-2 pr-2.5 text-xs rounded-md bg-[#eff6ff] text-blue-700 hover:bg-blue-100 border border-blue-100 flex items-center gap-1 transition-colors font-bold shadow-sm relative overflow-hidden group ml-1"
+          >
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 transition-transform group-hover:scale-y-110" />
+            <span className="ml-1">API 키 관리</span>
+            <ChevronRight className="w-3.5 h-3.5 opacity-70 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
+          </button>
         </div>
 
         {/* 상단 통계 카드 (4개) */}
@@ -470,6 +384,11 @@ export default function DataAnalysisSetup() {
         </div>
 
       </div>
+      
+      {/* Gemini API 키 관리 모달 */}
+      {isApiKeyModalOpen && (
+        <GeminiApiKeyModal onClose={() => setIsApiKeyModalOpen(false)} />
+      )}
     </SmartFactoryWrapper>
   )
 }

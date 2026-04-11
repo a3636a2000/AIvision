@@ -25,7 +25,7 @@ import {
 } from 'lucide-react'
 import Footer from '../components/Footer'
 
-import heroBg from '../assets/hero-bg.mp4'
+import heroBg from '../assets/hero-bg-2.mp4'
 
 const Home = () => {
   const navigate = useNavigate()
@@ -92,7 +92,7 @@ const Home = () => {
   const aiDataCards = [
     {
       icon: Settings,
-      title: '데이터분석 설정',
+      title: '데이터베이스 설정',
       desc: '모든 테이블 데이터의 백터화 파이프라인(TF-IDF/임베딩) 설정 및 관리',
       path: '/ai-data-setup',
       gradient: 'from-fuchsia-500 to-pink-500',
@@ -215,7 +215,7 @@ const Home = () => {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12 relative z-20 -mt-10">
 
         {/* ── 스마트팩토리 실습 모듈 섹션 ── */}
-        <div className="mb-8 sm:mb-12">
+        <div className="mb-8 sm:mb-12 animate-in slide-in-from-bottom-4 fade-in duration-500 delay-100 fill-mode-both">
           <div className="flex items-center gap-2 mb-4 sm:mb-6">
             <div className="w-6 h-6 bg-blue-100 rounded-lg flex items-center justify-center shrink-0 border border-blue-200">
               <Factory className="w-3.5 h-3.5 text-blue-600" />
@@ -252,7 +252,7 @@ const Home = () => {
         </div>
 
         {/* ── AI 데이터분석 섹션 ── */}
-        <div className="mb-8 sm:mb-12">
+        <div className="mb-8 sm:mb-12 animate-in slide-in-from-bottom-6 fade-in duration-500 delay-200 fill-mode-both">
           <div className="flex items-center gap-2 mb-4 sm:mb-6">
             <div className="w-6 h-6 bg-blue-100 rounded-lg flex items-center justify-center shrink-0 border border-blue-200">
               <Database className="w-3.5 h-3.5 text-blue-600" />
@@ -289,7 +289,7 @@ const Home = () => {
         </div>
 
         {/* ── 기본서비스 섹션 ── */}
-        <div className="mb-8 sm:mb-12">
+        <div className="mb-8 sm:mb-12 animate-in slide-in-from-bottom-8 fade-in duration-500 delay-300 fill-mode-both">
           <div className="flex items-center gap-2 mb-4 sm:mb-6">
             <div className="w-6 h-6 bg-blue-100 rounded-lg flex items-center justify-center shrink-0 border border-blue-200">
               <AppWindow className="w-3.5 h-3.5 text-blue-600" />
@@ -326,7 +326,7 @@ const Home = () => {
         </div>
 
         {/* ── 데이터 흐름 ── */}
-        <div className="mb-8 sm:mb-12">
+        <div className="mb-8 sm:mb-12 animate-in slide-in-from-bottom-10 fade-in duration-500 delay-500 fill-mode-both">
           <h2 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 text-center">
             제조 AI 데이터 처리 흐름
           </h2>

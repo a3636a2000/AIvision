@@ -18,6 +18,7 @@ import {
   ArrowLeft,
 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import SmartFactoryWrapper from '../components/SmartFactoryWrapper'
 
 /**
  * 고객센터 페이지
@@ -223,23 +224,23 @@ function AccordionItem({
 }) {
   const [open, setOpen] = useState(false)
   return (
-    <div className="border border-gray-700 rounded-lg bg-gray-800">
+    <div className="border border-slate-200 rounded-lg bg-white">
       <button
-        className="w-full text-left px-4 py-3 flex items-center justify-between hover:bg-gray-750 transition-colors"
+        className="w-full text-left px-4 py-3 flex items-center justify-between hover:bg-slate-50 transition-colors"
         onClick={() => setOpen(!open)}
       >
         <div className="flex items-center gap-3 flex-1 min-w-0">
           {badge}
-          <span className="font-medium text-sm sm:text-base truncate text-gray-200">{title}</span>
+          <span className="font-medium text-sm sm:text-base truncate text-slate-800">{title}</span>
         </div>
         {open ? (
-          <ChevronUp className="w-4 h-4 text-gray-500 shrink-0 ml-2" />
+          <ChevronUp className="w-4 h-4 text-slate-500 shrink-0 ml-2" />
         ) : (
-          <ChevronDown className="w-4 h-4 text-gray-500 shrink-0 ml-2" />
+          <ChevronDown className="w-4 h-4 text-slate-500 shrink-0 ml-2" />
         )}
       </button>
       {open && (
-        <div className="px-4 pb-4 pt-2 border-t border-gray-700 text-gray-400 text-sm leading-relaxed">
+        <div className="px-4 pb-4 pt-2 border-t border-slate-200 text-slate-600 text-sm leading-relaxed">
           {children}
         </div>
       )}
@@ -263,7 +264,8 @@ const HelpCenter: React.FC = () => {
   })
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 overflow-auto">
+    <SmartFactoryWrapper>
+      <div className="animate-in slide-in-from-bottom-4 fade-in duration-500 pb-10">
       {/* 히어로 */}
       <section className="bg-gradient-to-r from-blue-800 to-blue-900 text-slate-800 py-10 sm:py-16">
         <div className="max-w-5xl mx-auto px-4 text-center">
@@ -283,7 +285,7 @@ const HelpCenter: React.FC = () => {
               <input
                 type="text"
                 placeholder="궁금한 내용을 검색하세요"
-                className="w-full pl-4 pr-12 py-3 rounded-lg bg-gray-800 text-gray-100 text-sm placeholder-gray-500 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full pl-4 pr-12 py-3 rounded-lg bg-white text-slate-900 text-sm placeholder-gray-500 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -297,7 +299,7 @@ const HelpCenter: React.FC = () => {
 
       {/* 탭 네비게이션 */}
       <div className="max-w-5xl mx-auto px-4 py-6">
-        <div className="flex border-b border-gray-700 mb-6 overflow-x-auto">
+        <div className="flex border-b border-slate-200 mb-6 overflow-x-auto">
           {[
             { key: 'faq' as const, label: '자주 묻는 질문' },
             { key: 'notice' as const, label: '공지사항' },
@@ -309,7 +311,7 @@ const HelpCenter: React.FC = () => {
               className={`px-4 sm:px-6 py-3 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
                 activeTab === tab.key
                   ? 'border-blue-500 text-blue-400'
-                  : 'border-transparent text-gray-500 hover:text-gray-300'
+                  : 'border-transparent text-slate-500 hover:text-slate-700'
               }`}
             >
               {tab.label}
@@ -322,8 +324,8 @@ const HelpCenter: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             {/* 카테고리 사이드바 */}
             <div className="lg:col-span-1">
-              <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
-                <h3 className="font-semibold mb-3 text-gray-200">카테고리</h3>
+              <div className="bg-white rounded-lg border border-slate-200 p-4">
+                <h3 className="font-semibold mb-3 text-slate-800">카테고리</h3>
                 <div className="space-y-1">
                   {categories.map((cat) => (
                     <button
@@ -332,7 +334,7 @@ const HelpCenter: React.FC = () => {
                       className={`w-full text-left px-3 py-2 rounded-lg transition-colors flex items-center text-sm ${
                         selectedCategory === cat.id
                           ? 'bg-blue-900/50 text-blue-400'
-                          : 'hover:bg-gray-700 text-gray-400'
+                          : 'hover:bg-gray-700 text-slate-600'
                       }`}
                     >
                       {renderCategoryIcon(cat.icon)}
@@ -345,7 +347,7 @@ const HelpCenter: React.FC = () => {
 
             {/* FAQ 리스트 */}
             <div className="lg:col-span-3 space-y-2">
-              <p className="text-sm text-gray-500 mb-3">
+              <p className="text-sm text-slate-500 mb-3">
                 자주 묻는 질문 ({filteredFaqs.length}건)
               </p>
               {filteredFaqs.map((faq) => (
@@ -353,7 +355,7 @@ const HelpCenter: React.FC = () => {
                   key={faq.id}
                   title={faq.question}
                   badge={
-                    <span className="text-xs border border-gray-600 rounded px-2 py-0.5 text-gray-500 shrink-0">
+                    <span className="text-xs border border-slate-300 rounded px-2 py-0.5 text-slate-500 shrink-0">
                       {categories.find((c) => c.id === faq.category)?.name}
                     </span>
                   }
@@ -364,7 +366,7 @@ const HelpCenter: React.FC = () => {
               {filteredFaqs.length === 0 && (
                 <div className="text-center py-12">
                   <Search className="w-12 h-12 text-gray-600 mx-auto mb-4" />
-                  <p className="text-gray-500">검색 결과가 없습니다.</p>
+                  <p className="text-slate-500">검색 결과가 없습니다.</p>
                 </div>
               )}
             </div>
@@ -374,7 +376,7 @@ const HelpCenter: React.FC = () => {
         {/* ── 공지사항 탭 ── */}
         {activeTab === 'notice' && (
           <div className="space-y-2">
-            <p className="text-sm text-gray-500 mb-3">공지사항</p>
+            <p className="text-sm text-slate-500 mb-3">공지사항</p>
             {notices.map((n) => (
               <AccordionItem
                 key={n.id}
@@ -390,7 +392,7 @@ const HelpCenter: React.FC = () => {
                   </>
                 }
               >
-                <div className="flex items-center text-xs text-gray-500 mb-2">
+                <div className="flex items-center text-xs text-slate-500 mb-2">
                   {n.date}
                 </div>
                 <p>{n.content}</p>
@@ -402,7 +404,7 @@ const HelpCenter: React.FC = () => {
         {/* ── 이용가이드 탭 ── */}
         {activeTab === 'guide' && (
           <div className="space-y-2">
-            <p className="text-sm text-gray-500 mb-3">이용가이드</p>
+            <p className="text-sm text-slate-500 mb-3">이용가이드</p>
             {guideItems.map((g) => (
               <AccordionItem
                 key={g.id}
@@ -411,20 +413,20 @@ const HelpCenter: React.FC = () => {
               >
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <h4 className="font-semibold text-gray-200 mb-2 text-sm">
+                    <h4 className="font-semibold text-slate-800 mb-2 text-sm">
                       주요 절차
                     </h4>
-                    <ul className="list-disc list-inside space-y-1 text-sm text-gray-400">
+                    <ul className="list-disc list-inside space-y-1 text-sm text-slate-600">
                       {g.items.map((item, i) => (
                         <li key={i}>{item}</li>
                       ))}
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-200 mb-2 text-sm">
+                    <h4 className="font-semibold text-slate-800 mb-2 text-sm">
                       참고사항
                     </h4>
-                    <ul className="list-disc list-inside space-y-1 text-sm text-gray-400">
+                    <ul className="list-disc list-inside space-y-1 text-sm text-slate-600">
                       {g.notes.map((note, i) => (
                         <li key={i}>{note}</li>
                       ))}
@@ -439,30 +441,31 @@ const HelpCenter: React.FC = () => {
 
       {/* 하단 연락처 */}
       <div className="max-w-5xl mx-auto px-4 pb-10">
-        <div className="bg-gray-800 rounded-lg border border-gray-700 p-6 text-center">
-          <h3 className="text-lg font-semibold text-gray-100 mb-3">
+        <div className="bg-white rounded-lg border border-slate-200 p-6 text-center">
+          <h3 className="text-lg font-semibold text-slate-900 mb-3">
             추가 문의가 필요하신가요?
           </h3>
-          <p className="text-gray-400 text-sm mb-4">
+          <p className="text-slate-600 text-sm mb-4">
             고객센터로 연락 주시면 친절하게 안내해 드리겠습니다.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <div className="flex items-center gap-2">
               <Phone className="w-4 h-4 text-blue-400" />
-              <span className="text-sm text-gray-300">055-762-9703</span>
+              <span className="text-sm text-slate-700">055-762-9703</span>
             </div>
             <div className="flex items-center gap-2">
               <Mail className="w-4 h-4 text-blue-400" />
-              <span className="text-sm text-gray-300">decom2soft@gmail.com</span>
+              <span className="text-sm text-slate-700">decom2soft@gmail.com</span>
             </div>
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-blue-400" />
-              <span className="text-sm text-gray-300">경남 진주시</span>
+              <span className="text-sm text-slate-700">경남 진주시</span>
             </div>
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </SmartFactoryWrapper>
   )
 }
 

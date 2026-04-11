@@ -233,7 +233,7 @@ export default function VisionInspectionPage() {
       <div className="flex flex-col absolute inset-0 bg-[#f8f9fc] p-2">
         
         {/* 상단 헤더 영역 */}
-        <div className="relative bg-white border border-indigo-100 rounded-xl px-4 py-3 mb-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shrink-0 z-10 shadow-sm">
+        <div className="relative bg-white border border-indigo-100 rounded-xl px-4 py-3 mb-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shrink-0 z-10 shadow-sm animate-in slide-in-from-top-4 fade-in duration-500">
           <div className="flex items-center gap-3">
             <Activity className="w-5 h-5 text-indigo-600" />
             <div>
@@ -264,7 +264,7 @@ export default function VisionInspectionPage() {
 
         {activeTab === "SOFTWARE" ? (
           /* 기존 소프트웨어 모니터링 레이아웃 */
-          <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-2 overflow-hidden z-10 card-animate">
+          <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-2 overflow-hidden z-10 animate-in slide-in-from-bottom-4 fade-in duration-500 delay-100 fill-mode-both">
             {/* 왼쪽 영역: 카메라 및 불량유형 상세 */}
             <div className="lg:col-span-2 flex flex-col gap-2 min-h-0">
               
@@ -498,7 +498,7 @@ export default function VisionInspectionPage() {
           </div>
         ) : activeTab === "HARDWARE" ? (
           /* 하드웨어 연동 모니터링 레이아웃 */
-          <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-2 overflow-hidden z-10 card-animate">
+          <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-2 overflow-hidden z-10 animate-in slide-in-from-bottom-4 fade-in duration-500 delay-100 fill-mode-both">
             {/* 좌측 영역: 하드웨어 뷰 및 터미널 */}
             <div className="lg:col-span-2 flex flex-col gap-2 min-h-0">
               {/* 하드웨어 비전 뷰 */}
@@ -633,17 +633,17 @@ export default function VisionInspectionPage() {
           </div>
         ) : (
           /* 뷰웍스 연동 모니터링 레이아웃 */
-          <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-2 overflow-hidden z-10 card-animate">
+          <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-2 overflow-hidden z-10 animate-in slide-in-from-bottom-4 fade-in duration-500 delay-100 fill-mode-both">
             {/* 좌측 영역: 하드웨어 뷰 및 터미널 */}
             <div className="lg:col-span-2 flex flex-col gap-2 min-h-0">
-              {/* 뷰웍스 비전 뷰 */}
-              <div className="bg-[#0b0f19] rounded-xl overflow-hidden relative flex-1 min-h-[300px] flex flex-col shadow-inner border border-slate-800">
+              {/* 뷰웍스 비전 뷰 (라이트 테마 반영) */}
+              <div className="bg-white rounded-xl overflow-hidden relative flex-1 min-h-[300px] flex flex-col shadow-sm border border-slate-200">
                 {/* 상단 오버레이 (헤더) */}
-                <div className="flex items-center justify-between p-4 z-10 w-full shrink-0 relative">
+                <div className="flex items-center justify-between p-4 z-10 w-full shrink-0 relative bg-slate-50 border-b border-slate-200">
                   <div className="flex flex-col z-20">
                     <div className="flex items-center gap-2">
-                      <Server className="w-5 h-5 text-fuchsia-400" />
-                      <span className="text-white font-bold tracking-wider">VIEWWORKS HIGH-RES CAMERA</span>
+                      <Server className="w-5 h-5 text-fuchsia-500" />
+                      <span className="text-slate-800 font-bold tracking-wider">VIEWWORKS HIGH-RES CAMERA</span>
                     </div>
                     <span className="text-slate-500 text-xs font-mono mt-1">
                       {vwConnected ? 'Receiving real-time optical feed via VIS7 SDK Middleware...' : 'Waiting for Edge Application connection...'}
@@ -651,8 +651,8 @@ export default function VisionInspectionPage() {
                   </div>
                   <div className="flex flex-col items-end gap-1 z-20">
                     <div className="flex items-center gap-2">
-                      <div className={`w-2.5 h-2.5 rounded-full ${vwConnected ? 'bg-emerald-500 animate-pulse' : 'bg-slate-500'}`} />
-                      <span className={`text-xs font-bold tracking-wider ${vwConnected ? 'text-emerald-400' : 'text-slate-400'}`}>
+                      <div className={`w-2.5 h-2.5 rounded-full ${vwConnected ? 'bg-emerald-500 animate-pulse' : 'bg-slate-300'}`} />
+                      <span className={`text-xs font-bold tracking-wider ${vwConnected ? 'text-emerald-500' : 'text-slate-400'}`}>
                         {vwConnected ? 'VIS7 SDK CONNECTED' : 'OFFLINE'}
                       </span>
                     </div>
@@ -665,46 +665,46 @@ export default function VisionInspectionPage() {
                   </div>
                 </div>
 
-                <div className="flex-1 flex flex-col items-center justify-center relative">
+                <div className="flex-1 flex flex-col items-center justify-center relative bg-[#f8f9fc]">
                   {vwConnected ? (
-                    <div className="absolute inset-0 bg-[#0b0f19] flex items-center justify-center overflow-hidden">
+                    <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
                       {/* 가상의 비전 카메라 피드 배경 - 빈 화면 (하얀 배경) */}
-                      <div className="relative w-full max-w-[500px] aspect-[4/3] bg-white flex items-center justify-center">
+                      <div className="relative w-full max-w-[500px] aspect-[4/3] bg-white border border-slate-200 shadow-sm flex items-center justify-center rounded-md">
                         {/* 뷰파인더 가이드라인 */}
                         <div className="absolute inset-4 border-2 border-emerald-400/80">
                           {/* 십자 가이드라인 (크로스헤어) 형태 */}
-                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 border-2 border-white/50 rounded-lg flex items-center justify-center shadow-sm mix-blend-difference">
-                            <div className="w-1 h-4 absolute top-0 bg-white/70"></div>
-                            <div className="w-1 h-4 absolute bottom-0 bg-white/70"></div>
-                            <div className="w-4 h-1 absolute left-0 bg-white/70"></div>
-                            <div className="w-4 h-1 absolute right-0 bg-white/70"></div>
+                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 border-2 border-slate-300/80 rounded-lg flex items-center justify-center">
+                            <div className="w-1 h-4 absolute top-0 bg-slate-400"></div>
+                            <div className="w-1 h-4 absolute bottom-0 bg-slate-400"></div>
+                            <div className="w-4 h-1 absolute left-0 bg-slate-400"></div>
+                            <div className="w-4 h-1 absolute right-0 bg-slate-400"></div>
                           </div>
                         </div>
 
                         {/* 탐지 텍스트 오버레이 (그림과 동일하게) */}
-                        <div className="absolute z-10 flex flex-col items-center drop-shadow-md mix-blend-multiply">
-                          <span className="text-[#a13b48] text-2xl sm:text-[28px] font-medium tracking-wide whitespace-nowrap">
+                        <div className="absolute z-10 flex flex-col items-center">
+                          <span className="text-rose-500 text-2xl sm:text-[28px] font-medium tracking-wide whitespace-nowrap bg-white/80 px-4 py-1 rounded shadow-sm border border-rose-100">
                             HARDWARE POSITIVE DETECTION
                           </span>
                         </div>
                       </div>
 
                       {/* 우측 하단 측정 치수 오버레이 */}
-                      <div className="absolute bottom-4 right-4 bg-black/90 border border-slate-800 p-3 rounded shadow-2xl flex flex-col items-end">
-                        <span className="text-slate-400 text-[9px] font-bold tracking-widest mb-1">PRECISION MEASUREMENT</span>
+                      <div className="absolute bottom-4 right-4 bg-white/95 border border-slate-200 p-3 rounded shadow-md flex flex-col items-end">
+                        <span className="text-slate-500 text-[9px] font-bold tracking-widest mb-1">PRECISION MEASUREMENT</span>
                         <div className="flex items-baseline gap-1">
-                          <span className="text-emerald-400 font-mono text-[28px] font-bold leading-none">10.150</span>
-                          <span className="text-emerald-500/70 text-xs font-mono ml-0.5">mm</span>
+                          <span className="text-emerald-600 font-mono text-[28px] font-bold leading-none">10.150</span>
+                          <span className="text-emerald-500 text-xs font-mono ml-0.5">mm</span>
                         </div>
-                        <span className="text-slate-500 text-[10px] font-mono mt-1">Tol: ±0.050 mm</span>
+                        <span className="text-slate-400 text-[10px] font-mono mt-1">Tol: ±0.050 mm</span>
                       </div>
                     </div>
                   ) : (
-                    <div className="text-slate-500 flex flex-col items-center gap-4 text-center">
+                    <div className="text-slate-400 flex flex-col items-center gap-4 text-center">
                       <Monitor className="w-16 h-16 opacity-30" />
                       <div>
-                        <p className="text-sm font-medium tracking-wide text-slate-400 mb-1">엣지 브릿지(Python) 애플리케이션 연결이 필요합니다.</p>
-                        <p className="text-xs text-slate-500">현장 PC에서 Vieworks VIS7 SDK를 구동하여 획득한 이미지를<br/>ERP 서버 API로 스트리밍하십시오.</p>
+                        <p className="text-sm font-medium tracking-wide text-slate-500 mb-1">엣지 브릿지(Python) 애플리케이션 연결이 필요합니다.</p>
+                        <p className="text-xs text-slate-400">현장 PC에서 Vieworks VIS7 SDK를 구동하여 획득한 이미지를<br/>ERP 서버 API로 스트리밍하십시오.</p>
                       </div>
                     </div>
                   )}
@@ -712,25 +712,25 @@ export default function VisionInspectionPage() {
               </div>
 
               {/* 최근 수신 데이터 터미널 */}
-              <div className="bg-[#0b0f19] border border-slate-800 rounded-xl p-0 flex flex-col h-48 shrink-0 shadow-inner">
-                <div className="bg-slate-900/80 px-4 py-2 flex items-center justify-between border-b border-slate-800 shrink-0">
+              <div className="bg-white border border-slate-200 rounded-xl p-0 flex flex-col h-48 shrink-0 shadow-sm">
+                <div className="bg-slate-50 px-4 py-2 flex items-center justify-between border-b border-slate-200 shrink-0 rounded-t-xl">
                   <div className="flex items-center gap-2">
-                    <Terminal className="w-4 h-4 text-slate-400" />
-                    <span className="text-slate-300 text-xs font-bold">VIS7 Middleware Raw Data (API 수신)</span>
+                    <Terminal className="w-4 h-4 text-slate-500" />
+                    <span className="text-slate-700 text-xs font-bold">VIS7 Middleware Raw Data (API 수신)</span>
                   </div>
-                  <div className="bg-slate-800 text-slate-400 text-[10px] px-2 py-0.5 rounded font-mono">
+                  <div className="bg-slate-100 border border-slate-200 text-slate-500 text-[10px] px-2 py-0.5 rounded font-mono font-medium">
                     Port : 5000
                   </div>
                 </div>
-                <div className="flex-1 p-4 font-mono text-[11px] overflow-y-auto space-y-1">
+                <div className="flex-1 p-4 font-mono text-[11px] overflow-y-auto space-y-1 bg-[#f8f9fc] rounded-b-xl">
                   {vwTerminalLogs.length === 1 && vwTerminalLogs[0] === '데이터 대기 중...' ? (
-                    <div className="flex items-center justify-center h-full text-slate-600 text-sm">데이터 대기 중...</div>
+                    <div className="flex items-center justify-center h-full text-slate-400 text-sm">데이터 대기 중...</div>
                   ) : (
                     vwTerminalLogs.map((log, i) => (
                       <div key={i} className={
-                        log.includes('NG') || log.includes('에러') ? 'text-rose-400' : 
-                        log.includes('OK') ? 'text-emerald-400' : 
-                        'text-slate-400'
+                        log.includes('NG') || log.includes('에러') ? 'text-rose-500' : 
+                        log.includes('OK') ? 'text-emerald-600' : 
+                        'text-slate-600'
                       }>
                         {log}
                       </div>

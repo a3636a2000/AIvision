@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import SmartFactoryWrapper from '../components/SmartFactoryWrapper'
 import {
   Shield,
   Calendar,
@@ -23,12 +24,13 @@ const PrivacyPolicy: React.FC = () => {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 py-8 sm:py-12 overflow-auto">
+    <SmartFactoryWrapper>
+      <div className="py-8 sm:py-12 animate-in slide-in-from-bottom-4 fade-in duration-500">
       <div className="max-w-4xl mx-auto px-4">
         {/* 뒤로가기 */}
         <button
           onClick={() => navigate('/')}
-          className="inline-flex items-center gap-1 text-gray-400 hover:text-slate-800 text-sm mb-6 transition-colors"
+          className="inline-flex items-center gap-1 text-slate-600 hover:text-slate-800 text-sm mb-6 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           홈으로
@@ -44,7 +46,7 @@ const PrivacyPolicy: React.FC = () => {
               <h1 className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
                 개인정보처리방침
               </h1>
-              <p className="text-gray-400 mt-1 sm:mt-2 text-sm sm:text-base">디컴소프트 개인정보보호 정책</p>
+              <p className="text-slate-600 mt-1 sm:mt-2 text-sm sm:text-base">디컴소프트 개인정보보호 정책</p>
             </div>
           </div>
           <div className="bg-blue-900/30 border border-blue-800 rounded-lg p-3 sm:p-4 inline-block">
@@ -55,17 +57,17 @@ const PrivacyPolicy: React.FC = () => {
         </div>
 
         {/* 메인 콘텐츠 */}
-        <div className="bg-gray-800 rounded-xl border border-gray-700 p-5 sm:p-8 space-y-8">
+        <div className="bg-white rounded-xl border border-gray-700 p-5 sm:p-8 space-y-8">
           {/* 1. 개인정보의 처리 목적 */}
           <section>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center shrink-0">
                 <FileText className="w-4 h-4 text-slate-800" />
               </div>
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-100">1. 개인정보의 처리 목적</h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900">1. 개인정보의 처리 목적</h2>
             </div>
-            <div className="bg-gray-900/50 rounded-lg p-4 sm:p-6 border border-gray-700">
-              <p className="text-gray-300 mb-4 text-sm sm:text-base">
+            <div className="bg-[#f8f9fc]/50 rounded-lg p-4 sm:p-6 border border-gray-700">
+              <p className="text-slate-700 mb-4 text-sm sm:text-base">
                 디컴소프트('http://decomsoft.com' 이하 'DECOMSOFT')는 다음의 목적을 위하여 개인정보를 처리합니다.
                 처리하고 있는 개인정보는 다음의 목적 이외의 용도로는 이용되지 않으며, 이용 목적이 변경되는 경우에는
                 개인정보 보호법 제18조에 따라 별도의 동의를 받는 등 필요한 조치를 이행할 예정입니다.
@@ -80,7 +82,7 @@ const PrivacyPolicy: React.FC = () => {
                 ].map((text, i) => (
                   <li key={i} className="flex items-start gap-2">
                     <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 shrink-0" />
-                    <span className="text-gray-300 text-sm">{text}</span>
+                    <span className="text-slate-700 text-sm">{text}</span>
                   </li>
                 ))}
               </ul>
@@ -93,10 +95,10 @@ const PrivacyPolicy: React.FC = () => {
               <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center shrink-0">
                 <Calendar className="w-4 h-4 text-slate-800" />
               </div>
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-100">2. 개인정보의 처리 및 보유 기간</h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900">2. 개인정보의 처리 및 보유 기간</h2>
             </div>
-            <div className="bg-gray-900/50 rounded-lg p-4 sm:p-6 border border-gray-700">
-              <p className="text-gray-300 mb-4 text-sm sm:text-base">
+            <div className="bg-[#f8f9fc]/50 rounded-lg p-4 sm:p-6 border border-gray-700">
+              <p className="text-slate-700 mb-4 text-sm sm:text-base">
                 DECOMSOFT는 법령에 따른 개인정보 보유·이용기간 또는 정보주체로부터 개인정보를 수집 시에 동의받은
                 개인정보 보유·이용기간 내에서 개인정보를 처리·보유합니다.
               </p>
@@ -104,8 +106,8 @@ const PrivacyPolicy: React.FC = () => {
                 <table className="w-full border border-gray-700 rounded-lg text-sm">
                   <thead className="bg-gray-700">
                     <tr>
-                      <th className="px-4 py-3 text-left font-medium text-gray-300 border-b border-gray-600">처리 목적</th>
-                      <th className="px-4 py-3 text-left font-medium text-gray-300 border-b border-gray-600">보유 기간</th>
+                      <th className="px-4 py-3 text-left font-medium text-slate-700 border-b border-slate-300">처리 목적</th>
+                      <th className="px-4 py-3 text-left font-medium text-slate-700 border-b border-slate-300">보유 기간</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -117,8 +119,8 @@ const PrivacyPolicy: React.FC = () => {
                       ['마케팅 및 광고', '동의 철회 시까지'],
                     ].map(([purpose, period], i) => (
                       <tr key={i}>
-                        <td className="px-4 py-3 text-gray-300 border-b border-gray-700">{purpose}</td>
-                        <td className="px-4 py-3 text-gray-300 border-b border-gray-700">{period}</td>
+                        <td className="px-4 py-3 text-slate-700 border-b border-gray-700">{purpose}</td>
+                        <td className="px-4 py-3 text-slate-700 border-b border-gray-700">{period}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -133,10 +135,10 @@ const PrivacyPolicy: React.FC = () => {
               <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-lg flex items-center justify-center shrink-0">
                 <User className="w-4 h-4 text-slate-800" />
               </div>
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-100">3. 개인정보의 제3자 제공</h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900">3. 개인정보의 제3자 제공</h2>
             </div>
-            <div className="bg-gray-900/50 rounded-lg p-4 sm:p-6 border border-gray-700">
-              <p className="text-gray-300 mb-4 text-sm sm:text-base">
+            <div className="bg-[#f8f9fc]/50 rounded-lg p-4 sm:p-6 border border-gray-700">
+              <p className="text-slate-700 mb-4 text-sm sm:text-base">
                 DECOMSOFT는 원칙적으로 정보주체의 개인정보를 수집·이용 목적으로 명시한 범위 내에서 처리하며,
                 정보주체의 사전 동의 없이는 본래의 목적 범위를 초과하여 처리하거나 제3자에게 제공하지 않습니다.
               </p>
@@ -162,18 +164,18 @@ const PrivacyPolicy: React.FC = () => {
               <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center shrink-0">
                 <Database className="w-4 h-4 text-slate-800" />
               </div>
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-100">4. 개인정보처리의 위탁</h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900">4. 개인정보처리의 위탁</h2>
             </div>
-            <div className="bg-gray-900/50 rounded-lg p-4 sm:p-6 border border-gray-700">
-              <p className="text-gray-300 mb-4 text-sm sm:text-base">
+            <div className="bg-[#f8f9fc]/50 rounded-lg p-4 sm:p-6 border border-gray-700">
+              <p className="text-slate-700 mb-4 text-sm sm:text-base">
                 DECOMSOFT는 원활한 개인정보 업무처리를 위하여 다음과 같이 개인정보 처리업무를 위탁하고 있습니다.
               </p>
               <div className="overflow-x-auto">
                 <table className="w-full border border-gray-700 rounded-lg text-sm">
                   <thead className="bg-gray-700">
                     <tr>
-                      <th className="px-4 py-3 text-left font-medium text-gray-300 border-b border-gray-600">위탁받는 자</th>
-                      <th className="px-4 py-3 text-left font-medium text-gray-300 border-b border-gray-600">위탁하는 업무의 내용</th>
+                      <th className="px-4 py-3 text-left font-medium text-slate-700 border-b border-slate-300">위탁받는 자</th>
+                      <th className="px-4 py-3 text-left font-medium text-slate-700 border-b border-slate-300">위탁하는 업무의 내용</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -183,8 +185,8 @@ const PrivacyPolicy: React.FC = () => {
                       ['㈜다날', '결제 서비스 제공'],
                     ].map(([who, what], i) => (
                       <tr key={i}>
-                        <td className="px-4 py-3 text-gray-300 border-b border-gray-700">{who}</td>
-                        <td className="px-4 py-3 text-gray-300 border-b border-gray-700">{what}</td>
+                        <td className="px-4 py-3 text-slate-700 border-b border-gray-700">{who}</td>
+                        <td className="px-4 py-3 text-slate-700 border-b border-gray-700">{what}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -199,25 +201,25 @@ const PrivacyPolicy: React.FC = () => {
               <div className="w-8 h-8 bg-gradient-to-r from-pink-500 to-rose-500 rounded-lg flex items-center justify-center shrink-0">
                 <Eye className="w-4 h-4 text-slate-800" />
               </div>
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-100">5. 정보주체의 권리·의무</h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900">5. 정보주체의 권리·의무</h2>
             </div>
-            <div className="bg-gray-900/50 rounded-lg p-4 sm:p-6 border border-gray-700">
-              <p className="text-gray-300 mb-4 text-sm sm:text-base">
+            <div className="bg-[#f8f9fc]/50 rounded-lg p-4 sm:p-6 border border-gray-700">
+              <p className="text-slate-700 mb-4 text-sm sm:text-base">
                 정보주체는 DECOMSOFT에 대해 언제든지 다음 각 호의 개인정보 보호 관련 권리를 행사할 수 있습니다.
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
-                <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
-                  <h3 className="font-semibold text-gray-200 mb-2 text-sm">행사 가능한 권리</h3>
-                  <ul className="text-sm text-gray-400 space-y-1">
+                <div className="bg-white rounded-lg p-4 border border-gray-700">
+                  <h3 className="font-semibold text-slate-800 mb-2 text-sm">행사 가능한 권리</h3>
+                  <ul className="text-sm text-slate-600 space-y-1">
                     <li>• 개인정보 처리현황 통지요구</li>
                     <li>• 개인정보 열람요구</li>
                     <li>• 개인정보 정정·삭제요구</li>
                     <li>• 개인정보 처리정지요구</li>
                   </ul>
                 </div>
-                <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
-                  <h3 className="font-semibold text-gray-200 mb-2 text-sm">권리 행사 방법</h3>
-                  <ul className="text-sm text-gray-400 space-y-1">
+                <div className="bg-white rounded-lg p-4 border border-gray-700">
+                  <h3 className="font-semibold text-slate-800 mb-2 text-sm">권리 행사 방법</h3>
+                  <ul className="text-sm text-slate-600 space-y-1">
                     <li>• 개인정보 보호법 시행규칙 별지 제8호에 따라 작성</li>
                     <li>• 서면, 전자우편, 모사전송(FAX) 등을 통하여 하실 수 있음</li>
                     <li>• 회사는 지체 없이 조치하겠습니다</li>
@@ -233,25 +235,25 @@ const PrivacyPolicy: React.FC = () => {
               <div className="w-8 h-8 bg-gradient-to-r from-red-500 to-pink-500 rounded-lg flex items-center justify-center shrink-0">
                 <Lock className="w-4 h-4 text-slate-800" />
               </div>
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-100">6. 개인정보의 안전성 확보 조치</h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900">6. 개인정보의 안전성 확보 조치</h2>
             </div>
-            <div className="bg-gray-900/50 rounded-lg p-4 sm:p-6 border border-gray-700">
-              <p className="text-gray-300 mb-4 text-sm sm:text-base">
+            <div className="bg-[#f8f9fc]/50 rounded-lg p-4 sm:p-6 border border-gray-700">
+              <p className="text-slate-700 mb-4 text-sm sm:text-base">
                 DECOMSOFT는 개인정보보호법 제29조에 따라 다음과 같이 안전성 확보에 필요한 기술적/관리적 및 물리적 조치를 하고 있습니다.
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
-                <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
-                  <h3 className="font-semibold text-gray-200 mb-2 text-sm">기술적 조치</h3>
-                  <ul className="text-sm text-gray-400 space-y-1">
+                <div className="bg-white rounded-lg p-4 border border-gray-700">
+                  <h3 className="font-semibold text-slate-800 mb-2 text-sm">기술적 조치</h3>
+                  <ul className="text-sm text-slate-600 space-y-1">
                     <li>• 개인정보처리시스템 등의 접근권한 관리</li>
                     <li>• 개인정보의 암호화</li>
                     <li>• 해킹 등에 대비한 기술적 대책</li>
                     <li>• 개인정보처리시스템 접속기록의 보관 및 위변조 방지</li>
                   </ul>
                 </div>
-                <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
-                  <h3 className="font-semibold text-gray-200 mb-2 text-sm">관리적 조치</h3>
-                  <ul className="text-sm text-gray-400 space-y-1">
+                <div className="bg-white rounded-lg p-4 border border-gray-700">
+                  <h3 className="font-semibold text-slate-800 mb-2 text-sm">관리적 조치</h3>
+                  <ul className="text-sm text-slate-600 space-y-1">
                     <li>• 개인정보 취급직원의 최소화 및 교육</li>
                     <li>• 개인정보 보호책임자 등의 지정</li>
                     <li>• 정기적인 자체 감사 실시</li>
@@ -268,45 +270,45 @@ const PrivacyPolicy: React.FC = () => {
               <div className="w-8 h-8 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-lg flex items-center justify-center shrink-0">
                 <Phone className="w-4 h-4 text-slate-800" />
               </div>
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-100">7. 개인정보 보호책임자</h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900">7. 개인정보 보호책임자</h2>
             </div>
-            <div className="bg-gray-900/50 rounded-lg p-4 sm:p-6 border border-gray-700">
-              <p className="text-gray-300 mb-4 text-sm sm:text-base">
+            <div className="bg-[#f8f9fc]/50 rounded-lg p-4 sm:p-6 border border-gray-700">
+              <p className="text-slate-700 mb-4 text-sm sm:text-base">
                 DECOMSOFT는 개인정보 처리에 관한 업무를 총괄해서 책임지고, 개인정보 처리와 관련한 정보주체의 불만처리 및 피해구제 등을 위하여 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.
               </p>
-              <div className="bg-gray-800 rounded-lg p-4 sm:p-6 border border-gray-700">
+              <div className="bg-white rounded-lg p-4 sm:p-6 border border-gray-700">
                 <div className="grid sm:grid-cols-2 gap-6">
                   <div>
-                    <h3 className="font-semibold text-gray-200 mb-3 text-sm">개인정보 보호책임자</h3>
+                    <h3 className="font-semibold text-slate-800 mb-3 text-sm">개인정보 보호책임자</h3>
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
-                        <User className="w-4 h-4 text-gray-500" />
-                        <span className="text-sm text-gray-300">성명: 김대표</span>
+                        <User className="w-4 h-4 text-slate-500" />
+                        <span className="text-sm text-slate-700">성명: 김대표</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Phone className="w-4 h-4 text-gray-500" />
-                        <span className="text-sm text-gray-300">연락처: 055-762-9703</span>
+                        <Phone className="w-4 h-4 text-slate-500" />
+                        <span className="text-sm text-slate-700">연락처: 055-762-9703</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Mail className="w-4 h-4 text-gray-500" />
-                        <span className="text-sm text-gray-300">이메일: decom2soft@gmail.com</span>
+                        <Mail className="w-4 h-4 text-slate-500" />
+                        <span className="text-sm text-slate-700">이메일: decom2soft@gmail.com</span>
                       </div>
                     </div>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-200 mb-3 text-sm">개인정보 보호 담당부서</h3>
+                    <h3 className="font-semibold text-slate-800 mb-3 text-sm">개인정보 보호 담당부서</h3>
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
-                        <MapPin className="w-4 h-4 text-gray-500" />
-                        <span className="text-sm text-gray-300">부서명: 개발팀</span>
+                        <MapPin className="w-4 h-4 text-slate-500" />
+                        <span className="text-sm text-slate-700">부서명: 개발팀</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Phone className="w-4 h-4 text-gray-500" />
-                        <span className="text-sm text-gray-300">연락처: 055-762-9703</span>
+                        <Phone className="w-4 h-4 text-slate-500" />
+                        <span className="text-sm text-slate-700">연락처: 055-762-9703</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Mail className="w-4 h-4 text-gray-500" />
-                        <span className="text-sm text-gray-300">이메일: decom2soft@gmail.com</span>
+                        <Mail className="w-4 h-4 text-slate-500" />
+                        <span className="text-sm text-slate-700">이메일: decom2soft@gmail.com</span>
                       </div>
                     </div>
                   </div>
@@ -321,10 +323,10 @@ const PrivacyPolicy: React.FC = () => {
               <div className="w-8 h-8 bg-gradient-to-r from-violet-500 to-purple-500 rounded-lg flex items-center justify-center shrink-0">
                 <FileText className="w-4 h-4 text-slate-800" />
               </div>
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-100">8. 개인정보 처리방침 변경</h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900">8. 개인정보 처리방침 변경</h2>
             </div>
-            <div className="bg-gray-900/50 rounded-lg p-4 sm:p-6 border border-gray-700">
-              <p className="text-gray-300 mb-4 text-sm sm:text-base">
+            <div className="bg-[#f8f9fc]/50 rounded-lg p-4 sm:p-6 border border-gray-700">
+              <p className="text-slate-700 mb-4 text-sm sm:text-base">
                 이 개인정보처리방침은 시행일로부터 적용되며, 법령 및 방침에 따른 변경내용의 추가, 삭제 및 정정이 있는 경우에는 변경사항의 시행 7일 전부터 공지사항을 통하여 고지할 것입니다.
               </p>
               <div className="bg-blue-900/30 border border-blue-800 rounded-lg p-4">
@@ -342,29 +344,30 @@ const PrivacyPolicy: React.FC = () => {
 
         {/* 푸터 */}
         <div className="mt-10 sm:mt-12 text-center">
-          <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
-            <h3 className="text-lg font-semibold text-gray-100 mb-3">문의사항</h3>
-            <p className="text-gray-400 mb-4 text-sm">
+          <div className="bg-white rounded-lg border border-gray-700 p-6">
+            <h3 className="text-lg font-semibold text-slate-900 mb-3">문의사항</h3>
+            <p className="text-slate-600 mb-4 text-sm">
               개인정보 처리방침에 대한 문의사항이 있으시면 언제든지 연락주시기 바랍니다.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-blue-400" />
-                <span className="text-sm text-gray-300">055-762-9703</span>
+                <span className="text-sm text-slate-700">055-762-9703</span>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-blue-400" />
-                <span className="text-sm text-gray-300">decom2soft@gmail.com</span>
+                <span className="text-sm text-slate-700">decom2soft@gmail.com</span>
               </div>
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-blue-400" />
-                <span className="text-sm text-gray-300">경남 진주시</span>
+                <span className="text-sm text-slate-700">경남 진주시</span>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </SmartFactoryWrapper>
   )
 }
 

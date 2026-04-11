@@ -12,6 +12,7 @@ import {
 import FeedBoard from '../components/FeedBoard'
 import FeedDetail from '../components/FeedDetail'
 import EmojiPicker from '../components/EmojiPicker'
+import SmartFactoryWrapper from '../components/SmartFactoryWrapper'
 
 // ── 타입 정의 ──
 interface ChatMessage {
@@ -289,13 +290,13 @@ export default function ChatRoom() {
       const channelInfo = DEFAULT_CHANNELS.find((c) => c.id === activeChannel)
       return (
         <div className="flex-1 flex flex-col items-center justify-center text-center px-4">
-          <div className="w-16 h-16 rounded-full bg-gray-900/60 flex items-center justify-center mb-4">
-            <Hash className="w-8 h-8 text-gray-400" />
+          <div className="w-16 h-16 rounded-full bg-white/60 flex items-center justify-center mb-4">
+            <Hash className="w-8 h-8 text-slate-600" />
           </div>
           <h3 className="text-2xl font-bold text-slate-800 mb-2">
             #{channelInfo?.name || activeChannel}에 오신 것을 환영합니다!
           </h3>
-          <p className="text-gray-400 text-sm max-w-md">
+          <p className="text-slate-600 text-sm max-w-md">
             {channelInfo?.description || '이 채널에서 대화를 시작해보세요.'}
           </p>
         </div>
@@ -315,11 +316,11 @@ export default function ChatRoom() {
       if (msgDate !== lastDate) {
         elements.push(
           <div key={`date-${msgDate}`} className="flex items-center gap-4 py-2 px-4">
-            <div className="flex-1 h-px bg-gray-800/60" />
-            <span className="text-xs text-gray-500 font-medium whitespace-nowrap">
+            <div className="flex-1 h-px bg-slate-50/60" />
+            <span className="text-xs text-slate-500 font-medium whitespace-nowrap">
               {formatDateDivider(msg.created_at)}
             </span>
-            <div className="flex-1 h-px bg-gray-800/60" />
+            <div className="flex-1 h-px bg-slate-50/60" />
           </div>
         )
         lastAuthor = ''
@@ -332,12 +333,12 @@ export default function ChatRoom() {
       elements.push(
         <div
           key={msg.id}
-          className={`group flex items-start gap-4 px-4 hover:bg-gray-900/40 ${isGrouped ? 'py-0.5' : 'mt-3 py-1'}`}
+          className={`group flex items-start gap-4 px-4 hover:bg-white/40 ${isGrouped ? 'py-0.5' : 'mt-3 py-1'}`}
         >
           {/* 아바타 */}
           {isGrouped ? (
             <div className="w-10 shrink-0 flex items-center justify-center">
-              <span className="text-[10px] text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity">
+              <span className="text-[10px] text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity">
                 {msgTime}
               </span>
             </div>
@@ -360,12 +361,12 @@ export default function ChatRoom() {
                 >
                   {msg.author_name}
                 </span>
-                <span className="text-[11px] text-gray-500">
+                <span className="text-[11px] text-slate-500">
                   {formatTime(msg.created_at)}
                 </span>
               </div>
             )}
-            <p className="text-gray-200 text-sm leading-relaxed whitespace-pre-wrap break-words">
+            <p className="text-slate-800 text-sm leading-relaxed whitespace-pre-wrap break-words">
               {msg.content}
             </p>
           </div>
@@ -377,7 +378,7 @@ export default function ChatRoom() {
               setDeletePassword('')
               setDeleteError('')
             }}
-            className="opacity-0 group-hover:opacity-100 transition-opacity p-1 text-gray-500 hover:text-red-400 shrink-0"
+            className="opacity-0 group-hover:opacity-100 transition-opacity p-1 text-slate-500 hover:text-red-400 shrink-0"
             title="삭제"
           >
             <Trash2 className="w-4 h-4" />
@@ -395,7 +396,8 @@ export default function ChatRoom() {
   const activeChannelInfo = DEFAULT_CHANNELS.find((c) => c.id === activeChannel)
 
   return (
-    <div className="flex-1 flex overflow-hidden bg-gray-950">
+    <SmartFactoryWrapper>
+      <div className="flex-1 flex overflow-hidden bg-[#f8f9fc] animate-in slide-in-from-bottom-4 fade-in duration-500 rounded-xl border border-slate-200">
       {/* ─── 모바일 오버레이 배경 ─── */}
       {showChannelSidebar && (
         <div
@@ -410,20 +412,20 @@ export default function ChatRoom() {
           ${showChannelSidebar ? 'translate-x-0' : '-translate-x-full'}
           md:translate-x-0
           fixed md:static inset-y-0 left-0 z-40 md:z-auto
-          w-60 border-r border-gray-800/50 flex flex-col shrink-0
+          w-60 border-r border-slate-200/50 flex flex-col shrink-0
           transition-transform duration-200 md:transition-none
-          bg-gray-900/80 backdrop-blur-sm
+          bg-white/80 backdrop-blur-sm
         `}
       >
         {/* 서버 헤더 */}
-        <div className="h-12 px-4 flex items-center border-b border-gray-800/50 shadow-sm">
+        <div className="h-12 px-4 flex items-center border-b border-slate-200/50 shadow-sm">
           <h2 className="font-semibold text-slate-800 text-sm truncate">AI 한글 에디터</h2>
         </div>
 
         {/* 채널 목록 */}
         <div className="flex-1 overflow-y-auto py-3 px-2">
           <div className="flex items-center justify-between px-2 mb-1">
-            <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wide">
+            <span className="text-[11px] font-semibold text-slate-600 uppercase tracking-wide">
               채팅 채널
             </span>
           </div>
@@ -437,8 +439,8 @@ export default function ChatRoom() {
               }}
               className={`w-full flex items-center gap-2 px-2 py-1.5 rounded text-sm transition-colors mb-0.5 ${
                 activeChannel === ch.id
-                  ? 'bg-gray-800/60 text-slate-800 font-medium'
-                  : 'text-gray-400 hover:text-gray-200 hover:bg-gray-800/40'
+                  ? 'bg-slate-50/60 text-slate-800 font-medium'
+                  : 'text-slate-600 hover:text-slate-800 hover:bg-slate-50/40'
               }`}
             >
               <Hash className="w-4 h-4 shrink-0 opacity-60" />
@@ -448,7 +450,7 @@ export default function ChatRoom() {
 
           {/* 피드 게시판 섹션 */}
           <div className="flex items-center justify-between px-2 mb-1 mt-4">
-            <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wide">
+            <span className="text-[11px] font-semibold text-slate-600 uppercase tracking-wide">
               게시판
             </span>
           </div>
@@ -462,8 +464,8 @@ export default function ChatRoom() {
               }}
               className={`w-full flex items-center gap-2 px-2 py-1.5 rounded text-sm transition-colors mb-0.5 ${
                 activeChannel === ch.id
-                  ? 'bg-gray-800/60 text-slate-800 font-medium'
-                  : 'text-gray-400 hover:text-gray-200 hover:bg-gray-800/40'
+                  ? 'bg-slate-50/60 text-slate-800 font-medium'
+                  : 'text-slate-600 hover:text-slate-800 hover:bg-slate-50/40'
               }`}
             >
               <Newspaper className="w-4 h-4 shrink-0 opacity-60" />
@@ -473,7 +475,7 @@ export default function ChatRoom() {
         </div>
 
         {/* 유저 패널 (하단) */}
-        <div className="h-[52px] px-2 flex items-center bg-gray-900/60 border-t border-gray-800/50">
+        <div className="h-[52px] px-2 flex items-center bg-white/60 border-t border-slate-200/50">
           {nickname ? (
             <div className="flex items-center gap-2 flex-1 min-w-0">
               <div
@@ -484,7 +486,7 @@ export default function ChatRoom() {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-slate-800 truncate">{nickname}</p>
-                <p className="text-[10px] text-gray-400">접속 중</p>
+                <p className="text-[10px] text-slate-600">접속 중</p>
               </div>
               <button
                 onClick={() => {
@@ -492,7 +494,7 @@ export default function ChatRoom() {
                   setTempPassword(password)
                   setShowNicknameSetup(true)
                 }}
-                className="p-1 text-gray-400 hover:text-gray-200 transition-colors"
+                className="p-1 text-slate-600 hover:text-slate-800 transition-colors"
                 title="닉네임 변경"
               >
                 <Settings className="w-4 h-4" />
@@ -505,7 +507,7 @@ export default function ChatRoom() {
                 setTempPassword('')
                 setShowNicknameSetup(true)
               }}
-              className="flex items-center gap-2 text-sm text-gray-400 hover:text-gray-200 transition-colors w-full"
+              className="flex items-center gap-2 text-sm text-slate-600 hover:text-slate-800 transition-colors w-full"
             >
               <Users className="w-4 h-4" />
               <span>닉네임 설정</span>
@@ -515,29 +517,29 @@ export default function ChatRoom() {
       </div>
 
       {/* ─── 메인 영역 ─── */}
-      <div className="flex-1 flex flex-col min-w-0 min-h-0 bg-gray-950">
+      <div className="flex-1 flex flex-col min-w-0 min-h-0 bg-[#f8f9fc]">
         {/* 채널 헤더 */}
-        <div className="h-12 px-4 flex items-center gap-3 border-b border-gray-800/50 shadow-sm shrink-0">
+        <div className="h-12 px-4 flex items-center gap-3 border-b border-slate-200/50 shadow-sm shrink-0">
           {/* 모바일 햄버거 */}
           <button
             onClick={() => setShowChannelSidebar(true)}
-            className="md:hidden p-1 text-gray-400 hover:text-slate-800 transition-colors"
+            className="md:hidden p-1 text-slate-600 hover:text-slate-800 transition-colors"
           >
             <MessageCircle className="w-5 h-5" />
           </button>
 
           {activeChannelInfo?.type === 'feed' ? (
-            <Newspaper className="w-5 h-5 text-gray-400" />
+            <Newspaper className="w-5 h-5 text-slate-600" />
           ) : (
-            <Hash className="w-5 h-5 text-gray-400" />
+            <Hash className="w-5 h-5 text-slate-600" />
           )}
           <h3 className="font-semibold text-slate-800 text-sm">
             {activeChannelInfo?.name || activeChannel}
           </h3>
           {activeChannelInfo?.description && (
             <>
-              <div className="w-px h-5 bg-gray-800/60 hidden sm:block" />
-              <p className="text-xs text-gray-400 truncate hidden sm:block">
+              <div className="w-px h-5 bg-slate-50/60 hidden sm:block" />
+              <p className="text-xs text-slate-600 truncate hidden sm:block">
                 {activeChannelInfo.description}
               </p>
             </>
@@ -572,7 +574,7 @@ export default function ChatRoom() {
             >
               {isLoading ? (
                 <div className="flex-1 flex items-center justify-center h-full">
-                  <Loader2 className="w-8 h-8 text-gray-400 animate-spin" />
+                  <Loader2 className="w-8 h-8 text-slate-600 animate-spin" />
                 </div>
               ) : (
                 <>
@@ -591,7 +593,7 @@ export default function ChatRoom() {
                     setTempPassword('')
                     setShowNicknameSetup(true)
                   }}
-                    className="w-full py-3 rounded-lg bg-gray-900/60 border border-gray-800/60 text-gray-300 hover:bg-gray-800/60 hover:text-slate-800 transition-colors text-sm font-medium"
+                    className="w-full py-3 rounded-lg bg-white/60 border border-slate-200/60 text-slate-700 hover:bg-slate-50/60 hover:text-slate-800 transition-colors text-sm font-medium"
                 >
                   닉네임을 설정하고 채팅에 참여하세요
                 </button>
@@ -605,7 +607,7 @@ export default function ChatRoom() {
                     placeholder={`#${activeChannelInfo?.name || activeChannel}에 메시지 보내기`}
                     rows={1}
                     maxLength={2000}
-                    className="w-full px-4 py-3 pr-24 rounded-lg bg-gray-900/60 border border-gray-800/60 text-gray-200 placeholder-gray-500 text-sm resize-none focus:outline-none focus:ring-1 focus:ring-blue-500/50"
+                    className="w-full px-4 py-3 pr-24 rounded-lg bg-white/60 border border-slate-200/60 text-slate-800 placeholder-gray-500 text-sm resize-none focus:outline-none focus:ring-1 focus:ring-blue-500/50"
                     style={{
                       minHeight: '44px',
                       maxHeight: '200px',
@@ -627,7 +629,7 @@ export default function ChatRoom() {
                     <button
                       onClick={sendMessage}
                       disabled={!inputMessage.trim() || isSending}
-                      className="p-2 rounded-lg text-gray-400 hover:text-slate-800 disabled:opacity-30 disabled:hover:text-gray-400 transition-colors"
+                      className="p-2 rounded-lg text-slate-600 hover:text-slate-800 disabled:opacity-30 disabled:hover:text-slate-600 transition-colors"
                     >
                       {isSending ? (
                         <Loader2 className="w-5 h-5 animate-spin" />
@@ -646,34 +648,34 @@ export default function ChatRoom() {
       {/* ─── 닉네임 설정 모달 ─── */}
       {showNicknameSetup && (
         <div className="fixed inset-0 bg-slate-900/50 flex items-center justify-center z-50 px-4">
-          <div className="bg-gray-900 rounded-xl p-6 w-full max-w-sm border border-gray-800/60 shadow-2xl">
+          <div className="bg-white rounded-xl p-6 w-full max-w-sm border border-slate-200/60 shadow-2xl">
             <h3 className="text-lg font-bold text-slate-800 mb-1">닉네임 설정</h3>
-            <p className="text-sm text-gray-400 mb-5">
+            <p className="text-sm text-slate-600 mb-5">
               채팅에 참여하려면 닉네임과 비밀번호를 설정하세요.
               비밀번호는 메시지 삭제 시 사용됩니다.
             </p>
             <div className="space-y-3">
               <div>
-                <label className="text-xs font-medium text-gray-400 mb-1 block">닉네임</label>
+                <label className="text-xs font-medium text-slate-600 mb-1 block">닉네임</label>
                 <input
                   type="text"
                   value={tempNickname}
                   onChange={(e) => setTempNickname(e.target.value)}
                   placeholder="표시될 이름"
                   maxLength={50}
-                  className="w-full px-3 py-2.5 rounded-lg bg-gray-950 border border-gray-800/60 text-slate-800 placeholder-gray-500 text-sm focus:outline-none focus:border-blue-500"
+                  className="w-full px-3 py-2.5 rounded-lg bg-[#f8f9fc] border border-slate-200/60 text-slate-800 placeholder-gray-500 text-sm focus:outline-none focus:border-blue-500"
                   onKeyDown={(e) => e.key === 'Enter' && saveNickname()}
                   autoFocus
                 />
               </div>
               <div>
-                <label className="text-xs font-medium text-gray-400 mb-1 block">비밀번호</label>
+                <label className="text-xs font-medium text-slate-600 mb-1 block">비밀번호</label>
                 <input
                   type="password"
                   value={tempPassword}
                   onChange={(e) => setTempPassword(e.target.value)}
                   placeholder="메시지 삭제 시 필요"
-                  className="w-full px-3 py-2.5 rounded-lg bg-gray-950 border border-gray-800/60 text-slate-800 placeholder-gray-500 text-sm focus:outline-none focus:border-blue-500"
+                  className="w-full px-3 py-2.5 rounded-lg bg-[#f8f9fc] border border-slate-200/60 text-slate-800 placeholder-gray-500 text-sm focus:outline-none focus:border-blue-500"
                   onKeyDown={(e) => e.key === 'Enter' && saveNickname()}
                 />
               </div>
@@ -681,7 +683,7 @@ export default function ChatRoom() {
             <div className="flex gap-3 mt-6">
               <button
                 onClick={() => setShowNicknameSetup(false)}
-                className="flex-1 py-2.5 rounded-lg bg-gray-800/60 text-gray-300 hover:bg-gray-700/60 text-sm font-medium transition-colors"
+                className="flex-1 py-2.5 rounded-lg bg-slate-50/60 text-slate-700 hover:bg-gray-700/60 text-sm font-medium transition-colors"
               >
                 취소
               </button>
@@ -700,9 +702,9 @@ export default function ChatRoom() {
       {/* ─── 삭제 확인 모달 ─── */}
       {deleteTarget !== null && (
         <div className="fixed inset-0 bg-slate-900/50 flex items-center justify-center z-50 px-4">
-          <div className="bg-gray-900 rounded-xl p-6 w-full max-w-sm border border-gray-800/60 shadow-2xl">
+          <div className="bg-white rounded-xl p-6 w-full max-w-sm border border-slate-200/60 shadow-2xl">
             <h3 className="text-lg font-bold text-slate-800 mb-1">메시지 삭제</h3>
-            <p className="text-sm text-gray-400 mb-5">
+            <p className="text-sm text-slate-600 mb-5">
               이 메시지를 삭제하려면 작성 시 사용한 비밀번호를 입력하세요.
             </p>
             <input
@@ -713,7 +715,7 @@ export default function ChatRoom() {
                 setDeleteError('')
               }}
               placeholder="비밀번호"
-              className="w-full px-3 py-2.5 rounded-lg bg-gray-950 border border-gray-800/60 text-slate-800 placeholder-gray-500 text-sm focus:outline-none focus:border-red-500 mb-2"
+              className="w-full px-3 py-2.5 rounded-lg bg-[#f8f9fc] border border-slate-200/60 text-slate-800 placeholder-gray-500 text-sm focus:outline-none focus:border-red-500 mb-2"
               onKeyDown={(e) => e.key === 'Enter' && handleDelete()}
               autoFocus
             />
@@ -727,7 +729,7 @@ export default function ChatRoom() {
                   setDeletePassword('')
                   setDeleteError('')
                 }}
-                className="flex-1 py-2.5 rounded-lg bg-gray-800/60 text-gray-300 hover:bg-gray-700/60 text-sm font-medium transition-colors"
+                className="flex-1 py-2.5 rounded-lg bg-slate-50/60 text-slate-700 hover:bg-gray-700/60 text-sm font-medium transition-colors"
               >
                 취소
               </button>
@@ -742,7 +744,8 @@ export default function ChatRoom() {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </SmartFactoryWrapper>
   )
 }
 

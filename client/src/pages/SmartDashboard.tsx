@@ -319,7 +319,7 @@ export default function SmartDashboard() {
             <BarChart3 className="w-5 h-5 text-indigo-600" />
             <div>
               <h2 className="text-indigo-900 font-bold text-lg tracking-tight">스마트 대시보드</h2>
-              <p className="text-slate-500 text-[11px] mt-0.5">사업장: 품질재단실습 | 관리자 접속중</p>
+              <p className="text-slate-500 text-[11px] mt-0.5">사업장: 품질재단실습 | 정현민 접속중</p>
             </div>
           </div>
           <div className="flex items-center gap-2 flex-wrap">

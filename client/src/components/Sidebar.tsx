@@ -46,7 +46,7 @@ const Sidebar = () => {
 
   // AI 데이터분석
   const aiDataItems = [
-    { icon: Settings,        label: '데이터분석 설정', path: '/ai-data-setup' },
+    { icon: Settings,        label: '데이터베이스 설정', path: '/ai-data-setup' },
     { icon: LayoutDashboard, label: 'AI 온톨로지 분석', path: '/ai-ontology' },
     { icon: FileText,        label: 'AI 온톨로지 관리', path: '/ai-pattern' },
     { icon: Activity,        label: '실시간 인사이트 플랫폼', path: '/ai-insight' },

@@ -10,6 +10,7 @@ import { exportVideo } from '../video-maker/services/videoRenderer'
 import { convertPdfToImages } from '../video-maker/services/pdfUtils'
 import { exportPptx } from '../video-maker/services/pptxService'
 import { type ModelTier, MODEL_TIERS, getModelTier, setModelTier as saveModelTier } from '../utils/modelConfig'
+import SmartFactoryWrapper from '../components/SmartFactoryWrapper'
 
 /**
  * 동영상 만들기 페이지 (MagicSlide Studio)
@@ -516,9 +517,10 @@ const VideoMaker: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col h-full bg-gray-950 text-slate-800 overflow-hidden relative">
+    <SmartFactoryWrapper>
+      <div className="flex flex-col h-full bg-[#f8f9fc] text-slate-800 overflow-hidden relative animate-in slide-in-from-bottom-4 fade-in duration-500 rounded-xl border border-slate-200">
       {/* ── 상단 헤더 바 ── */}
-      <header className="h-14 border-b border-gray-800 bg-gray-900 flex items-center justify-between px-4 sm:px-6 z-20 shadow-xl shrink-0">
+      <header className="h-14 border-b border-slate-200 bg-white flex items-center justify-between px-4 sm:px-6 z-20 shadow-xl shrink-0">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-900/40">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-slate-800">
@@ -532,13 +534,13 @@ const VideoMaker: React.FC = () => {
 
         <div className="flex items-center gap-2 sm:gap-4">
           {/* 화면 비율 토글 */}
-          <div className="flex bg-gray-800 rounded-lg p-1 border border-gray-700">
+          <div className="flex bg-gray-800 rounded-lg p-1 border border-slate-200">
             <button
               onClick={() => setAspectRatio(AspectRatio.Video16_9)}
               className={`px-3 py-1 text-xs font-bold rounded-md transition-all ${
                 aspectRatio === AspectRatio.Video16_9
                   ? 'bg-indigo-600 text-slate-800 shadow-lg'
-                  : 'text-gray-400 hover:text-slate-800'
+                  : 'text-slate-600 hover:text-slate-800'
               }`}
             >
               16:9
@@ -548,7 +550,7 @@ const VideoMaker: React.FC = () => {
               className={`px-3 py-1 text-xs font-bold rounded-md transition-all ${
                 aspectRatio === AspectRatio.Portrait9_16
                   ? 'bg-indigo-600 text-slate-800 shadow-lg'
-                  : 'text-gray-400 hover:text-slate-800'
+                  : 'text-slate-600 hover:text-slate-800'
               }`}
             >
               9:16
@@ -561,7 +563,7 @@ const VideoMaker: React.FC = () => {
             className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border transition-all text-xs font-bold ${
               includeSubtitles
                 ? 'bg-green-500/10 border-green-500/50 text-green-400'
-                : 'bg-gray-800 border-gray-700 text-gray-500'
+                : 'bg-gray-800 border-slate-200 text-slate-500'
             }`}
           >
             <div className={`w-3 h-3 rounded-full ${includeSubtitles ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]' : 'bg-gray-600'}`}></div>
@@ -575,7 +577,7 @@ const VideoMaker: React.FC = () => {
               className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border transition-all text-xs font-bold ${
                 slideDelayEnabled
                   ? 'bg-cyan-500/10 border-cyan-500/50 text-cyan-400'
-                  : 'bg-gray-800 border-gray-700 text-gray-500'
+                  : 'bg-gray-800 border-slate-200 text-slate-500'
               }`}
               title="슬라이드 전환 시 딜레이 추가"
             >
@@ -588,7 +590,7 @@ const VideoMaker: React.FC = () => {
               <select
                 value={slideDelaySec}
                 onChange={(e) => setSlideDelaySec(Number(e.target.value))}
-                className="bg-gray-800 border border-gray-700 rounded-lg px-2 py-1.5 text-xs font-bold text-cyan-400 outline-none focus:border-cyan-500/50 cursor-pointer"
+                className="bg-gray-800 border border-slate-200 rounded-lg px-2 py-1.5 text-xs font-bold text-cyan-400 outline-none focus:border-cyan-500/50 cursor-pointer"
               >
                 {[1, 2, 3, 4, 5].map((sec) => (
                   <option key={sec} value={sec}>
@@ -616,7 +618,7 @@ const VideoMaker: React.FC = () => {
               <span className="hidden sm:inline">{MODEL_TIERS[modelTier].label}</span>
             </button>
             {showModelSelect && (
-              <div className="absolute right-0 top-full mt-1 w-52 bg-gray-800 border border-gray-700 rounded-xl shadow-2xl z-50 p-2 space-y-1">
+              <div className="absolute right-0 top-full mt-1 w-52 bg-gray-800 border border-slate-200 rounded-xl shadow-2xl z-50 p-2 space-y-1">
                 {(Object.keys(MODEL_TIERS) as ModelTier[]).map((tier) => {
                   const c = MODEL_TIERS[tier]
                   const isActive = modelTier === tier
@@ -625,7 +627,7 @@ const VideoMaker: React.FC = () => {
                       key={tier}
                       onClick={() => handleModelChange(tier)}
                       className={`w-full text-left px-3 py-2 rounded-lg text-xs transition-all ${
-                        isActive ? 'bg-indigo-600/20 border border-indigo-500/40 text-slate-800' : 'hover:bg-gray-700 text-gray-400'
+                        isActive ? 'bg-indigo-600/20 border border-indigo-500/40 text-slate-800' : 'hover:bg-gray-700 text-slate-600'
                       }`}
                     >
                       <div className="font-medium">{c.label}</div>
@@ -633,7 +635,7 @@ const VideoMaker: React.FC = () => {
                     </button>
                   )
                 })}
-                <div className="text-[9px] text-gray-500 px-2 pt-1 border-t border-gray-700/50">
+                <div className="text-[9px] text-slate-500 px-2 pt-1 border-t border-slate-200/50">
                   TTS 모델은 변경할 수 없습니다
                 </div>
               </div>
@@ -645,7 +647,7 @@ const VideoMaker: React.FC = () => {
             <button
               onClick={handlePptxExport}
               disabled={generationState.isExporting || slides.length === 0}
-              className="px-3 sm:px-5 py-2 bg-gray-800 hover:bg-gray-700 text-gray-200 border border-gray-700 rounded-full font-bold text-xs sm:text-sm shadow-lg transition-all flex items-center gap-2 disabled:opacity-30"
+              className="px-3 sm:px-5 py-2 bg-gray-800 hover:bg-gray-700 text-slate-800 border border-slate-200 rounded-full font-bold text-xs sm:text-sm shadow-lg transition-all flex items-center gap-2 disabled:opacity-30"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 text-orange-400">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
@@ -666,10 +668,10 @@ const VideoMaker: React.FC = () => {
       {/* ── 메인 콘텐츠 영역 ── */}
       <div className="flex-1 flex overflow-hidden">
         {/* 좌측 슬라이드 관리 패널 */}
-        <aside className="w-64 sm:w-80 bg-gray-900 border-r border-gray-800 flex flex-col z-10 shadow-2xl shrink-0">
-          <div className="p-4 sm:p-5 border-b border-gray-800 bg-gray-900/50">
+        <aside className="w-64 sm:w-80 bg-white border-r border-slate-200 flex flex-col z-10 shadow-2xl shrink-0">
+          <div className="p-4 sm:p-5 border-b border-slate-200 bg-white/50">
             <div className="flex justify-between items-center">
-              <h2 className="text-xs font-black text-gray-500 uppercase tracking-[0.2em]">슬라이드 관리</h2>
+              <h2 className="text-xs font-black text-slate-500 uppercase tracking-[0.2em]">슬라이드 관리</h2>
               <div className="flex items-center gap-2">
                 {slides.length > 0 && (
                   <button
@@ -698,7 +700,7 @@ const VideoMaker: React.FC = () => {
 
           {/* 일괄 생성 버튼 영역 */}
           {slides.length > 0 && (
-            <div className="p-3 border-b border-gray-800 flex flex-col gap-2">
+            <div className="p-3 border-b border-slate-200 flex flex-col gap-2">
               {!isBatchRunning ? (
                 <div className="flex gap-2">
                   <button
@@ -728,7 +730,7 @@ const VideoMaker: React.FC = () => {
                   {/* 진행 상태 표시 */}
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-1.5">
-                      <span className="text-[10px] font-bold text-gray-400 uppercase">
+                      <span className="text-[10px] font-bold text-slate-600 uppercase">
                         {batchState.type === 'script' ? '자막 생성 중' : '음성 생성 중'}
                       </span>
                       <span className="text-[10px] font-black text-indigo-400 tabular-nums">
@@ -768,7 +770,7 @@ const VideoMaker: React.FC = () => {
             ))}
 
             {/* 파일 업로드 영역 */}
-            <label className="border-2 border-dashed border-gray-800 hover:border-indigo-500/50 hover:bg-indigo-500/5 rounded-2xl p-6 sm:p-8 flex flex-col items-center justify-center cursor-pointer transition-all gap-3 group">
+            <label className="border-2 border-dashed border-slate-200 hover:border-indigo-500/50 hover:bg-indigo-500/5 rounded-2xl p-6 sm:p-8 flex flex-col items-center justify-center cursor-pointer transition-all gap-3 group">
               <input
                 type="file"
                 className="hidden"
@@ -777,11 +779,11 @@ const VideoMaker: React.FC = () => {
                 onChange={handleFileUpload}
               />
               <div className="w-12 h-12 bg-gray-800 group-hover:bg-indigo-600 rounded-full flex items-center justify-center transition-all shadow-lg shadow-black/40">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6 text-gray-400 group-hover:text-slate-800">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6 text-slate-600 group-hover:text-slate-800">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
               </div>
-              <span className="text-xs font-black text-gray-500 group-hover:text-indigo-400 uppercase tracking-widest text-center">
+              <span className="text-xs font-black text-slate-500 group-hover:text-indigo-400 uppercase tracking-widest text-center">
                 이미지 / PDF / 영상 추가
               </span>
             </label>
@@ -789,7 +791,7 @@ const VideoMaker: React.FC = () => {
         </aside>
 
         {/* 우측 미리보기 + 편집 영역 */}
-        <main className="flex-1 flex flex-col min-w-0 bg-gray-950">
+        <main className="flex-1 flex flex-col min-w-0 bg-[#f8f9fc]">
           {/* 미리보기 / 렌더링 캔버스 영역 */}
           <div className="flex-1 relative overflow-hidden">
             {/* 일반 미리보기 (내보내기 중이 아닐 때) */}
@@ -799,12 +801,12 @@ const VideoMaker: React.FC = () => {
 
             {/* 렌더링 캔버스 (내보내기 중일 때 표시) */}
             <div
-              className="w-full h-full flex items-center justify-center bg-gray-950 p-4"
+              className="w-full h-full flex items-center justify-center bg-[#f8f9fc] p-4"
               style={{ display: generationState.isExporting ? 'flex' : 'none' }}
             >
               <canvas
                 ref={renderCanvasRef}
-                className="max-w-full max-h-full rounded-lg shadow-2xl border border-gray-700/50"
+                className="max-w-full max-h-full rounded-lg shadow-2xl border border-slate-200/50"
                 style={{
                   aspectRatio: aspectRatio === AspectRatio.Portrait9_16 ? '9 / 16' : '16 / 9',
                 }}
@@ -832,7 +834,7 @@ const VideoMaker: React.FC = () => {
       {generationState.isExporting && (
         <div className="fixed top-0 left-0 right-0 z-[10000] pointer-events-none">
           {/* 프로그레스 바 (가장 상단) */}
-          <div className="w-full h-1 bg-gray-900/80">
+          <div className="w-full h-1 bg-white/80">
             <div
               className="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 transition-all duration-500 ease-out shadow-[0_0_20px_rgba(99,102,241,0.8)]"
               style={{ width: `${Math.round(generationState.progress)}%` }}
@@ -841,9 +843,9 @@ const VideoMaker: React.FC = () => {
 
           {/* 상태 배너 */}
           <div className="flex items-center justify-center px-4 py-2 pointer-events-auto">
-            <div className="flex items-center gap-3 bg-gray-900/95 backdrop-blur-md border border-indigo-500/30 rounded-full px-5 py-2 shadow-2xl shadow-indigo-900/30">
+            <div className="flex items-center gap-3 bg-white/95 backdrop-blur-md border border-indigo-500/30 rounded-full px-5 py-2 shadow-2xl shadow-indigo-900/30">
               <div className="w-5 h-5 border-2 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin shrink-0"></div>
-              <span className="text-sm font-semibold text-gray-200">
+              <span className="text-sm font-semibold text-slate-800">
                 {generationState.statusMessage || '렌더링 중...'}
               </span>
               <span className="text-sm font-black text-indigo-400 tabular-nums">
@@ -858,16 +860,16 @@ const VideoMaker: React.FC = () => {
       {/* ── 일괄 생성 진행 배너 ── */}
       {isBatchRunning && !generationState.isExporting && (
         <div className="fixed top-0 left-0 right-0 z-[10000] pointer-events-none">
-          <div className="w-full h-1 bg-gray-900/80">
+          <div className="w-full h-1 bg-white/80">
             <div
               className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-300 ease-out"
               style={{ width: `${batchState.total > 0 ? (batchState.current / batchState.total) * 100 : 0}%` }}
             />
           </div>
           <div className="flex items-center justify-center px-4 py-2 pointer-events-auto">
-            <div className="flex items-center gap-3 bg-gray-900/95 backdrop-blur-md border border-indigo-500/30 rounded-full px-5 py-2 shadow-2xl shadow-indigo-900/30">
+            <div className="flex items-center gap-3 bg-white/95 backdrop-blur-md border border-indigo-500/30 rounded-full px-5 py-2 shadow-2xl shadow-indigo-900/30">
               <div className="w-5 h-5 border-2 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin shrink-0"></div>
-              <span className="text-sm font-semibold text-gray-200">
+              <span className="text-sm font-semibold text-slate-800">
                 {batchState.type === 'script' ? '전체 자막 생성 중' : '전체 음성 생성 중'}
               </span>
               <span className="text-sm font-black text-indigo-400 tabular-nums">
@@ -883,7 +885,8 @@ const VideoMaker: React.FC = () => {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </SmartFactoryWrapper>
   )
 }
 

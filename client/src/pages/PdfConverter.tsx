@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import SmartFactoryWrapper from '../components/SmartFactoryWrapper'
 import {
   Upload,
   Download,
@@ -1017,7 +1018,8 @@ const PdfConverter = () => {
   )
 
   return (
-    <div className="flex-1 flex flex-col p-4 sm:p-6 overflow-auto">
+    <SmartFactoryWrapper>
+      <div className="flex-1 flex flex-col p-4 sm:p-6 overflow-auto animate-in slide-in-from-bottom-4 fade-in duration-500">
       {showPreview && slidesData.length > 0 ? (
         <SlidePreview
           slides={slidesData}
@@ -1032,7 +1034,7 @@ const PdfConverter = () => {
       {/* 페이지 헤더 */}
       <div className="mb-4 sm:mb-6">
         <h1 className="text-xl sm:text-2xl font-bold text-slate-800 mb-1 sm:mb-2">PDF / 이미지 변환</h1>
-        <p className="text-gray-400 text-xs sm:text-sm">
+        <p className="text-slate-600 text-xs sm:text-sm">
           PDF 슬라이드를 이미지로 변환하고 워터마크를 자동 제거합니다. 이미지 파일도 직접 업로드할 수 있습니다.
         </p>
       </div>
@@ -1042,7 +1044,7 @@ const PdfConverter = () => {
         <button
           onClick={() => setWatermarkRemoval(!watermarkRemoval)}
           className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors shrink-0 ${
-            watermarkRemoval ? 'bg-blue-600' : 'bg-gray-700'
+            watermarkRemoval ? 'bg-blue-600' : 'bg-slate-50'
           }`}
         >
           <span
@@ -1053,12 +1055,12 @@ const PdfConverter = () => {
         </button>
         <div className="flex items-center gap-2">
           <Eraser className={`w-4 h-4 ${watermarkRemoval ? 'text-blue-400' : 'text-gray-500'}`} />
-          <span className={`text-sm ${watermarkRemoval ? 'text-gray-300' : 'text-gray-500'}`}>
+          <span className={`text-sm ${watermarkRemoval ? 'text-slate-700' : 'text-gray-500'}`}>
             워터마크 자동 제거
           </span>
         </div>
         {watermarkRemoval && (
-          <span className="text-xs text-gray-500 bg-gray-800/50 px-2 py-0.5 rounded hidden sm:inline">
+          <span className="text-xs text-gray-500 bg-white/50 px-2 py-0.5 rounded hidden sm:inline">
             오른쪽 하단 워터마크를 배경색으로 채워 제거합니다
           </span>
         )}
@@ -1067,7 +1069,7 @@ const PdfConverter = () => {
       {/* ─── 업로드 영역 ─── */}
       {!file && (
         <div
-          className="border-2 border-dashed border-gray-700 rounded-xl sm:rounded-2xl p-8 sm:p-12 text-center hover:border-gray-500 active:border-gray-400 transition-colors cursor-pointer mb-4 sm:mb-6"
+          className="border-2 border-dashed border-slate-200 rounded-xl sm:rounded-2xl p-8 sm:p-12 text-center hover:border-gray-500 active:border-gray-400 transition-colors cursor-pointer mb-4 sm:mb-6"
           onDrop={handleDrop}
           onDragOver={handleDragOver}
           onClick={() => fileInputRef.current?.click()}
@@ -1081,7 +1083,7 @@ const PdfConverter = () => {
             onChange={handleFileInput}
           />
           <Upload className="w-10 h-10 sm:w-12 sm:h-12 text-gray-500 mx-auto mb-3 sm:mb-4" />
-          <p className="text-gray-300 text-base sm:text-lg mb-2">
+          <p className="text-slate-700 text-base sm:text-lg mb-2">
             PDF 또는 이미지 파일을 여기에 드래그하세요
           </p>
           <p className="text-gray-500 text-xs sm:text-sm">또는 클릭하여 파일 선택 · PDF, JPG, PNG 등 지원 (최대 50MB)</p>
@@ -1090,7 +1092,7 @@ const PdfConverter = () => {
 
       {/* ─── 변환 중 진행률 ─── */}
       {file && isConverting && (
-        <div className="bg-gray-800/50 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 border border-gray-700/50">
+        <div className="bg-white/50 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 border border-slate-200/50">
           <div className="flex items-center gap-3 mb-3 sm:mb-4">
             <Loader2 className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400 animate-spin shrink-0" />
             <div className="min-w-0">
@@ -1101,7 +1103,7 @@ const PdfConverter = () => {
               </p>
             </div>
           </div>
-          <div className="w-full bg-gray-700 rounded-full h-2">
+          <div className="w-full bg-slate-50 rounded-full h-2">
             <div
               className="bg-blue-500 h-2 rounded-full transition-all duration-300"
               style={{ width: `${(progress / totalPages) * 100}%` }}
@@ -1124,7 +1126,7 @@ const PdfConverter = () => {
                   변환 완료! {pages.length}장
                   {watermarkRemoval && ' · 워터마크 제거됨'}
                 </p>
-                <p className="text-gray-400 text-xs sm:text-sm truncate">{file?.name}</p>
+                <p className="text-slate-600 text-xs sm:text-sm truncate">{file?.name}</p>
                 {totalExtractedText > 0 ? (
                   <p className="text-emerald-400 text-xs mt-0.5">
                     {totalExtractedText}개 텍스트 추출됨 — PPT 변환 시 자동 분리
@@ -1185,14 +1187,14 @@ const PdfConverter = () => {
               <button
                 onClick={downloadAllImages}
                 disabled={isDownloading}
-                className="flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-800 hover:bg-gray-700 disabled:bg-gray-700/50 text-gray-300 rounded-xl text-xs sm:text-sm transition-colors justify-center"
+                className="flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 bg-white hover:bg-slate-50 disabled:bg-slate-50/50 text-slate-700 rounded-xl text-xs sm:text-sm transition-colors justify-center"
               >
                 <ImageDown className="w-4 h-4" />
                 <span className="hidden sm:inline">이미지</span> ({pages.length}장)
               </button>
               <button
                 onClick={resetFile}
-                className="flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-xl text-xs sm:text-sm transition-colors justify-center"
+                className="flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 bg-white hover:bg-slate-50 text-slate-700 rounded-xl text-xs sm:text-sm transition-colors justify-center"
                 title="새 PDF 업로드"
               >
                 <RotateCcw className="w-4 h-4" />
@@ -1202,10 +1204,10 @@ const PdfConverter = () => {
           </div>
 
           {/* Gemini API Key 입력 (선택 사항 — 고급 모드) */}
-          <div className="mt-4 pt-4 border-t border-gray-700/50">
+          <div className="mt-4 pt-4 border-t border-slate-200/50">
             <button
               onClick={() => setShowApiKeyInput(!showApiKeyInput)}
-              className="flex items-center gap-2 text-xs text-gray-400 hover:text-gray-300 transition-colors"
+              className="flex items-center gap-2 text-xs text-slate-600 hover:text-slate-700 transition-colors"
             >
               <KeyRound className="w-3.5 h-3.5" />
               <span>
@@ -1222,11 +1224,11 @@ const PdfConverter = () => {
                     value={geminiApiKey}
                     onChange={(e) => saveApiKey(e.target.value)}
                     placeholder="Gemini API Key 입력 (없어도 기본 모드로 동작)"
-                    className="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-sm text-gray-300 placeholder-gray-500 focus:outline-none focus:border-orange-500 pr-10"
+                    className="w-full bg-white border border-gray-600 rounded-lg px-3 py-2 text-sm text-slate-700 placeholder-gray-500 focus:outline-none focus:border-orange-500 pr-10"
                   />
                   <button
                     onClick={() => setShowApiKey(!showApiKey)}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-slate-700"
                   >
                     {showApiKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
@@ -1252,16 +1254,16 @@ const PdfConverter = () => {
 
             {/* AI 모델 선택 (비용 절감 옵션) */}
             {hasApiKey && (
-              <div className="mt-3 pt-3 border-t border-gray-700/30">
-                <p className="text-[11px] text-gray-400 mb-2 font-medium">⚡ AI 모델 선택 (비용 조절)</p>
+              <div className="mt-3 pt-3 border-t border-slate-200/30">
+                <p className="text-[11px] text-slate-600 mb-2 font-medium">⚡ AI 모델 선택 (비용 조절)</p>
                 <div className="grid grid-cols-3 gap-1.5">
                   {(Object.keys(MODEL_TIERS) as ModelTier[]).map((tier) => {
                     const config = MODEL_TIERS[tier]
                     const isSelected = selectedModelTier === tier
                     const colorMap: Record<string, string> = {
-                      emerald: isSelected ? 'border-emerald-500 bg-emerald-500/10 text-emerald-300' : 'border-gray-700 text-gray-500 hover:border-gray-600',
-                      blue: isSelected ? 'border-blue-500 bg-blue-500/10 text-blue-300' : 'border-gray-700 text-gray-500 hover:border-gray-600',
-                      amber: isSelected ? 'border-amber-500 bg-amber-500/10 text-amber-300' : 'border-gray-700 text-gray-500 hover:border-gray-600',
+                      emerald: isSelected ? 'border-emerald-500 bg-emerald-500/10 text-emerald-300' : 'border-slate-200 text-gray-500 hover:border-gray-600',
+                      blue: isSelected ? 'border-blue-500 bg-blue-500/10 text-blue-300' : 'border-slate-200 text-gray-500 hover:border-gray-600',
+                      amber: isSelected ? 'border-amber-500 bg-amber-500/10 text-amber-300' : 'border-slate-200 text-gray-500 hover:border-gray-600',
                     }
                     return (
                       <button
@@ -1276,7 +1278,7 @@ const PdfConverter = () => {
                   })}
                 </div>
                 <p className="text-[9px] text-gray-500 mt-1.5">
-                  {MODEL_TIERS[selectedModelTier].costLabel} · 현재: <span className="text-gray-400 font-mono">{MODEL_TIERS[selectedModelTier].textModel}</span>
+                  {MODEL_TIERS[selectedModelTier].costLabel} · 현재: <span className="text-slate-600 font-mono">{MODEL_TIERS[selectedModelTier].textModel}</span>
                 </p>
               </div>
             )}
@@ -1295,7 +1297,7 @@ const PdfConverter = () => {
       {pages.length > 0 && (
         <>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-xs sm:text-sm font-medium text-gray-400">
+            <h2 className="text-xs sm:text-sm font-medium text-slate-600">
               미리보기 · 각 이미지를 클릭하면 다운로드 또는 편집
             </h2>
           </div>
@@ -1303,7 +1305,7 @@ const PdfConverter = () => {
             {pages.map((page) => (
               <div
                 key={page.pageNumber}
-                className="bg-gray-800/50 rounded-lg overflow-hidden border border-gray-700/50 group"
+                className="bg-white/50 rounded-lg overflow-hidden border border-slate-200/50 group"
               >
                 <div className="relative overflow-hidden">
                   <img
@@ -1361,7 +1363,8 @@ const PdfConverter = () => {
       )}
       </>
       )}
-    </div>
+      </div>
+    </SmartFactoryWrapper>
   )
 }
 

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import SmartFactoryWrapper from '../components/SmartFactoryWrapper'
 import {
   Upload,
   ZoomIn,
@@ -1280,7 +1281,7 @@ const ImageEditor = () => {
   const renderEditPanel = () => (
     <>
       {/* 패널 헤더 */}
-      <div className="p-3 sm:p-4 border-b border-gray-800 flex items-center justify-between shrink-0">
+      <div className="p-3 sm:p-4 border-b border-slate-200 flex items-center justify-between shrink-0">
         <h3 className="text-slate-800 font-medium text-sm flex items-center gap-2">
           <Type className="w-4 h-4 text-blue-400" />
           한글 텍스트 교체
@@ -1289,7 +1290,7 @@ const ImageEditor = () => {
           {hasValidSelection && (
             <button
               onClick={() => { setSelection(null); setEditedText('') }}
-              className="p-1 text-gray-400 hover:text-slate-800 transition-colors"
+              className="p-1 text-slate-600 hover:text-slate-800 transition-colors"
               title="선택 해제"
             >
               <X className="w-4 h-4" />
@@ -1298,7 +1299,7 @@ const ImageEditor = () => {
           {/* 모바일 접기 버튼 */}
           <button
             onClick={() => setMobilePanelOpen(false)}
-            className="p-1 text-gray-400 hover:text-slate-800 transition-colors md:hidden"
+            className="p-1 text-slate-600 hover:text-slate-800 transition-colors md:hidden"
           >
             <ChevronDown className="w-4 h-4" />
           </button>
@@ -1311,10 +1312,10 @@ const ImageEditor = () => {
           <div className="flex flex-col items-center justify-center h-full gap-4">
             <Loader2 className="w-8 h-8 text-blue-400 animate-spin" />
             <div className="text-center">
-              <p className="text-gray-300 text-sm">한글을 인식하고 있습니다...</p>
-              <p className="text-gray-500 text-xs mt-1">{ocrProgress}% 완료</p>
+              <p className="text-slate-700 text-sm">한글을 인식하고 있습니다...</p>
+              <p className="text-slate-500 text-xs mt-1">{ocrProgress}% 완료</p>
             </div>
-            <div className="w-full bg-gray-800 rounded-full h-2">
+            <div className="w-full bg-white rounded-full h-2">
               <div
                 className="bg-blue-500 h-2 rounded-full transition-all duration-300"
                 style={{ width: `${ocrProgress}%` }}
@@ -1327,20 +1328,20 @@ const ImageEditor = () => {
               <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 text-center">
                 <Square className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400 mx-auto mb-2" />
                 <p className="text-blue-300 text-sm font-medium">영역을 선택하세요</p>
-                <p className="text-gray-500 text-xs mt-1">
+                <p className="text-slate-500 text-xs mt-1">
                   이미지에서 깨진 한글 영역을 드래그하세요
                 </p>
               </div>
             )}
 
             <div>
-              <label className="text-xs text-gray-500 mb-1.5 sm:mb-2 block">
+              <label className="text-xs text-slate-500 mb-1.5 sm:mb-2 block">
                 {hasValidSelection ? '① 인식된 텍스트를 확인/수정하거나 직접 입력' : '교체할 텍스트'}
               </label>
               <textarea
                 value={editedText}
                 onChange={(e) => setEditedText(e.target.value)}
-                className="w-full bg-gray-800/50 border border-gray-700 rounded-lg p-3 text-gray-200 text-sm resize-none focus:outline-none focus:border-blue-500 transition-colors"
+                className="w-full bg-white/50 border border-slate-200 rounded-lg p-3 text-slate-800 text-sm resize-none focus:outline-none focus:border-blue-500 transition-colors"
                 rows={4}
                 placeholder="교체할 한글 텍스트를 입력하세요..."
               />
@@ -1348,20 +1349,20 @@ const ImageEditor = () => {
 
             {/* 원본 텍스트 측정 결과 & 조절 */}
             {hasValidSelection && textMeasure && (
-              <div className="bg-gray-800/60 border border-gray-700 rounded-lg p-3 space-y-3">
-                <p className="text-xs text-gray-400 font-medium">📏 원본 텍스트 측정 결과</p>
+              <div className="bg-white/60 border border-slate-200 rounded-lg p-3 space-y-3">
+                <p className="text-xs text-slate-600 font-medium">📏 원본 텍스트 측정 결과</p>
                 <div className="grid grid-cols-2 gap-2 text-xs">
-                  <span className="text-gray-500">글자 높이</span>
-                  <span className="text-gray-300 font-mono">{textMeasure.textHeight}px</span>
-                  <span className="text-gray-500">획 두께</span>
-                  <span className="text-gray-300 font-mono">{textMeasure.strokeWidth}px</span>
-                  <span className="text-gray-500">시작 위치</span>
-                  <span className="text-gray-300 font-mono">({textMeasure.textLeft}, {textMeasure.textTop})</span>
+                  <span className="text-slate-500">글자 높이</span>
+                  <span className="text-slate-700 font-mono">{textMeasure.textHeight}px</span>
+                  <span className="text-slate-500">획 두께</span>
+                  <span className="text-slate-700 font-mono">{textMeasure.strokeWidth}px</span>
+                  <span className="text-slate-500">시작 위치</span>
+                  <span className="text-slate-700 font-mono">({textMeasure.textLeft}, {textMeasure.textTop})</span>
                 </div>
 
                 {/* 폰트 크기 조절 */}
                 <div>
-                  <label className="text-xs text-gray-400 mb-1 flex items-center justify-between">
+                  <label className="text-xs text-slate-600 mb-1 flex items-center justify-between">
                     <span>교체 텍스트 높이 (px)</span>
                     <button
                       onClick={() => setFontSizeOverride(textMeasure!.textHeight)}
@@ -1377,7 +1378,7 @@ const ImageEditor = () => {
                       max={Math.round(textMeasure.textHeight * 3)}
                       value={fontSizeOverride ?? textMeasure.textHeight}
                       onChange={(e) => setFontSizeOverride(Number(e.target.value))}
-                      className="flex-1 h-1.5 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                      className="flex-1 h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-blue-500"
                     />
                     <input
                       type="number"
@@ -1385,7 +1386,7 @@ const ImageEditor = () => {
                       max={800}
                       value={fontSizeOverride ?? textMeasure.textHeight}
                       onChange={(e) => setFontSizeOverride(Number(e.target.value))}
-                      className="w-16 bg-gray-700 border border-gray-600 rounded px-2 py-1 text-gray-200 text-xs font-mono text-center"
+                      className="w-16 bg-slate-100 border border-gray-600 rounded px-2 py-1 text-slate-800 text-xs font-mono text-center"
                     />
                   </div>
                 </div>
@@ -1397,9 +1398,9 @@ const ImageEditor = () => {
                       type="checkbox"
                       checked={fontBold}
                       onChange={(e) => setFontBold(e.target.checked)}
-                      className="w-4 h-4 rounded border-gray-600 bg-gray-700 text-blue-500 focus:ring-blue-500"
+                      className="w-4 h-4 rounded border-gray-600 bg-slate-100 text-blue-500 focus:ring-blue-500"
                     />
-                    <span className="text-xs text-gray-400">
+                    <span className="text-xs text-slate-600">
                       볼드 {textMeasure.isBold && <span className="text-blue-400 ml-1">← 자동 감지</span>}
                     </span>
                   </label>
@@ -1407,7 +1408,7 @@ const ImageEditor = () => {
 
                 {/* 글자 색상 선택 */}
                 <div>
-                  <label className="text-xs text-gray-400 mb-1 flex items-center justify-between">
+                  <label className="text-xs text-slate-600 mb-1 flex items-center justify-between">
                     <span>글자 색상</span>
                     <button
                       onClick={() => {
@@ -1443,7 +1444,7 @@ const ImageEditor = () => {
                       style={{ backgroundColor: textColorOverride || '#1a1a1a' }}
                       title="현재 글자 색상 미리보기"
                     />
-                    <span className="text-xs text-gray-400 font-mono uppercase">
+                    <span className="text-xs text-slate-600 font-mono uppercase">
                       {textColorOverride || '미감지'}
                     </span>
                     {textColorOverride && (
@@ -1457,21 +1458,21 @@ const ImageEditor = () => {
             <button
               onClick={replaceText}
               disabled={!editedText.trim() || !selection}
-              className="flex items-center gap-2 px-4 py-2.5 sm:py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-700 disabled:text-gray-500 text-slate-800 rounded-lg text-sm w-full justify-center transition-colors font-medium"
+              className="flex items-center gap-2 px-4 py-2.5 sm:py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-100 disabled:text-slate-500 text-slate-800 rounded-lg text-sm w-full justify-center transition-colors font-medium"
             >
               <Type className="w-4 h-4" />
               {hasValidSelection ? '② 선택 영역에 텍스트 교체' : '영역을 먼저 선택하세요'}
             </button>
 
             {/* 사용법 (데스크탑만 표시) */}
-            <div className="bg-gray-800/30 rounded-lg p-3 space-y-1.5 hidden sm:block">
-              <p className="text-xs text-gray-400 font-medium">💡 사용법</p>
-              <p className="text-xs text-gray-500">1. Ctrl+마우스 휠로 확대</p>
-              <p className="text-xs text-gray-500">2. 깨진 한글 영역을 드래그로 선택</p>
-              <p className="text-xs text-gray-500">3. 자동 측정된 크기/두께 확인 (조절 가능)</p>
-              <p className="text-xs text-gray-500">4. 텍스트를 입력하고 "텍스트 교체" 클릭</p>
-              <p className="text-xs text-gray-500">5. 핸들로 영역 크기 조절 가능</p>
-              <p className="text-xs text-gray-500">6. Ctrl+Z로 실행 취소</p>
+            <div className="bg-white/30 rounded-lg p-3 space-y-1.5 hidden sm:block">
+              <p className="text-xs text-slate-600 font-medium">💡 사용법</p>
+              <p className="text-xs text-slate-500">1. Ctrl+마우스 휠로 확대</p>
+              <p className="text-xs text-slate-500">2. 깨진 한글 영역을 드래그로 선택</p>
+              <p className="text-xs text-slate-500">3. 자동 측정된 크기/두께 확인 (조절 가능)</p>
+              <p className="text-xs text-slate-500">4. 텍스트를 입력하고 "텍스트 교체" 클릭</p>
+              <p className="text-xs text-slate-500">5. 핸들로 영역 크기 조절 가능</p>
+              <p className="text-xs text-slate-500">6. Ctrl+Z로 실행 취소</p>
             </div>
 
             {/* 이미지 붙여넣기 안내 */}
@@ -1480,10 +1481,10 @@ const ImageEditor = () => {
                 <Clipboard className="w-3.5 h-3.5" />
                 이미지 붙여넣기 (덮어쓰기)
               </p>
-              <p className="text-xs text-gray-500">1. 외부에서 이미지를 복사 (Ctrl+C)</p>
-              <p className="text-xs text-gray-500">2. 이 화면에서 Ctrl+V로 붙여넣기</p>
-              <p className="text-xs text-gray-500">3. 드래그로 위치 이동, 꼭짓점으로 크기 조절</p>
-              <p className="text-xs text-gray-500">4. Enter로 적용, ESC로 취소</p>
+              <p className="text-xs text-slate-500">1. 외부에서 이미지를 복사 (Ctrl+C)</p>
+              <p className="text-xs text-slate-500">2. 이 화면에서 Ctrl+V로 붙여넣기</p>
+              <p className="text-xs text-slate-500">3. 드래그로 위치 이동, 꼭짓점으로 크기 조절</p>
+              <p className="text-xs text-slate-500">4. Enter로 적용, ESC로 취소</p>
             </div>
           </div>
         )}
@@ -1492,13 +1493,14 @@ const ImageEditor = () => {
   )
 
   return (
-    <div className="flex-1 flex flex-col min-h-0">
+    <SmartFactoryWrapper>
+      <div className="flex-1 flex flex-col min-h-0 animate-in slide-in-from-bottom-4 fade-in duration-500">
       {/* ═══ 상단 툴바 ═══ */}
-      <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 border-b border-gray-800 shrink-0 flex-wrap">
+      <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 border-b border-slate-200 shrink-0 flex-wrap">
         {/* 이미지 업로드 */}
         <button
           onClick={() => fileInputRef.current?.click()}
-          className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg text-xs sm:text-sm transition-colors"
+          className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 bg-white hover:bg-slate-100 text-slate-700 rounded-lg text-xs sm:text-sm transition-colors"
         >
           <Upload className="w-4 h-4" />
           <span className="hidden sm:inline">이미지</span> 업로드
@@ -1511,26 +1513,26 @@ const ImageEditor = () => {
           onChange={handleFileUpload}
         />
 
-        <div className="w-px h-5 sm:h-6 bg-gray-700" />
+        <div className="w-px h-5 sm:h-6 bg-slate-100" />
 
         {/* 줌 컨트롤 */}
-        <button onClick={zoomOut} className="p-1.5 sm:p-2 text-gray-400 hover:text-slate-800 hover:bg-gray-800 rounded-lg transition-colors" title="축소">
+        <button onClick={zoomOut} className="p-1.5 sm:p-2 text-slate-600 hover:text-slate-800 hover:bg-white rounded-lg transition-colors" title="축소">
           <ZoomOut className="w-4 h-4" />
         </button>
-        <span className="text-xs sm:text-sm text-gray-400 min-w-[40px] sm:min-w-[48px] text-center">
+        <span className="text-xs sm:text-sm text-slate-600 min-w-[40px] sm:min-w-[48px] text-center">
           {Math.round(scale * 100)}%
         </span>
-        <button onClick={zoomIn} className="p-1.5 sm:p-2 text-gray-400 hover:text-slate-800 hover:bg-gray-800 rounded-lg transition-colors" title="확대">
+        <button onClick={zoomIn} className="p-1.5 sm:p-2 text-slate-600 hover:text-slate-800 hover:bg-white rounded-lg transition-colors" title="확대">
           <ZoomIn className="w-4 h-4" />
         </button>
-        <button onClick={resetZoom} className="p-1.5 sm:p-2 text-gray-400 hover:text-slate-800 hover:bg-gray-800 rounded-lg transition-colors" title="원래 크기">
+        <button onClick={resetZoom} className="p-1.5 sm:p-2 text-slate-600 hover:text-slate-800 hover:bg-white rounded-lg transition-colors" title="원래 크기">
           <RotateCcw className="w-4 h-4" />
         </button>
 
         {/* 안내 (데스크탑만) */}
         {!isPasteMode && (
-          <div className="hidden lg:flex items-center gap-2 text-sm text-gray-400">
-            <div className="w-px h-6 bg-gray-700" />
+          <div className="hidden lg:flex items-center gap-2 text-sm text-slate-600">
+            <div className="w-px h-6 bg-slate-100" />
             <Square className="w-4 h-4 text-blue-400" />
             <span>Ctrl+휠 확대 · 드래그 선택 · Ctrl+V 이미지 붙여넣기</span>
           </div>
@@ -1539,7 +1541,7 @@ const ImageEditor = () => {
         {/* 선택 영역 있을 때 OCR 버튼 */}
         {hasValidSelection && !isPasteMode && (
           <>
-            <div className="w-px h-5 sm:h-6 bg-gray-700" />
+            <div className="w-px h-5 sm:h-6 bg-slate-100" />
             <button
               onClick={runOCR}
               disabled={isProcessing}
@@ -1556,7 +1558,7 @@ const ImageEditor = () => {
             </button>
             <button
               onClick={() => { setSelection(null); setEditedText('') }}
-              className="p-1.5 sm:p-2 text-gray-400 hover:text-slate-800 hover:bg-gray-800 rounded-lg transition-colors"
+              className="p-1.5 sm:p-2 text-slate-600 hover:text-slate-800 hover:bg-white rounded-lg transition-colors"
               title="선택 해제"
             >
               <X className="w-4 h-4" />
@@ -1567,10 +1569,10 @@ const ImageEditor = () => {
         {/* 실행 취소 */}
         {history.length > 0 && !isPasteMode && (
           <>
-            <div className="w-px h-5 sm:h-6 bg-gray-700" />
+            <div className="w-px h-5 sm:h-6 bg-slate-100" />
             <button
               onClick={undo}
-              className="flex items-center gap-1.5 px-2 sm:px-3 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg text-xs sm:text-sm transition-colors"
+              className="flex items-center gap-1.5 px-2 sm:px-3 py-2 bg-white hover:bg-slate-100 text-slate-700 rounded-lg text-xs sm:text-sm transition-colors"
             >
               <Undo2 className="w-4 h-4" />
               <span className="hidden sm:inline">실행 취소</span>
@@ -1581,7 +1583,7 @@ const ImageEditor = () => {
         {/* ═══ 이미지 붙여넣기 모드 컨트롤 ═══ */}
         {isPasteMode && (
           <>
-            <div className="w-px h-5 sm:h-6 bg-gray-700" />
+            <div className="w-px h-5 sm:h-6 bg-slate-100" />
             <div className="flex items-center gap-2 bg-green-500/10 border border-green-500/30 rounded-lg px-3 py-1.5">
               <ImageIcon className="w-4 h-4 text-green-400" />
               <span className="text-green-300 text-xs sm:text-sm font-medium">이미지 붙여넣기</span>
@@ -1597,11 +1599,11 @@ const ImageEditor = () => {
             </button>
             <button
               onClick={cancelPaste}
-              className="flex items-center gap-1.5 px-3 py-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg text-xs sm:text-sm transition-colors"
+              className="flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-gray-600 text-slate-700 rounded-lg text-xs sm:text-sm transition-colors"
             >
               <X className="w-4 h-4" />
               <span className="hidden sm:inline">취소</span>
-              <span className="text-gray-500 text-[10px] hidden lg:inline">(ESC)</span>
+              <span className="text-slate-500 text-[10px] hidden lg:inline">(ESC)</span>
             </button>
           </>
         )}
@@ -1612,7 +1614,7 @@ const ImageEditor = () => {
         {editCanvas && (
           <button
             onClick={downloadImage}
-            className="flex items-center gap-1.5 px-2 sm:px-3 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg text-xs sm:text-sm transition-colors"
+            className="flex items-center gap-1.5 px-2 sm:px-3 py-2 bg-white hover:bg-slate-100 text-slate-700 rounded-lg text-xs sm:text-sm transition-colors"
           >
             <Download className="w-4 h-4" />
             <span className="hidden sm:inline">이미지 저장</span>
@@ -1645,16 +1647,16 @@ const ImageEditor = () => {
         {/* 캔버스 영역 */}
         <div
           ref={containerRef}
-          className="flex-1 overflow-auto bg-gray-900/50 flex items-center justify-center p-2 sm:p-4"
+          className="flex-1 overflow-auto bg-[#f8f9fc]/50 flex items-center justify-center p-2 sm:p-4"
         >
           {!editCanvas ? (
             <div
-              className="border-2 border-dashed border-gray-700 rounded-xl sm:rounded-2xl p-8 sm:p-16 text-center cursor-pointer hover:border-gray-500 active:border-gray-400 transition-colors"
+              className="border-2 border-dashed border-slate-200 rounded-xl sm:rounded-2xl p-8 sm:p-16 text-center cursor-pointer hover:border-gray-500 active:border-gray-400 transition-colors"
               onClick={() => fileInputRef.current?.click()}
             >
               <Upload className="w-12 h-12 sm:w-16 sm:h-16 text-gray-600 mx-auto mb-3 sm:mb-4" />
-              <p className="text-gray-400 text-base sm:text-lg mb-2">이미지를 업로드하세요</p>
-              <p className="text-gray-500 text-xs sm:text-sm">
+              <p className="text-slate-600 text-base sm:text-lg mb-2">이미지를 업로드하세요</p>
+              <p className="text-slate-500 text-xs sm:text-sm">
                 또는 PDF 변환 페이지에서 이미지를 가져오세요
               </p>
             </div>
@@ -1677,7 +1679,7 @@ const ImageEditor = () => {
         {editCanvas && !mobilePanelOpen && (
           <button
             onClick={() => setMobilePanelOpen(true)}
-            className="md:hidden absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-2 bg-gray-800 border border-gray-700 rounded-full text-gray-300 text-xs shadow-lg z-10"
+            className="md:hidden absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-full text-slate-700 text-xs shadow-lg z-10"
           >
             <ChevronUp className="w-4 h-4" />
             텍스트 교체 패널
@@ -1686,14 +1688,14 @@ const ImageEditor = () => {
 
         {/* ═══ 데스크탑: 우측 패널 (항상 표시) ═══ */}
         {editCanvas && (
-          <div className="hidden md:flex w-72 lg:w-80 border-l border-gray-800 flex-col bg-gray-900/80 shrink-0">
+          <div className="hidden md:flex w-72 lg:w-80 border-l border-slate-200 flex-col bg-[#f8f9fc]/80 shrink-0">
             {renderEditPanel()}
           </div>
         )}
 
         {/* ═══ 모바일: 하단 슬라이드업 패널 ═══ */}
         {editCanvas && mobilePanelOpen && (
-          <div className="md:hidden absolute bottom-0 left-0 right-0 max-h-[60vh] flex flex-col bg-gray-900 border-t border-gray-700 rounded-t-2xl shadow-2xl z-20">
+          <div className="md:hidden absolute bottom-0 left-0 right-0 max-h-[60vh] flex flex-col bg-[#f8f9fc] border-t border-slate-200 rounded-t-2xl shadow-2xl z-20">
             {/* 드래그 핸들 */}
             <div className="flex justify-center py-2">
               <div className="w-10 h-1 bg-gray-600 rounded-full" />
@@ -1704,7 +1706,7 @@ const ImageEditor = () => {
       </div>
 
       {/* ═══ 하단 상태바 (데스크탑만, 모바일에서는 공간 절약을 위해 숨김) ═══ */}
-      <div className="hidden sm:flex items-center gap-4 px-4 py-2 border-t border-gray-800 text-xs text-gray-500 shrink-0">
+      <div className="hidden sm:flex items-center gap-4 px-4 py-2 border-t border-slate-200 text-xs text-slate-500 shrink-0">
         {editCanvas && (
           <>
             <span>원본: {editCanvas.width} × {editCanvas.height}px</span>
@@ -1726,7 +1728,8 @@ const ImageEditor = () => {
           <span className="text-gray-600">편집: {history.length}회</span>
         )}
       </div>
-    </div>
+      </div>
+    </SmartFactoryWrapper>
   )
 }
 
